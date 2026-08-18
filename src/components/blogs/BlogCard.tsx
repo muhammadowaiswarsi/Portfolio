@@ -91,7 +91,7 @@ export function BlogCard({ post, index, featured = false }: BlogCardProps) {
         <div className="space-y-3">
           <h2
             className={cn(
-              "font-display tracking-tight text-white",
+              "font-display font-semibold tracking-[-0.02em] text-white",
               featured ? "text-2xl sm:text-3xl lg:text-4xl" : "text-xl sm:text-2xl",
             )}
           >

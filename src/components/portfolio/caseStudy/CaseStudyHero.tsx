@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import { LaptopMockup } from "@/components/portfolio/caseStudy/LaptopMockup";
 import {
+  caseStudyTitleClass,
   fadeUp,
   getImageUrl,
   hasImage,
@@ -39,7 +40,7 @@ function collectHeroShots(project: CaseStudyProject): HeroShot[] {
     if (!hasImage(image) || !image) return;
     const key = imageKey(image);
     if (seen.has(key)) return;
-    const url = getImageUrl(image, 1400, 900);
+    const url = getImageUrl(image, 1600);
     if (!url) return;
     seen.add(key);
     shots.push({
@@ -95,6 +96,8 @@ function HeroShowcase({ shots }: { shots: HeroShot[] }) {
           src={primary.url}
           alt={primary.alt}
           priority
+          fit="contain"
+          aspectClass="aspect-[16/9]"
           sizes="(min-width: 1024px) 42vw, 80vw"
         />
       </div>
@@ -108,6 +111,8 @@ function HeroShowcase({ shots }: { shots: HeroShot[] }) {
           <LaptopMockup
             src={left.url}
             alt={left.alt}
+            fit="contain"
+            aspectClass="aspect-[16/9]"
             sizes="(min-width: 1024px) 280px, 40vw"
           />
         </div>
@@ -117,6 +122,8 @@ function HeroShowcase({ shots }: { shots: HeroShot[] }) {
           <LaptopMockup
             src={right.url}
             alt={right.alt}
+            fit="contain"
+            aspectClass="aspect-[16/9]"
             sizes="(min-width: 1024px) 280px, 40vw"
           />
         </div>
@@ -131,6 +138,8 @@ function HeroShowcase({ shots }: { shots: HeroShot[] }) {
           src={primary.url}
           alt={primary.alt}
           priority
+          fit="contain"
+          aspectClass="aspect-[16/9]"
           sizes="(min-width: 1024px) 420px, 80vw"
         />
       </div>
@@ -216,7 +225,7 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
           </motion.div>
 
           <motion.h1
-            className="mt-5 break-words font-display text-4xl leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.35rem] xl:text-[3.6rem]"
+            className={`mt-5 break-words text-4xl leading-[1.12] sm:text-5xl lg:text-[3.25rem] xl:text-[3.45rem] ${caseStudyTitleClass}`}
             initial="hidden"
             animate="visible"
             custom={0.16}

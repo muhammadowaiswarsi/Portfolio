@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-import { fadeUp } from "@/components/portfolio/caseStudy/helpers";
+import { caseStudySectionClass, fadeUp } from "@/components/portfolio/caseStudy/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 
@@ -26,7 +26,7 @@ export function CaseStudyCta() {
           <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
             Start Your Project
           </p>
-          <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl lg:text-5xl">
+          <h2 className={`text-3xl leading-[1.15] sm:text-4xl lg:text-5xl ${caseStudySectionClass}`}>
             Ready to build something like this?
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">

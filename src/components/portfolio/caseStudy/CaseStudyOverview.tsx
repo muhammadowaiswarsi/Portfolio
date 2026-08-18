@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 import { ProjectPortableText } from "@/components/portfolio/ProjectPortableText";
-import { fadeUp, hasItems, hasText } from "@/components/portfolio/caseStudy/helpers";
+import { caseStudySectionClass, fadeUp, hasItems, hasText } from "@/components/portfolio/caseStudy/helpers";
 import { Container } from "@/components/ui/Container";
 import type { CaseStudyProject } from "@/types/sanity";
 
@@ -89,7 +89,7 @@ export function CaseStudyOverview({ project }: CaseStudyOverviewProps) {
             <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
               Overview
             </p>
-            <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl">
+            <h2 className={`text-3xl leading-[1.15] sm:text-4xl ${caseStudySectionClass}`}>
               About the Project
             </h2>
             <div className="mt-6">

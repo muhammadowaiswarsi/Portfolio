@@ -40,3 +40,12 @@ export function completeCaseStudyItems(items?: CaseStudyItem[] | null) {
     (item) => hasText(item.title) && hasText(item.description),
   );
 }
+
+export const caseStudyTitleClass =
+  "font-sans font-semibold tracking-[-0.035em] text-white";
+
+export const caseStudySectionClass =
+  "font-sans font-semibold tracking-[-0.03em] text-white";
+
+export const caseStudySubheadClass =
+  "font-sans font-semibold tracking-[-0.02em] text-white";

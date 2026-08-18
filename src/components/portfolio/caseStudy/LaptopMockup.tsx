@@ -8,6 +8,8 @@ type LaptopMockupProps = {
   priority?: boolean;
   sizes?: string;
   className?: string;
+  fit?: "cover" | "contain";
+  aspectClass?: string;
 };
 
 export function LaptopMockup({
@@ -16,11 +18,18 @@ export function LaptopMockup({
   priority = false,
   sizes = "(min-width: 1024px) 42vw, 100vw",
   className,
+  fit = "cover",
+  aspectClass = "aspect-[16/10]",
 }: LaptopMockupProps) {
   return (
     <div className={cn("relative", className)}>
       <div className="overflow-hidden rounded-t-[1.15rem] border border-white/12 bg-[#0c1118] p-[0.55rem] shadow-[0_28px_70px_rgba(0,0,0,0.42)] sm:p-2">
-        <div className="relative aspect-[16/10] overflow-hidden rounded-[0.55rem] bg-primary/30">
+        <div
+          className={cn(
+            "relative overflow-hidden rounded-[0.55rem] bg-[#0a0f16]",
+            aspectClass,
+          )}
+        >
           <Image
             src={src}
             alt={alt}
@@ -28,7 +37,9 @@ export function LaptopMockup({
             priority={priority}
             unoptimized
             sizes={sizes}
-            className="object-cover object-top"
+            className={
+              fit === "contain" ? "object-contain" : "object-cover object-top"
+            }
           />
         </div>
       </div>

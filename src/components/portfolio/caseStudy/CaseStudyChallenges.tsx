@@ -5,6 +5,7 @@ import { Target } from "lucide-react";
 
 import { LaptopMockup } from "@/components/portfolio/caseStudy/LaptopMockup";
 import {
+  caseStudySectionClass,
   fadeUp,
   getImageUrl,
   hasImage,
@@ -32,7 +33,7 @@ export function CaseStudyChallenges({
   if (items.length === 0) return null;
 
   const mockupUrl = hasImage(mockupImage)
-    ? getImageUrl(mockupImage, 1400, 900)
+    ? getImageUrl(mockupImage, 1800)
     : null;
   const mockupAlt = mockupImage?.alt || `${projectTitle} website`;
 
@@ -56,7 +57,7 @@ export function CaseStudyChallenges({
             <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
               Challenges
             </p>
-            <h2 className="font-display text-4xl leading-[1.12] tracking-tight text-white sm:text-5xl lg:text-[3.25rem]">
+            <h2 className={`text-4xl leading-[1.15] sm:text-5xl lg:text-[3.15rem] ${caseStudySectionClass}`}>
               Project <span className="text-accent">Challenges</span>
             </h2>
 
@@ -97,6 +98,8 @@ export function CaseStudyChallenges({
                   src={mockupUrl}
                   alt={mockupAlt}
                   sizes="(min-width: 1024px) 42vw, 90vw"
+                  fit="contain"
+                  aspectClass="aspect-[16/9]"
                 />
               </div>
             </motion.div>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 import {
+  caseStudySubheadClass,
   completeCaseStudyItems,
   getImageUrl,
 } from "@/components/portfolio/caseStudy/helpers";
@@ -32,7 +33,11 @@ export function CaseStudyApproach({ items }: CaseStudyApproachProps) {
   return (
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
       <Container>
-        <SectionHeading eyebrow="Process" title="Our Approach" />
+        <SectionHeading
+          eyebrow="Process"
+          title="Our Approach"
+          headingClassName="font-sans font-semibold"
+        />
 
         <ol className={`mt-12 grid gap-6 lg:gap-8 ${columnClass}`}>
           {steps.map((step, index) => {
@@ -69,7 +74,7 @@ export function CaseStudyApproach({ items }: CaseStudyApproachProps) {
                     <span className="mb-5 flex size-12 items-center justify-center rounded-full border border-primary bg-[#1A202C] text-sm font-medium tracking-wide text-accent">
                       {number}
                     </span>
-                    <h3 className="font-display text-xl tracking-tight text-white sm:text-2xl">
+                    <h3 className={`text-xl sm:text-2xl ${caseStudySubheadClass}`}>
                       {step.title}
                     </h3>
                     <p className="mt-3 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">

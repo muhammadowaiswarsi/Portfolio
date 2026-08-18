@@ -5,6 +5,7 @@ import { Quote, Star } from "lucide-react";
 import Image from "next/image";
 
 import {
+  caseStudySectionClass,
   fadeUp,
   getImageUrl,
   hasText,
@@ -67,7 +68,7 @@ export function CaseStudyTestimonial({
             </div>
           ) : null}
 
-          <blockquote className="mt-6 font-display text-2xl leading-snug tracking-tight text-white sm:text-3xl sm:leading-snug">
+          <blockquote className={`mt-6 text-2xl leading-snug sm:text-3xl sm:leading-snug ${caseStudySectionClass}`}>
             {testimonial.quote}
           </blockquote>
 

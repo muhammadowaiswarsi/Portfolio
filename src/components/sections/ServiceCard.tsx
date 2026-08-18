@@ -44,7 +44,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
         )}
       </div>
 
-      <h3 className="font-display text-xl tracking-tight text-white sm:text-2xl">
+      <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
         <Link href={href} className="transition-colors hover:text-accent">
           {service.title}
         </Link>

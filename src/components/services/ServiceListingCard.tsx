@@ -51,7 +51,7 @@ export function ServiceListingCard({
         )}
       </div>
 
-      <h2 className="font-display text-2xl tracking-tight text-white sm:text-[1.75rem]">
+      <h2 className="font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">
         {service.title}
       </h2>
 

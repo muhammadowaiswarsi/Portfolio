@@ -49,7 +49,7 @@ export function FinalCta() {
           </motion.p>
 
           <motion.h2
-            className="font-display text-4xl leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]"
+            className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.15rem]"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}

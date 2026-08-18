@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 import {
+  caseStudySubheadClass,
   completeCaseStudyItems,
   getImageUrl,
 } from "@/components/portfolio/caseStudy/helpers";
@@ -31,7 +32,11 @@ export function CaseStudyItemGrid({
   return (
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
       <Container>
-        <SectionHeading eyebrow={eyebrow} title={title} />
+        <SectionHeading
+          eyebrow={eyebrow}
+          title={title}
+          headingClassName="font-sans font-semibold"
+        />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:gap-8">
           {completeItems.map((item, index) => {
@@ -70,7 +75,7 @@ export function CaseStudyItemGrid({
                       {String(index + 1).padStart(2, "0")}
                     </p>
                   ) : null}
-                  <h3 className="font-display text-xl tracking-tight text-white sm:text-2xl">
+                  <h3 className={`text-xl sm:text-2xl ${caseStudySubheadClass}`}>
                     {item.title}
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">

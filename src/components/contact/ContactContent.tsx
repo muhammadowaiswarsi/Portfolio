@@ -74,7 +74,7 @@ export function ContactContent() {
               custom={0.08}
               variants={fadeUp}
             >
-              <h2 className="font-display text-2xl tracking-tight text-white sm:text-3xl">
+              <h2 className="font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
                 Contact Information
               </h2>
               <p className="mt-3 max-w-md text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">
@@ -113,7 +113,7 @@ export function ContactContent() {
               custom={0.14}
               variants={fadeUp}
             >
-              <h2 className="mb-6 font-display text-2xl tracking-tight text-white sm:text-3xl">
+              <h2 className="mb-6 font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
                 Tell us about your project
               </h2>
               <ContactForm />

@@ -31,7 +31,11 @@ export function CaseStudyGallery({
   return (
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
       <Container>
-        <SectionHeading eyebrow="Visuals" title="Project Gallery" />
+        <SectionHeading
+          eyebrow="Visuals"
+          title="Project Gallery"
+          headingClassName="font-sans font-semibold"
+        />
 
         <div
           className={
@@ -41,7 +45,7 @@ export function CaseStudyGallery({
           }
         >
           {gallery.map((image, index) => {
-            const imageUrl = getImageUrl(image, 1600, 1000);
+            const imageUrl = getImageUrl(image, 1800);
             if (!imageUrl) return null;
 
             return (
@@ -80,6 +84,8 @@ export function CaseStudyGallery({
                     alt={
                       image.alt || `${projectTitle} gallery image ${index + 1}`
                     }
+                    fit="contain"
+                    aspectClass="aspect-[16/9]"
                     sizes={
                       single
                         ? "(min-width: 1280px) 768px, 100vw"

@@ -15,7 +15,11 @@ export function CaseStudyMoreWork({ projects }: CaseStudyMoreWorkProps) {
   return (
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
       <Container>
-        <SectionHeading eyebrow="Portfolio" title="More Projects" />
+        <SectionHeading
+          eyebrow="Portfolio"
+          title="More Projects"
+          headingClassName="font-sans font-semibold"
+        />
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:gap-8">
           {projects.map((project, index) => (
             <FeaturedProjectCard

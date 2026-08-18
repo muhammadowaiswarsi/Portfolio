@@ -69,7 +69,7 @@ export function Process() {
                 <span className="relative z-10 mb-6 flex size-12 items-center justify-center rounded-full border border-primary bg-[#1A202C] text-sm font-medium tracking-wide text-accent transition-colors duration-300 group-hover:border-accent">
                   {step.number}
                 </span>
-                <h3 className="font-display text-xl tracking-tight text-white sm:text-2xl">
+                <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
                   {step.title}
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">

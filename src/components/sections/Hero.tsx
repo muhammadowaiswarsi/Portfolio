@@ -36,7 +36,7 @@ export function Hero() {
           </motion.p>
 
           <motion.h1
-            className="font-display text-4xl leading-[1.08] tracking-tight text-white uppercase sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem]"
+            className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-white uppercase sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem]"
             initial="hidden"
             animate="visible"
             custom={0.12}

@@ -71,7 +71,7 @@ export function WhyComputingYard() {
               <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
                 {value.number}
               </p>
-              <h3 className="mt-4 font-display text-xl tracking-tight text-white sm:text-2xl">
+              <h3 className="mt-4 font-display text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
                 {value.title}
               </h3>
               <p className="mt-3 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">

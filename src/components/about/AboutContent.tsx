@@ -151,7 +151,7 @@ export function AboutContent() {
                   <span className="mb-6 flex size-11 items-center justify-center rounded-xl border border-primary/50 bg-primary/20 text-accent">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
-                  <h3 className="font-display text-xl tracking-tight text-white sm:text-2xl">
+                  <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
                     {belief.title}
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">
@@ -213,7 +213,7 @@ export function AboutContent() {
         <Container className="relative">
           <div className="mx-auto max-w-3xl text-center">
             <motion.h2
-              className="font-display text-4xl leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3.5rem]"
+              className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.15rem]"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.4 }}

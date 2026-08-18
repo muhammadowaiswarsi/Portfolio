@@ -48,8 +48,8 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 shadow-[0_1px_0_0_var(--border)] backdrop-blur-md">
       <Container>
-        <div className="flex h-[5.5rem] items-center justify-between gap-4 lg:h-24">
-          <Logo />
+          <div className="flex h-[5.5rem] items-center justify-between gap-4 lg:h-24">
+            <Logo />
 
           <nav
             className="hidden items-center gap-1 lg:flex"

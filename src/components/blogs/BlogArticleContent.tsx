@@ -64,7 +64,7 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
             ) : null}
 
             <motion.h1
-              className="font-display text-4xl leading-[1.12] tracking-tight text-white sm:text-5xl lg:text-[3.25rem]"
+              className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.15rem]"
               initial="hidden"
               animate="visible"
               custom={0.1}
@@ -156,7 +156,7 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
             custom={0.08}
             variants={fadeUp}
           >
-            <h2 className="font-display text-3xl tracking-tight text-white sm:text-4xl lg:text-5xl">
+            <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl">
               Have a Project in Mind?
             </h2>
             <div className="mt-8">
