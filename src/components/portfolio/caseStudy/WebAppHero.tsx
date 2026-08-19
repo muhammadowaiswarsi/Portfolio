@@ -33,6 +33,8 @@ export function WebAppHero({ project }: WebAppHeroProps) {
   const heroUrl = hasImage(heroImage) ? getImageUrl(heroImage, 1800) : null;
   const heroAlt = heroImage?.alt || project.title;
   const backgroundUrl = getImageUrl(project.thumbnail, 1920) || heroUrl;
+  const landingHero =
+    project.slug === "traino-ai" || project.slug === "tms-system";
 
   return (
     <section className="relative isolate overflow-hidden border-b border-border">
@@ -147,8 +149,8 @@ export function WebAppHero({ project }: WebAppHeroProps) {
               src={heroUrl}
               alt={heroAlt}
               priority
-              fit="contain"
-              aspectClass="aspect-[3/2]"
+              fit={landingHero ? "cover" : "contain"}
+              aspectClass={landingHero ? "aspect-[16/10]" : "aspect-[3/2]"}
               sizes="(min-width: 1024px) 48vw, 100vw"
             />
           </motion.div>

@@ -68,6 +68,10 @@ const catalog: TechDefinition[] = [
   { display: "HTML", aliases: ["html", "html5"], icon: Code },
   { display: "CSS", aliases: ["css", "css3"], icon: Paintbrush },
   { display: "AWS", aliases: ["aws", "amazon web services"], icon: Cloud },
+  { display: "Vite", aliases: ["vite"], icon: Zap },
+  { display: "WordPress", aliases: ["wordpress", "wp"], icon: Globe },
+  { display: "Elementor", aliases: ["elementor"], icon: Paintbrush },
+  { display: "Cloudflare", aliases: ["cloudflare"], icon: Cloud },
 ];
 
 function compact(value: string) {

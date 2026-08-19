@@ -1,4 +1,4 @@
-import { Inter, Montserrat, Open_Sans, Roboto } from "next/font/google";
+import { Inter, Montserrat, Open_Sans, Roboto, Rubik } from "next/font/google";
 
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -28,11 +28,19 @@ const inter = Inter({
   display: "swap",
 });
 
+const rubik = Rubik({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-rubik",
+  display: "swap",
+});
+
 const catalog: Record<string, { className: string; cssVar: string }> = {
   "Open Sans": { className: openSans.variable, cssVar: "var(--font-open-sans)" },
   Roboto: { className: roboto.variable, cssVar: "var(--font-roboto)" },
   Montserrat: { className: montserrat.variable, cssVar: "var(--font-montserrat)" },
   Inter: { className: inter.variable, cssVar: "var(--font-inter)" },
+  Rubik: { className: rubik.variable, cssVar: "var(--font-rubik)" },
   Syne: { className: "", cssVar: "var(--font-syne)" },
 };
 

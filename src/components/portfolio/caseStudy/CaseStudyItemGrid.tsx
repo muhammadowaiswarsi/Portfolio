@@ -7,6 +7,7 @@ import {
   caseStudySubheadClass,
   completeCaseStudyItems,
   getImageUrl,
+  hasImage,
 } from "@/components/portfolio/caseStudy/helpers";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -28,8 +29,11 @@ export function CaseStudyItemGrid({
   imageFit = "cover",
 }: CaseStudyItemGridProps) {
   const completeItems = completeCaseStudyItems(items);
+  const itemsWithImages = completeItems.filter((item) => hasImage(item.image));
+  const visibleItems =
+    itemsWithImages.length > 0 ? itemsWithImages : completeItems;
 
-  if (completeItems.length === 0) return null;
+  if (visibleItems.length === 0) return null;
 
   return (
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
@@ -41,7 +45,7 @@ export function CaseStudyItemGrid({
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:gap-8">
-          {completeItems.map((item, index) => {
+          {visibleItems.map((item, index) => {
             const imageUrl =
               imageFit === "contain"
                 ? getImageUrl(item.image, 1200)

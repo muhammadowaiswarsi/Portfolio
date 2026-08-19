@@ -47,6 +47,7 @@ export const projectTypography = defineType({
           { title: "Roboto", value: "Roboto" },
           { title: "Montserrat", value: "Montserrat" },
           { title: "Inter", value: "Inter" },
+          { title: "Rubik", value: "Rubik" },
           { title: "Syne", value: "Syne" },
         ],
         layout: "radio",

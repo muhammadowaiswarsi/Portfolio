@@ -9,6 +9,7 @@ type PhoneMockupProps = {
   sizes?: string;
   className?: string;
   caption?: string;
+  fit?: "cover" | "contain";
 };
 
 export function PhoneMockup({
@@ -18,15 +19,16 @@ export function PhoneMockup({
   sizes = "(min-width: 1024px) 280px, 55vw",
   className,
   caption,
+  fit = "contain",
 }: PhoneMockupProps) {
   return (
     <figure className={cn("mx-auto w-full max-w-[17.5rem]", className)}>
-      <div className="relative rounded-[2.35rem] border border-white/14 bg-[#0b1017] p-[0.55rem] shadow-[0_28px_70px_rgba(0,0,0,0.45)]">
+      <div className="relative rounded-[2.15rem] border border-white/14 bg-[#0b1017] p-2 shadow-[0_28px_70px_rgba(0,0,0,0.45)]">
         <div
           aria-hidden="true"
-          className="absolute top-3 left-1/2 z-10 h-[1.15rem] w-[5.5rem] -translate-x-1/2 rounded-full bg-black/85"
+          className="mx-auto mb-1.5 h-1.5 w-16 rounded-full bg-black"
         />
-        <div className="relative aspect-[9/19] overflow-hidden rounded-[1.85rem] bg-[#e8eef4]">
+        <div className="relative aspect-[9/19.5] overflow-hidden rounded-[1.55rem] bg-[#e8eef4]">
           <Image
             src={src}
             alt={alt}
@@ -34,9 +36,15 @@ export function PhoneMockup({
             priority={priority}
             unoptimized
             sizes={sizes}
-            className="object-contain"
+            className={
+              fit === "contain" ? "object-contain" : "object-cover object-top"
+            }
           />
         </div>
+        <div
+          aria-hidden="true"
+          className="mx-auto mt-1.5 h-1 w-10 rounded-full bg-white/20"
+        />
       </div>
       {caption ? (
         <figcaption className="mt-4 text-center text-[11px] font-medium uppercase tracking-[0.18em] text-muted">

@@ -36,6 +36,13 @@ export function WebAppCaseStudy({
       <WebAppScreens images={project.gallery} projectTitle={project.title} />
       <CaseStudyChallenges
         challenges={project.challenges}
+        mockupImage={
+          project.slug === "traino-ai" || project.slug === "tms-system"
+            ? (project.gallery ?? []).find((image) =>
+                /create training|platform admin|load info/i.test(image.alt || ""),
+              ) || project.gallery?.[0]
+            : undefined
+        }
         projectTitle={project.title}
       />
       <CaseStudyApproach items={project.approach} />
@@ -43,6 +50,11 @@ export function WebAppCaseStudy({
         eyebrow="Highlights"
         title="Key Features"
         items={project.keyFeatures}
+        imageFit={
+          project.slug === "traino-ai" || project.slug === "tms-system"
+            ? "contain"
+            : "cover"
+        }
       />
       <CaseStudyItemGrid
         eyebrow="Outcomes"
