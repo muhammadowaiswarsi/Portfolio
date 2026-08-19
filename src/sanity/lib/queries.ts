@@ -8,6 +8,7 @@ export const featuredProjectsQuery = groq`
     shortDescription,
     technologies,
     category,
+    projectType,
     thumbnail {
       _type,
       alt,
@@ -29,6 +30,7 @@ export const allProjectsQuery = groq`
     shortDescription,
     technologies,
     category,
+    projectType,
     thumbnail {
       _type,
       alt,
@@ -52,6 +54,7 @@ export const projectBySlugQuery = groq`
     technologies,
     featured,
     category,
+    projectType,
     industry,
     businessType,
     servicesProvided,

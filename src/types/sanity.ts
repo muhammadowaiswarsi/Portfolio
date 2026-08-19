@@ -48,6 +48,7 @@ export type Project = {
   cardImage?: SanityImage;
   technologies: string[];
   featured?: boolean;
+  projectType?: "mobile-app" | "web-app";
   industry?: string;
   businessType?: string;
   servicesProvided?: string[];
@@ -70,6 +71,7 @@ export type FeaturedProject = {
   shortDescription: string;
   technologies: string[];
   category?: string | null;
+  projectType?: "mobile-app" | "web-app" | null;
   thumbnail: SanityImage | null;
   cardImage?: SanityImage | null;
 };

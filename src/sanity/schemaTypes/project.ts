@@ -94,6 +94,21 @@ export const project = defineType({
       initialValue: false,
     }),
     defineField({
+      name: "projectType",
+      title: "Project type",
+      type: "string",
+      group: "overview",
+      description: "Used by the portfolio listing filters: Mobile Apps or Web Apps.",
+      options: {
+        list: [
+          { title: "Mobile App", value: "mobile-app" },
+          { title: "Web App", value: "web-app" },
+        ],
+        layout: "radio",
+      },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "industry",
       title: "Industry",
       type: "string",

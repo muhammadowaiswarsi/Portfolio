@@ -10,45 +10,45 @@ type PortfolioGridProps = {
   projects: FeaturedProject[];
 };
 
-function getCategory(project: FeaturedProject) {
-  return typeof project.category === "string" && project.category.trim()
-    ? project.category.trim()
+const FILTERS = [
+  { id: "all", label: "All" },
+  { id: "mobile-app", label: "Mobile Apps" },
+  { id: "web-app", label: "Web Apps" },
+] as const;
+
+type FilterId = (typeof FILTERS)[number]["id"];
+
+function getProjectType(project: FeaturedProject) {
+  return project.projectType === "mobile-app" || project.projectType === "web-app"
+    ? project.projectType
     : null;
 }
 
 export function PortfolioGrid({ projects }: PortfolioGridProps) {
-  const categories = useMemo(() => {
-    const unique = new Set<string>();
+  const [activeFilter, setActiveFilter] = useState<FilterId>("all");
 
-    for (const project of projects) {
-      const category = getCategory(project);
-      if (category) unique.add(category);
-    }
+  const visibleProjects = useMemo(() => {
+    if (activeFilter === "all") return projects;
 
-    return Array.from(unique).sort((a, b) => a.localeCompare(b));
-  }, [projects]);
-
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const visibleProjects =
-    activeCategory === "All"
-      ? projects
-      : projects.filter((project) => getCategory(project) === activeCategory);
+    return projects.filter(
+      (project) => getProjectType(project) === activeFilter,
+    );
+  }, [activeFilter, projects]);
 
   return (
     <div>
       <div
         className="mb-12 flex flex-wrap justify-center gap-3"
-        aria-label="Filter projects by category"
+        aria-label="Filter projects by type"
       >
-        {["All", ...categories].map((category) => {
-          const active = activeCategory === category;
+        {FILTERS.map((filter) => {
+          const active = activeFilter === filter.id;
 
           return (
             <button
-              key={category}
+              key={filter.id}
               type="button"
-              onClick={() => setActiveCategory(category)}
+              onClick={() => setActiveFilter(filter.id)}
               className={cn(
                 "rounded-full px-5 py-2.5 text-sm font-medium tracking-wide transition-colors duration-200",
                 active
@@ -57,7 +57,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
               )}
               aria-pressed={active}
             >
-              {category}
+              {filter.label}
             </button>
           );
         })}
