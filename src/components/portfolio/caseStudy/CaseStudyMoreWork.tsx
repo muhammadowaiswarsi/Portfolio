@@ -18,7 +18,7 @@ export function CaseStudyMoreWork({ projects }: CaseStudyMoreWorkProps) {
         <SectionHeading
           eyebrow="Portfolio"
           title="More Projects"
-          headingClassName="font-sans font-semibold"
+          headingClassName="font-display font-semibold"
         />
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:gap-8">
           {projects.map((project, index) => (

@@ -50,7 +50,7 @@ const components: PortableTextComponents = {
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="mt-8 mb-3 text-lg font-semibold tracking-tight text-white">
+      <h4 className="mt-8 mb-3 font-display text-lg font-semibold tracking-[-0.02em] text-white">
         {children}
       </h4>
     ),

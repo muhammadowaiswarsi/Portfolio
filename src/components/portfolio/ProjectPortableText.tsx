@@ -8,12 +8,12 @@ const components: PortableTextComponents = {
       </p>
     ),
     h2: ({ children }) => (
-      <h2 className="mt-10 mb-4 font-sans text-2xl font-semibold tracking-[-0.02em] text-white first:mt-0 sm:text-3xl">
+      <h2 className="mt-10 mb-4 font-display text-2xl font-semibold tracking-[-0.02em] text-white first:mt-0 sm:text-3xl">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mt-8 mb-3 font-sans text-xl font-semibold tracking-[-0.02em] text-white first:mt-0 sm:text-2xl">
+      <h3 className="mt-8 mb-3 font-display text-xl font-semibold tracking-[-0.02em] text-white first:mt-0 sm:text-2xl">
         {children}
       </h3>
     ),

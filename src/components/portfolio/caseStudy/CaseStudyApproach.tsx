@@ -36,7 +36,7 @@ export function CaseStudyApproach({ items }: CaseStudyApproachProps) {
         <SectionHeading
           eyebrow="Process"
           title="Our Approach"
-          headingClassName="font-sans font-semibold"
+          headingClassName="font-display font-semibold"
         />
 
         <ol className={`mt-12 grid gap-6 lg:gap-8 ${columnClass}`}>

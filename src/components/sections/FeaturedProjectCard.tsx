@@ -60,7 +60,7 @@ export function FeaturedProjectCard({
           </p>
         ) : null}
 
-        <h3 className="text-[1.35rem] font-semibold tracking-tight text-white sm:text-2xl">
+        <h3 className="font-display text-[1.35rem] font-semibold tracking-[-0.02em] text-white sm:text-2xl">
           <Link href={href} className="transition-colors hover:text-accent">
             {project.title}
           </Link>
@@ -70,14 +70,16 @@ export function FeaturedProjectCard({
           {project.shortDescription}
         </p>
 
-        <Button
-          href={href}
-          variant="secondary"
-          size="sm"
-          className="mt-8 rounded-full border-white/25 px-6 hover:border-accent hover:bg-transparent hover:text-accent"
-        >
-          View Case Study
-        </Button>
+        <div className="mt-auto pt-8">
+          <Button
+            href={href}
+            variant="secondary"
+            size="sm"
+            className="rounded-full border-white/25 px-6 leading-none hover:border-accent hover:bg-transparent hover:text-accent"
+          >
+            View Case Study
+          </Button>
+        </div>
       </div>
     </motion.article>
   );

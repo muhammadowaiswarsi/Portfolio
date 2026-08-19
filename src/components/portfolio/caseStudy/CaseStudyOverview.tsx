@@ -5,10 +5,13 @@ import { motion } from "framer-motion";
 import { ProjectPortableText } from "@/components/portfolio/ProjectPortableText";
 import { caseStudySectionClass, fadeUp, hasItems, hasText } from "@/components/portfolio/caseStudy/helpers";
 import { Container } from "@/components/ui/Container";
+import { TechChipList } from "@/components/ui/TechChip";
 import type { CaseStudyProject } from "@/types/sanity";
 
 type CaseStudyOverviewProps = {
   project: CaseStudyProject;
+  eyebrow?: string;
+  heading?: string;
 };
 
 function MetaBlock({
@@ -45,7 +48,11 @@ function TagList({ items }: { items: string[] }) {
   );
 }
 
-export function CaseStudyOverview({ project }: CaseStudyOverviewProps) {
+export function CaseStudyOverview({
+  project,
+  eyebrow = "Overview",
+  heading = "About the Project",
+}: CaseStudyOverviewProps) {
   const hasDescription = Boolean(project.description?.length);
   const services = (project.servicesProvided ?? []).filter(hasText);
   const technologies = (project.technologies ?? []).filter(hasText);
@@ -87,10 +94,10 @@ export function CaseStudyOverview({ project }: CaseStudyOverviewProps) {
             variants={fadeUp}
           >
             <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
-              Overview
+              {eyebrow}
             </p>
             <h2 className={`text-3xl leading-[1.15] sm:text-4xl ${caseStudySectionClass}`}>
-              About the Project
+              {heading}
             </h2>
             <div className="mt-6">
               {hasDescription ? (
@@ -130,7 +137,7 @@ export function CaseStudyOverview({ project }: CaseStudyOverviewProps) {
                 {team ? <MetaBlock label="Team">{team}</MetaBlock> : null}
                 {hasItems(technologies) ? (
                   <MetaBlock label="Technologies">
-                    <TagList items={technologies} />
+                    <TechChipList items={technologies} />
                   </MetaBlock>
                 ) : null}
               </div>

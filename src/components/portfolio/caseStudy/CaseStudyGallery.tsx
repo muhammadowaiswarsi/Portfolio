@@ -34,7 +34,7 @@ export function CaseStudyGallery({
         <SectionHeading
           eyebrow="Visuals"
           title="Project Gallery"
-          headingClassName="font-sans font-semibold"
+          headingClassName="font-display font-semibold"
         />
 
         <div

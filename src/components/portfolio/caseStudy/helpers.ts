@@ -1,5 +1,5 @@
 import { urlFor } from "@/sanity/lib/image";
-import type { CaseStudyItem, SanityImage } from "@/types/sanity";
+import type { CaseStudyItem, CaseStudyProject, SanityImage } from "@/types/sanity";
 
 export const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -42,10 +42,61 @@ export function completeCaseStudyItems(items?: CaseStudyItem[] | null) {
 }
 
 export const caseStudyTitleClass =
-  "font-sans font-semibold tracking-[-0.035em] text-white";
+  "font-display font-semibold tracking-[-0.035em] text-white";
 
 export const caseStudySectionClass =
-  "font-sans font-semibold tracking-[-0.03em] text-white";
+  "font-display font-semibold tracking-[-0.03em] text-white";
 
 export const caseStudySubheadClass =
-  "font-sans font-semibold tracking-[-0.02em] text-white";
+  "font-display font-semibold tracking-[-0.02em] text-white";
+
+export function isMobileAppProject(project: CaseStudyProject) {
+  const haystack = [
+    project.businessType,
+    project.category,
+    ...(project.servicesProvided ?? []),
+  ]
+    .filter(hasText)
+    .join(" ")
+    .toLowerCase();
+
+  return /mobile app|ios|android|react native/.test(haystack);
+}
+
+export function isWebAppProject(project: CaseStudyProject) {
+  if (isMobileAppProject(project)) return false;
+
+  const type = (project.businessType ?? "").toLowerCase();
+  return /web application|web platform|web app/.test(type);
+}
+
+export function isWebScreen(image?: SanityImage | null) {
+  if (!hasImage(image) || !image) return false;
+  return /web dashboard|web analytics|web platform|website/i.test(
+    image.alt || "",
+  );
+}
+
+export function isPhoneScreen(image?: SanityImage | null) {
+  if (!hasImage(image) || !image) return false;
+  if (isWebScreen(image)) return false;
+  return /mobile app|app screen|^login\b|^sign up\b|^payment profile/i.test(
+    image.alt || "",
+  );
+}
+
+export function imagesMatching(
+  images: SanityImage[] | null | undefined,
+  pattern: RegExp,
+) {
+  return (images ?? []).filter(
+    (image) => hasImage(image) && pattern.test(image.alt || ""),
+  );
+}
+
+export function firstMatching(
+  images: SanityImage[] | null | undefined,
+  pattern: RegExp,
+) {
+  return imagesMatching(images, pattern)[0] ?? null;
+}

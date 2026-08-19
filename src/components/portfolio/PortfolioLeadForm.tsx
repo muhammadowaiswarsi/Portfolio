@@ -76,7 +76,7 @@ export function PortfolioLeadForm() {
       noValidate
       className="rounded-[1.5rem] border border-border bg-surface p-6 shadow-[0_24px_80px_color-mix(in_srgb,#2C5270_18%,transparent)] sm:p-8"
     >
-      <h2 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+      <h2 className="font-display text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
         Get In Touch With Us!
       </h2>
 

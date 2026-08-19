@@ -17,6 +17,7 @@ type CaseStudyItemGridProps = {
   title: string;
   items: CaseStudyItem[] | null | undefined;
   numbered?: boolean;
+  imageFit?: "cover" | "contain";
 };
 
 export function CaseStudyItemGrid({
@@ -24,6 +25,7 @@ export function CaseStudyItemGrid({
   title,
   items,
   numbered = false,
+  imageFit = "cover",
 }: CaseStudyItemGridProps) {
   const completeItems = completeCaseStudyItems(items);
 
@@ -35,12 +37,15 @@ export function CaseStudyItemGrid({
         <SectionHeading
           eyebrow={eyebrow}
           title={title}
-          headingClassName="font-sans font-semibold"
+          headingClassName="font-display font-semibold"
         />
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:gap-8">
           {completeItems.map((item, index) => {
-            const imageUrl = getImageUrl(item.image, 1200, 750);
+            const imageUrl =
+              imageFit === "contain"
+                ? getImageUrl(item.image, 1200)
+                : getImageUrl(item.image, 1200, 750);
             const imageAlt = item.image?.alt || item.title || title;
 
             return (
@@ -57,14 +62,18 @@ export function CaseStudyItemGrid({
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface"
               >
                 {imageUrl ? (
-                  <div className="relative aspect-[16/10] overflow-hidden bg-primary/25">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-[#0a0f16]">
                     <Image
                       src={imageUrl}
                       alt={imageAlt}
                       fill
                       unoptimized
                       sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw"
-                      className="object-cover"
+                      className={
+                        imageFit === "contain"
+                          ? "object-contain"
+                          : "object-cover"
+                      }
                     />
                   </div>
                 ) : null}
