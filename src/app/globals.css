@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
-:root {
+:root,
+html[data-color-mode="dark"] {
   color-scheme: dark;
   --background: #1a202c;
   --foreground: #ffffff;
@@ -13,6 +14,22 @@
   --muted: color-mix(in srgb, white 68%, var(--background));
   --surface: color-mix(in srgb, white 6%, var(--background));
   --border: color-mix(in srgb, white 12%, transparent);
+  --ring: var(--accent);
+}
+
+html[data-color-mode="light"] {
+  color-scheme: light;
+  --background: #ffffff;
+  --foreground: #1a202c;
+  --primary: #2c5270;
+  --primary-hover: color-mix(in srgb, var(--primary) 88%, black);
+  --primary-foreground: #ffffff;
+  --accent: #f57b00;
+  --accent-hover: color-mix(in srgb, var(--accent) 86%, black);
+  --accent-foreground: #1a202c;
+  --muted: color-mix(in srgb, var(--foreground) 58%, white);
+  --surface: #f4f7fa;
+  --border: color-mix(in srgb, var(--primary) 16%, white);
   --ring: var(--accent);
 }
 
@@ -44,6 +61,10 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   min-height: 100%;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
 }
 
 h1,
@@ -64,4 +85,34 @@ h6 {
   html {
     scroll-behavior: auto;
   }
+}
+
+.project-theme {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-project), var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.project-theme h1,
+.project-theme h2,
+.project-theme h3,
+.project-theme h4,
+.project-theme h5,
+.project-theme h6 {
+  font-family: var(--font-project), var(--font-syne), ui-sans-serif, sans-serif;
+  font-weight: var(--project-font-weight, 600);
+}
+
+html[data-color-mode="light"] .logo-dark,
+html[data-color-mode="light"] .theme-toggle-sun {
+  display: none;
+}
+
+html[data-color-mode="light"] .logo-light,
+html[data-color-mode="light"] .theme-toggle-moon {
+  display: block;
 }

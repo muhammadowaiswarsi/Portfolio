@@ -26,7 +26,7 @@ function MetaBlock({
       <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
         {label}
       </p>
-      <div className="mt-2 text-sm leading-6 text-white/90 sm:text-[15px] sm:leading-7">
+      <div className="mt-2 text-sm leading-6 text-foreground/90 sm:text-[15px] sm:leading-7">
         {children}
       </div>
     </div>
@@ -39,7 +39,7 @@ function TagList({ items }: { items: string[] }) {
       {items.map((item) => (
         <li
           key={item}
-          className="rounded-md border border-primary/45 bg-primary/20 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide text-white/80"
+          className="rounded-md border border-primary/45 bg-primary/20 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide text-foreground/80"
         >
           {item}
         </li>

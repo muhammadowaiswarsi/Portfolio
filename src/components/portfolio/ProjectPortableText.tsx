@@ -8,17 +8,17 @@ const components: PortableTextComponents = {
       </p>
     ),
     h2: ({ children }) => (
-      <h2 className="mt-10 mb-4 font-display text-2xl font-semibold tracking-[-0.02em] text-white first:mt-0 sm:text-3xl">
+      <h2 className="mt-10 mb-4 font-display text-2xl font-semibold tracking-[-0.02em] text-foreground first:mt-0 sm:text-3xl">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mt-8 mb-3 font-display text-xl font-semibold tracking-[-0.02em] text-white first:mt-0 sm:text-2xl">
+      <h3 className="mt-8 mb-3 font-display text-xl font-semibold tracking-[-0.02em] text-foreground first:mt-0 sm:text-2xl">
         {children}
       </h3>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="my-6 border-l-2 border-accent pl-5 text-base leading-7 text-white/90 sm:text-lg sm:leading-8">
+      <blockquote className="my-6 border-l-2 border-accent pl-5 text-base leading-7 text-foreground/90 sm:text-lg sm:leading-8">
         {children}
       </blockquote>
     ),
@@ -37,7 +37,7 @@ const components: PortableTextComponents = {
   },
   marks: {
     strong: ({ children }) => (
-      <strong className="font-semibold text-white">{children}</strong>
+      <strong className="font-semibold text-foreground">{children}</strong>
     ),
     em: ({ children }) => <em>{children}</em>,
     link: ({ children, value }) => {

@@ -6,7 +6,7 @@ const variants = {
   primary:
     "bg-accent text-accent-foreground hover:bg-accent-hover",
   secondary:
-    "border border-white/25 bg-transparent text-white hover:border-white hover:bg-white hover:text-background",
+    "border border-border bg-transparent text-foreground hover:border-foreground hover:bg-foreground hover:text-background",
   ghost: "text-muted hover:bg-surface hover:text-primary",
 } as const;
 

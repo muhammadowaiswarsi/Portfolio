@@ -64,7 +64,7 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
             ) : null}
 
             <motion.h1
-              className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.15rem]"
+              className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-foreground sm:text-5xl lg:text-[3.15rem]"
               initial="hidden"
               animate="visible"
               custom={0.1}
@@ -84,7 +84,7 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
             </motion.p>
 
             <motion.div
-              className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-white/75"
+              className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-foreground/75"
               initial="hidden"
               animate="visible"
               custom={0.22}
@@ -145,7 +145,7 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
       <section className="relative overflow-hidden border-t border-border py-20 sm:py-24">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,#2C5270_28%,transparent),transparent_62%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--primary)_28%,transparent),transparent_62%)]"
         />
         <Container className="relative">
           <motion.div
@@ -156,7 +156,7 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
             custom={0.08}
             variants={fadeUp}
           >
-            <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] text-white sm:text-4xl lg:text-5xl">
+            <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl lg:text-5xl">
               Have a Project in Mind?
             </h2>
             <div className="mt-8">

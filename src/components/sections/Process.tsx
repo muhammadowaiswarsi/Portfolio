@@ -66,10 +66,10 @@ export function Process() {
               className="relative"
             >
               <article className="group h-full rounded-2xl border border-border bg-surface p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-primary sm:p-7">
-                <span className="relative z-10 mb-6 flex size-12 items-center justify-center rounded-full border border-primary bg-[#1A202C] text-sm font-medium tracking-wide text-accent transition-colors duration-300 group-hover:border-accent">
+                <span className="relative z-10 mb-6 flex size-12 items-center justify-center rounded-full border border-primary bg-background text-sm font-medium tracking-wide text-accent transition-colors duration-300 group-hover:border-accent">
                   {step.number}
                 </span>
-                <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
+                <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
                   {step.title}
                 </h3>
                 <p className="mt-3 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">

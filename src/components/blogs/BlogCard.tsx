@@ -76,7 +76,7 @@ export function BlogCard({ post, index, featured = false }: BlogCardProps) {
               priority={featured}
             />
           ) : null}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#1A202C] via-[#1A202C]/15 to-transparent opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/15 to-transparent opacity-80" />
           <span className="absolute left-0 top-0 h-[2px] w-full origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100" />
         </div>
       </Link>
@@ -91,7 +91,7 @@ export function BlogCard({ post, index, featured = false }: BlogCardProps) {
         <div className="space-y-3">
           <h2
             className={cn(
-              "font-display font-semibold tracking-[-0.02em] text-white",
+              "font-display font-semibold tracking-[-0.02em] text-foreground",
               featured ? "text-2xl sm:text-3xl lg:text-4xl" : "text-xl sm:text-2xl",
             )}
           >
@@ -104,7 +104,7 @@ export function BlogCard({ post, index, featured = false }: BlogCardProps) {
           </p>
         </div>
 
-        <p className="mt-auto text-sm text-white/75">{post.author}</p>
+        <p className="mt-auto text-sm text-foreground/75">{post.author}</p>
 
         <Link
           href={href}

@@ -62,7 +62,7 @@ function validate(values: FormState): FormErrors {
 }
 
 const fieldClass =
-  "w-full rounded-md border border-border bg-[#1A202C] px-3.5 py-2.5 text-sm text-white outline-none transition-colors placeholder:text-white/35 focus:border-accent focus:ring-2 focus:ring-accent/30";
+  "w-full rounded-md border border-border bg-surface px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-foreground/35 focus:border-accent focus:ring-2 focus:ring-accent/30";
 
 export function ContactForm() {
   const [values, setValues] = useState<FormState>(initialState);
@@ -223,7 +223,7 @@ function Field({
 }) {
   return (
     <div className={className}>
-      <label htmlFor={id} className="mb-2 block text-sm font-medium text-white">
+      <label htmlFor={id} className="mb-2 block text-sm font-medium text-foreground">
         {label}
         {optional ? (
           <span className="ml-2 text-xs font-normal text-muted">Optional</span>

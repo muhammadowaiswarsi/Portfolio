@@ -38,7 +38,7 @@ export function FeaturedProjectCard({
       transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
       className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-surface"
     >
-      <Link href={href} className="relative block overflow-hidden bg-[#2C5270]">
+      <Link href={href} className="relative block overflow-hidden bg-primary">
         <div className="relative aspect-[5/4]">
           {imageUrl ? (
             <Image
@@ -60,7 +60,7 @@ export function FeaturedProjectCard({
           </p>
         ) : null}
 
-        <h3 className="font-display text-[1.35rem] font-semibold tracking-[-0.02em] text-white sm:text-2xl">
+        <h3 className="font-display text-[1.35rem] font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
           <Link href={href} className="transition-colors hover:text-accent">
             {project.title}
           </Link>
@@ -75,7 +75,7 @@ export function FeaturedProjectCard({
             href={href}
             variant="secondary"
             size="sm"
-            className="rounded-full border-white/25 px-6 leading-none hover:border-accent hover:bg-transparent hover:text-accent"
+            className="rounded-full border-border px-6 leading-none hover:border-accent hover:bg-transparent hover:text-accent"
           >
             View Case Study
           </Button>

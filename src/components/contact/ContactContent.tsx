@@ -74,7 +74,7 @@ export function ContactContent() {
               custom={0.08}
               variants={fadeUp}
             >
-              <h2 className="font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
+              <h2 className="font-display text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl">
                 Contact Information
               </h2>
               <p className="mt-3 max-w-md text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">
@@ -98,7 +98,7 @@ export function ContactContent() {
                         <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-accent">
                           {item.label}
                         </p>
-                        <p className="mt-1 text-sm text-white/80">{item.value}</p>
+                        <p className="mt-1 text-sm text-foreground/80">{item.value}</p>
                       </div>
                     </li>
                   );
@@ -113,7 +113,7 @@ export function ContactContent() {
               custom={0.14}
               variants={fadeUp}
             >
-              <h2 className="mb-6 font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
+              <h2 className="mb-6 font-display text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl">
                 Tell us about your project
               </h2>
               <ContactForm />

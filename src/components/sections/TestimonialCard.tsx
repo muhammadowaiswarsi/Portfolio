@@ -60,12 +60,12 @@ export function TestimonialCard({
             className="size-12 rounded-full object-cover"
           />
         ) : (
-          <span className="flex size-12 items-center justify-center rounded-full border border-primary/50 bg-primary/25 text-sm font-medium text-white">
+          <span className="flex size-12 items-center justify-center rounded-full border border-primary/50 bg-primary/25 text-sm font-medium text-foreground">
             {testimonial.name.charAt(0)}
           </span>
         )}
         <div>
-          <p className="text-sm font-medium text-white">{testimonial.name}</p>
+          <p className="text-sm font-medium text-foreground">{testimonial.name}</p>
           <p className="text-xs leading-5 text-muted">
             {testimonial.role}, {testimonial.company}
           </p>

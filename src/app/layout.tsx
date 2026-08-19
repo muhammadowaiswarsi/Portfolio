@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Syne } from "next/font/google";
+import Script from "next/script";
 
 import "./globals.css";
 
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
   description:
     "Computing Yard is a premium software development agency building refined digital products.",
   icons: {
-    icon: "/computing-yard-logo.png",
+    icon: "/computing-yard-logo-dark.png",
   },
 };
 
@@ -35,9 +36,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-color-mode="dark"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col font-sans">{children}</body>
+      <body className="flex min-h-full flex-col font-sans">
+        <Script id="cy-color-mode" strategy="beforeInteractive">
+          {`try{var m=localStorage.getItem('cy-color-mode');if(m==='light'||m==='dark'){document.documentElement.setAttribute('data-color-mode',m);document.documentElement.style.colorScheme=m}}catch(e){}`}
+        </Script>
+        {children}
+      </body>
     </html>
   );
 }

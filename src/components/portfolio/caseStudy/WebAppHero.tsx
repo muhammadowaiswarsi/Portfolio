@@ -51,11 +51,11 @@ export function WebAppHero({ project }: WebAppHeroProps) {
 
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-[#1A202C] via-[#1A202C]/92 to-[#1A202C]"
+        className="absolute inset-0 bg-gradient-to-b from-background via-background/92 to-background"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,#2C5270_36%,transparent),transparent_58%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--primary)_36%,transparent),transparent_58%)]"
       />
 
       <Container className="relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-14 lg:py-24">
@@ -68,7 +68,7 @@ export function WebAppHero({ project }: WebAppHeroProps) {
           >
             <Link
               href="/portfolio"
-              className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/60 transition-colors hover:text-accent"
+              className="text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/60 transition-colors hover:text-accent"
             >
               All Projects
             </Link>
@@ -84,7 +84,7 @@ export function WebAppHero({ project }: WebAppHeroProps) {
             <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
               {eyebrow}
             </p>
-            <span className="rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-white/80">
+            <span className="rounded-full border border-foreground/20 bg-foreground/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-foreground/80">
               Web App
             </span>
           </motion.div>
@@ -101,7 +101,7 @@ export function WebAppHero({ project }: WebAppHeroProps) {
 
           {hasText(project.shortDescription) ? (
             <motion.p
-              className="mt-6 max-w-lg text-base leading-7 text-white/78 sm:text-lg sm:leading-8"
+              className="mt-6 max-w-lg text-base leading-7 text-foreground/78 sm:text-lg sm:leading-8"
               initial="hidden"
               animate="visible"
               custom={0.22}

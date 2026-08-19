@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import { Logo } from "@/components/layout/Logo";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
@@ -48,8 +49,8 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 shadow-[0_1px_0_0_var(--border)] backdrop-blur-md">
       <Container>
-          <div className="flex h-[5.5rem] items-center justify-between gap-4 lg:h-24">
-            <Logo />
+        <div className="flex h-[5.5rem] items-center justify-between gap-4 lg:h-24">
+          <Logo />
 
           <nav
             className="hidden items-center gap-1 lg:flex"
@@ -65,8 +66,8 @@ export function Navbar() {
                   className={cn(
                     "relative px-3 py-2 text-sm transition-colors duration-200",
                     active
-                      ? "text-white"
-                      : "text-white/70 hover:text-accent",
+                      ? "text-foreground"
+                      : "text-foreground/70 hover:text-accent",
                   )}
                 >
                   {item.label}
@@ -82,26 +83,30 @@ export function Navbar() {
             })}
           </nav>
 
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-3 lg:flex">
+            <ThemeToggle />
             <Button href="/contact" size="sm">
               Let&apos;s Talk
               <ArrowUpRight className="size-3.5" aria-hidden="true" />
             </Button>
           </div>
 
-          <button
-            type="button"
-            className="inline-flex size-10 items-center justify-center rounded-md text-white transition-colors hover:bg-surface hover:text-accent lg:hidden"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((current) => !current)}
-          >
-            {open ? (
-              <X className="size-5" aria-hidden="true" />
-            ) : (
-              <Menu className="size-5" aria-hidden="true" />
-            )}
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle />
+            <button
+              type="button"
+              className="inline-flex size-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-surface hover:text-accent"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((current) => !current)}
+            >
+              {open ? (
+                <X className="size-5" aria-hidden="true" />
+              ) : (
+                <Menu className="size-5" aria-hidden="true" />
+              )}
+            </button>
+          </div>
         </div>
       </Container>
 
@@ -130,8 +135,8 @@ export function Navbar() {
                       className={cn(
                         "block rounded-md px-3 py-3 text-base",
                         active
-                          ? "bg-surface text-white"
-                          : "text-white/80 hover:bg-surface hover:text-accent",
+                          ? "bg-surface text-foreground"
+                          : "text-foreground/80 hover:bg-surface hover:text-accent",
                       )}
                     >
                       {item.label}

@@ -149,15 +149,15 @@ export function MobileAppHero({ project }: MobileAppHeroProps) {
 
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-b from-[#1A202C] via-[#1A202C]/92 to-[#1A202C]"
+        className="absolute inset-0 bg-gradient-to-b from-background via-background/92 to-background"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_srgb,#2C5270_34%,transparent),transparent_55%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,color-mix(in_srgb,var(--primary)_34%,transparent),transparent_55%)]"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,color-mix(in_srgb,#F57B00_14%,transparent),transparent_42%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,color-mix(in_srgb,var(--accent)_14%,transparent),transparent_42%)]"
       />
 
       <Container className="relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-10 lg:py-24 xl:py-28">
@@ -170,7 +170,7 @@ export function MobileAppHero({ project }: MobileAppHeroProps) {
           >
             <Link
               href="/portfolio"
-              className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/60 transition-colors hover:text-accent"
+              className="text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/60 transition-colors hover:text-accent"
             >
               All Projects
             </Link>
@@ -186,7 +186,7 @@ export function MobileAppHero({ project }: MobileAppHeroProps) {
             <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
               {eyebrow}
             </p>
-            <span className="rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-white/80">
+            <span className="rounded-full border border-foreground/20 bg-foreground/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-foreground/80">
               Mobile App
             </span>
           </motion.div>
@@ -203,7 +203,7 @@ export function MobileAppHero({ project }: MobileAppHeroProps) {
 
           {hasText(project.shortDescription) ? (
             <motion.p
-              className="mt-6 max-w-lg text-base leading-7 text-white/78 sm:text-lg sm:leading-8"
+              className="mt-6 max-w-lg text-base leading-7 text-foreground/78 sm:text-lg sm:leading-8"
               initial="hidden"
               animate="visible"
               custom={0.22}

@@ -62,6 +62,26 @@ export type Project = {
   liveUrl?: string;
   projectDuration?: string;
   team?: string;
+  lightTheme?: ProjectColorTheme;
+  darkTheme?: ProjectColorTheme;
+  typography?: ProjectTypography;
+};
+
+export type ProjectColorTheme = {
+  _type?: "projectColorTheme";
+  primary?: string | null;
+  secondary?: string | null;
+  background?: string | null;
+  text?: string | null;
+  mutedText?: string | null;
+  border?: string | null;
+  surface?: string | null;
+};
+
+export type ProjectTypography = {
+  _type?: "projectTypography";
+  fontFamily?: string | null;
+  fontWeight?: string | null;
 };
 
 export type FeaturedProject = {
@@ -92,6 +112,9 @@ export type CaseStudyProject = FeaturedProject & {
   liveUrl?: string | null;
   projectDuration?: string | null;
   team?: string | null;
+  lightTheme?: ProjectColorTheme | null;
+  darkTheme?: ProjectColorTheme | null;
+  typography?: ProjectTypography | null;
 };
 
 export type Service = {

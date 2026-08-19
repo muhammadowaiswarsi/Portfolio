@@ -105,7 +105,7 @@ export function MobileAppScreens({
             <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
               Web Platform
             </p>
-            <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-3xl">
+            <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-3xl">
               Dashboard, analytics and home
             </h3>
 

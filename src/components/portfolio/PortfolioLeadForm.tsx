@@ -22,7 +22,7 @@ const initialState: FormState = {
 };
 
 const underlineField =
-  "w-full border-0 border-b border-white/20 bg-transparent px-0 py-3 text-sm text-white outline-none transition-colors placeholder:text-white/40 focus:border-accent";
+  "w-full border-0 border-b border-border bg-transparent px-0 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-foreground/40 focus:border-accent";
 
 function validate(values: FormState): FormErrors {
   const errors: FormErrors = {};
@@ -74,9 +74,9 @@ export function PortfolioLeadForm() {
       id="get-in-touch"
       onSubmit={onSubmit}
       noValidate
-      className="rounded-[1.5rem] border border-border bg-surface p-6 shadow-[0_24px_80px_color-mix(in_srgb,#2C5270_18%,transparent)] sm:p-8"
+      className="rounded-[1.5rem] border border-border bg-surface p-6 shadow-[0_24px_80px_color-mix(in_srgb,var(--primary)_18%,transparent)] sm:p-8"
     >
-      <h2 className="font-display text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
+      <h2 className="font-display text-xl font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
         Get In Touch With Us!
       </h2>
 

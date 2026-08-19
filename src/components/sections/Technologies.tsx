@@ -77,7 +77,7 @@ export function Technologies() {
                   <span className="flex size-9 items-center justify-center rounded-lg border border-primary/50 bg-primary/20 text-accent">
                     <GroupIcon className="size-4" aria-hidden="true" />
                   </span>
-                  <h3 className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-white">
+                  <h3 className="font-display text-sm font-semibold uppercase tracking-[0.18em] text-foreground">
                     {group.title}
                   </h3>
                 </div>

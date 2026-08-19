@@ -39,7 +39,7 @@ export function ProductFrame({
         </div>
       </div>
       {caption ? (
-        <figcaption className="mt-4 text-[11px] font-medium uppercase tracking-[0.18em] text-white/70">
+        <figcaption className="mt-4 text-[11px] font-medium uppercase tracking-[0.18em] text-muted">
           {caption}
         </figcaption>
       ) : null}

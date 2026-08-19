@@ -7,12 +7,15 @@ import {
   projectClientTestimonial,
 } from "./caseStudy";
 import { project } from "./project";
+import { projectColorTheme, projectTypography } from "./projectTheme";
 import { service } from "./service";
 import { testimonial } from "./testimonial";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
     project,
+    projectColorTheme,
+    projectTypography,
     caseStudyItem,
     caseStudyChallenge,
     projectClientTestimonial,

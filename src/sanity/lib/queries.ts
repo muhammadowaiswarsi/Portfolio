@@ -118,6 +118,28 @@ export const projectBySlugQuery = groq`
       company,
       rating,
       avatar { _type, alt, asset }
+    },
+    lightTheme {
+      primary,
+      secondary,
+      background,
+      text,
+      mutedText,
+      border,
+      surface
+    },
+    darkTheme {
+      primary,
+      secondary,
+      background,
+      text,
+      mutedText,
+      border,
+      surface
+    },
+    typography {
+      fontFamily,
+      fontWeight
     }
   }
 `;

@@ -31,7 +31,7 @@ export function WhyComputingYard() {
     <section className="relative overflow-hidden border-t border-border bg-background py-20 sm:py-24 lg:py-28">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,#2C5270_22%,transparent),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--primary)_22%,transparent),transparent_55%)]"
       />
 
       <Container className="relative">
@@ -71,7 +71,7 @@ export function WhyComputingYard() {
               <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
                 {value.number}
               </p>
-              <h3 className="mt-4 font-display text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
+              <h3 className="mt-4 font-display text-xl font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
                 {value.title}
               </h3>
               <p className="mt-3 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">
@@ -87,16 +87,16 @@ export function WhyComputingYard() {
 
 function WhyVisual() {
   return (
-    <div className="absolute inset-0 bg-[#1A202C]">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_srgb,#2C5270_28%,transparent),transparent_62%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,#2C5270_18%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,#2C5270_18%,transparent)_1px,transparent_1px)] bg-[size:44px_44px] opacity-70" />
+    <div className="absolute inset-0 bg-background">
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--primary)_28%,transparent),transparent_62%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--primary)_18%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--primary)_18%,transparent)_1px,transparent_1px)] bg-[size:44px_44px] opacity-70" />
 
       <div className="absolute left-8 top-8 h-24 w-24 rounded-2xl border border-primary/60 bg-primary/25" />
       <div className="absolute bottom-10 right-10 h-36 w-36 rounded-full border border-primary/40" />
       <div className="absolute right-16 top-16 size-3 rounded-full bg-accent" />
       <div className="absolute bottom-16 left-16 h-1.5 w-16 rounded-full bg-accent" />
 
-      <p className="absolute bottom-8 left-8 text-[11px] font-medium uppercase tracking-[0.22em] text-white/70">
+      <p className="absolute bottom-8 left-8 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/70">
         Computing Yard
       </p>
     </div>

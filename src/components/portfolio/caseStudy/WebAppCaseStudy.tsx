@@ -1,4 +1,5 @@
 import { CaseStudyApproach } from "@/components/portfolio/caseStudy/CaseStudyApproach";
+import { CaseStudyBrand } from "@/components/portfolio/caseStudy/CaseStudyBrand";
 import { CaseStudyChallenges } from "@/components/portfolio/caseStudy/CaseStudyChallenges";
 import { CaseStudyCta } from "@/components/portfolio/caseStudy/CaseStudyCta";
 import { CaseStudyItemGrid } from "@/components/portfolio/caseStudy/CaseStudyItemGrid";
@@ -26,6 +27,7 @@ export function WebAppCaseStudy({
         eyebrow="The Platform"
         heading="About the Web App"
       />
+      <CaseStudyBrand project={project} />
       <CaseStudyItemGrid
         eyebrow="Objectives"
         title="Project Goals"

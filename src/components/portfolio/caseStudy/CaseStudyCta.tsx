@@ -12,7 +12,7 @@ export function CaseStudyCta() {
     <section className="relative overflow-hidden border-t border-border py-20 sm:py-24 lg:py-28">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,#2C5270_28%,transparent),transparent_62%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--primary)_28%,transparent),transparent_62%)]"
       />
       <Container className="relative">
         <motion.div

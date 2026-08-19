@@ -71,7 +71,7 @@ export function CaseStudyChallenges({
                     <Target className="size-3.5" aria-hidden="true" />
                   </span>
                   <p className="min-w-0 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">
-                    <span className="font-semibold text-white">
+                    <span className="font-semibold text-foreground">
                       {item.title}:
                     </span>{" "}
                     {item.description}

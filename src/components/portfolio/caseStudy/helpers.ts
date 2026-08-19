@@ -42,13 +42,13 @@ export function completeCaseStudyItems(items?: CaseStudyItem[] | null) {
 }
 
 export const caseStudyTitleClass =
-  "font-display font-semibold tracking-[-0.035em] text-white";
+  "font-display font-semibold tracking-[-0.035em] text-foreground";
 
 export const caseStudySectionClass =
-  "font-display font-semibold tracking-[-0.03em] text-white";
+  "font-display font-semibold tracking-[-0.03em] text-foreground";
 
 export const caseStudySubheadClass =
-  "font-display font-semibold tracking-[-0.02em] text-white";
+  "font-display font-semibold tracking-[-0.02em] text-foreground";
 
 export function isMobileAppProject(project: CaseStudyProject) {
   const haystack = [

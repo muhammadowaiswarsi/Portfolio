@@ -62,7 +62,7 @@ export function CaseStudyItemGrid({
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface"
               >
                 {imageUrl ? (
-                  <div className="relative aspect-[16/10] overflow-hidden bg-[#0a0f16]">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-surface">
                     <Image
                       src={imageUrl}
                       alt={imageAlt}

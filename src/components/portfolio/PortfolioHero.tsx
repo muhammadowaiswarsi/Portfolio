@@ -20,17 +20,17 @@ export function PortfolioHero() {
     <section className="relative overflow-hidden bg-background">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,#2C5270_28%,transparent),transparent_55%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--primary)_28%,transparent),transparent_55%)]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,#2C5270_10%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,#2C5270_10%,transparent)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_22%,transparent_78%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--primary)_10%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--primary)_10%,transparent)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_22%,transparent_78%)]"
       />
 
       <Container className="relative grid items-center gap-12 py-16 sm:py-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 lg:py-24">
         <div className="max-w-xl">
           <motion.h1
-            className="font-display text-5xl font-semibold leading-[1.12] tracking-[-0.035em] text-white sm:text-6xl lg:text-[4.25rem]"
+            className="font-display text-5xl font-semibold leading-[1.12] tracking-[-0.035em] text-foreground sm:text-6xl lg:text-[4.25rem]"
             initial="hidden"
             animate="visible"
             custom={0.08}

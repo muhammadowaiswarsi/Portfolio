@@ -1,4 +1,5 @@
 import { CaseStudyApproach } from "@/components/portfolio/caseStudy/CaseStudyApproach";
+import { CaseStudyBrand } from "@/components/portfolio/caseStudy/CaseStudyBrand";
 import { CaseStudyChallenges } from "@/components/portfolio/caseStudy/CaseStudyChallenges";
 import { CaseStudyCta } from "@/components/portfolio/caseStudy/CaseStudyCta";
 import { CaseStudyGallery } from "@/components/portfolio/caseStudy/CaseStudyGallery";
@@ -8,6 +9,7 @@ import { CaseStudyMoreWork } from "@/components/portfolio/caseStudy/CaseStudyMor
 import { CaseStudyOverview } from "@/components/portfolio/caseStudy/CaseStudyOverview";
 import { CaseStudyTestimonial } from "@/components/portfolio/caseStudy/CaseStudyTestimonial";
 import { MobileAppCaseStudy } from "@/components/portfolio/caseStudy/MobileAppCaseStudy";
+import { ProjectThemeShell } from "@/components/portfolio/caseStudy/ProjectThemeShell";
 import { WebAppCaseStudy } from "@/components/portfolio/caseStudy/WebAppCaseStudy";
 import {
   isMobileAppProject,
@@ -26,24 +28,30 @@ export function ProjectCaseStudy({
 }: ProjectCaseStudyProps) {
   if (isMobileAppProject(project)) {
     return (
-      <MobileAppCaseStudy
-        project={project}
-        relatedProjects={relatedProjects}
-      />
+      <ProjectThemeShell project={project}>
+        <MobileAppCaseStudy
+          project={project}
+          relatedProjects={relatedProjects}
+        />
+      </ProjectThemeShell>
     );
   }
 
   if (isWebAppProject(project)) {
     return (
-      <WebAppCaseStudy project={project} relatedProjects={relatedProjects} />
+      <ProjectThemeShell project={project}>
+        <WebAppCaseStudy project={project} relatedProjects={relatedProjects} />
+      </ProjectThemeShell>
     );
   }
 
   return (
-    <article className="overflow-x-hidden bg-background">
-      <CaseStudyHero project={project} />
-      <CaseStudyOverview project={project} />
-      <CaseStudyItemGrid
+    <ProjectThemeShell project={project}>
+      <article className="overflow-x-hidden bg-background">
+        <CaseStudyHero project={project} />
+        <CaseStudyOverview project={project} />
+        <CaseStudyBrand project={project} />
+        <CaseStudyItemGrid
         eyebrow="Objectives"
         title="Project Goals"
         items={project.projectGoals}
@@ -72,5 +80,6 @@ export function ProjectCaseStudy({
       <CaseStudyMoreWork projects={relatedProjects} />
       <CaseStudyCta />
     </article>
+    </ProjectThemeShell>
   );
 }

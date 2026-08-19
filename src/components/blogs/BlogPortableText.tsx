@@ -40,22 +40,22 @@ const components: PortableTextComponents = {
       </p>
     ),
     h2: ({ children }) => (
-      <h2 className="mt-12 mb-4 font-display text-2xl font-semibold tracking-[-0.02em] text-white first:mt-0 sm:text-3xl">
+      <h2 className="mt-12 mb-4 font-display text-2xl font-semibold tracking-[-0.02em] text-foreground first:mt-0 sm:text-3xl">
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="mt-10 mb-3 font-display text-xl font-semibold tracking-[-0.02em] text-white first:mt-0 sm:text-2xl">
+      <h3 className="mt-10 mb-3 font-display text-xl font-semibold tracking-[-0.02em] text-foreground first:mt-0 sm:text-2xl">
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="mt-8 mb-3 font-display text-lg font-semibold tracking-[-0.02em] text-white">
+      <h4 className="mt-8 mb-3 font-display text-lg font-semibold tracking-[-0.02em] text-foreground">
         {children}
       </h4>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="my-8 border-l-2 border-accent pl-5 text-base leading-8 text-white/90 sm:text-lg sm:leading-9">
+      <blockquote className="my-8 border-l-2 border-accent pl-5 text-base leading-8 text-foreground/90 sm:text-lg sm:leading-9">
         {children}
       </blockquote>
     ),
@@ -74,11 +74,11 @@ const components: PortableTextComponents = {
   },
   marks: {
     strong: ({ children }) => (
-      <strong className="font-semibold text-white">{children}</strong>
+      <strong className="font-semibold text-foreground">{children}</strong>
     ),
     em: ({ children }) => <em>{children}</em>,
     code: ({ children }) => (
-      <code className="rounded bg-primary/30 px-1.5 py-0.5 font-mono text-[0.9em] text-white">
+      <code className="rounded bg-primary/30 px-1.5 py-0.5 font-mono text-[0.9em] text-foreground">
         {children}
       </code>
     ),

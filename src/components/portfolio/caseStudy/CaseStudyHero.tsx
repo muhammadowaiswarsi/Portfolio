@@ -32,6 +32,12 @@ function imageKey(image: SanityImage) {
   return image.asset._ref;
 }
 
+const AMI_HOMEPAGE_SHOT: HeroShot = {
+  key: "ami-homepage",
+  url: "/ami-homepage.jpg",
+  alt: "Arabian Metal Industries homepage",
+};
+
 function collectHeroShots(project: CaseStudyProject): HeroShot[] {
   const shots: HeroShot[] = [];
   const seen = new Set<string>();
@@ -49,6 +55,11 @@ function collectHeroShots(project: CaseStudyProject): HeroShot[] {
       alt: image.alt || fallbackAlt,
     });
   };
+
+  if (project.slug === "arabian-metal-industries-ami") {
+    shots.push(AMI_HOMEPAGE_SHOT);
+    seen.add(AMI_HOMEPAGE_SHOT.key);
+  }
 
   add(project.thumbnail, project.title);
   if (project.gallery) {
@@ -138,7 +149,7 @@ function HeroShowcase({ shots }: { shots: HeroShot[] }) {
           src={primary.url}
           alt={primary.alt}
           priority
-          fit="contain"
+          fit="cover"
           aspectClass="aspect-[16/9]"
           sizes="(min-width: 1024px) 420px, 80vw"
         />
@@ -176,19 +187,19 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
 
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-r from-[#1A202C] via-[#1A202C]/88 to-[#2C5270]/72"
+        className="absolute inset-0 bg-gradient-to-r from-background via-background/88 to-primary/72"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,#F57B00_16%,transparent),transparent_42%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,color-mix(in_srgb,var(--accent)_16%,transparent),transparent_42%)]"
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,color-mix(in_srgb,#2C5270_40%,transparent),transparent_55%)]"
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,color-mix(in_srgb,var(--primary)_40%,transparent),transparent_55%)]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,#2C5270_14%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,#2C5270_14%,transparent)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_18%,transparent_78%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--primary)_14%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--primary)_14%,transparent)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_18%,transparent_78%)]"
       />
 
       <Container className="relative grid items-center gap-10 py-16 sm:py-20 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-12 lg:py-24 xl:py-28">
@@ -201,7 +212,7 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
           >
             <Link
               href="/portfolio"
-              className="text-[11px] font-medium uppercase tracking-[0.22em] text-white/60 transition-colors hover:text-accent"
+              className="text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/60 transition-colors hover:text-accent"
             >
               All Projects
             </Link>
@@ -218,7 +229,7 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
               {eyebrow}
             </p>
             {project.featured ? (
-              <span className="rounded-full border border-white/20 bg-white/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-white/80">
+              <span className="rounded-full border border-foreground/20 bg-foreground/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-foreground/80">
                 Featured
               </span>
             ) : null}
@@ -236,7 +247,7 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
 
           {hasText(project.shortDescription) ? (
             <motion.p
-              className="mt-6 max-w-lg text-base leading-7 text-white/78 sm:text-lg sm:leading-8"
+              className="mt-6 max-w-lg text-base leading-7 text-foreground/78 sm:text-lg sm:leading-8"
               initial="hidden"
               animate="visible"
               custom={0.22}
@@ -280,7 +291,7 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
           {shots.length > 0 ? (
             <HeroShowcase shots={shots} />
           ) : backgroundUrl ? (
-            <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-primary/30 shadow-[0_28px_70px_rgba(0,0,0,0.35)]">
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-primary/30 shadow-[0_28px_70px_rgba(0,0,0,0.35)]">
               <div className="relative aspect-[16/10]">
                 <Image
                   src={backgroundUrl}

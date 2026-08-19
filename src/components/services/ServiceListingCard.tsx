@@ -51,11 +51,11 @@ export function ServiceListingCard({
         )}
       </div>
 
-      <h2 className="font-display text-2xl font-semibold tracking-[-0.02em] text-white sm:text-[1.75rem]">
+      <h2 className="font-display text-2xl font-semibold tracking-[-0.02em] text-foreground sm:text-[1.75rem]">
         {service.title}
       </h2>
 
-      <p className="mt-3 text-sm leading-6 text-white/80 sm:text-[15px] sm:leading-7">
+      <p className="mt-3 text-sm leading-6 text-foreground/80 sm:text-[15px] sm:leading-7">
         {service.shortDescription}
       </p>
 

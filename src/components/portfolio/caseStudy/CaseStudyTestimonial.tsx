@@ -83,12 +83,12 @@ export function CaseStudyTestimonial({
                   className="size-14 rounded-full object-cover"
                 />
               ) : name ? (
-                <span className="flex size-14 items-center justify-center rounded-full border border-primary/50 bg-primary/25 text-sm font-medium text-white">
+                <span className="flex size-14 items-center justify-center rounded-full border border-primary/50 bg-primary/25 text-sm font-medium text-foreground">
                   {name.charAt(0)}
                 </span>
               ) : null}
               {name ? (
-                <p className="text-sm font-medium uppercase tracking-[0.16em] text-white">
+                <p className="text-sm font-medium uppercase tracking-[0.16em] text-foreground">
                   {name}
                 </p>
               ) : null}

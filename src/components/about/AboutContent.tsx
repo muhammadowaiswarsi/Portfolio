@@ -151,7 +151,7 @@ export function AboutContent() {
                   <span className="mb-6 flex size-11 items-center justify-center rounded-xl border border-primary/50 bg-primary/20 text-accent">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
-                  <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-white sm:text-2xl">
+                  <h3 className="font-display text-xl font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
                     {belief.title}
                   </h3>
                   <p className="mt-3 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">
@@ -187,7 +187,7 @@ export function AboutContent() {
                   <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-primary/50 bg-primary/20 text-accent">
                     <Icon className="size-5" aria-hidden="true" />
                   </span>
-                  <p className="font-medium tracking-tight text-white">
+                  <p className="font-medium tracking-tight text-foreground">
                     {capability.title}
                   </p>
                 </motion.li>
@@ -200,20 +200,20 @@ export function AboutContent() {
       <section className="relative overflow-hidden border-t border-border py-20 sm:py-24 lg:py-28">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[#1A202C]"
+          className="pointer-events-none absolute inset-0 bg-background"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,#2C5270_32%,transparent),transparent_62%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--primary)_32%,transparent),transparent_62%)]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,color-mix(in_srgb,#F57B00_12%,transparent),transparent_42%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,color-mix(in_srgb,var(--accent)_12%,transparent),transparent_42%)]"
         />
         <Container className="relative">
           <div className="mx-auto max-w-3xl text-center">
             <motion.h2
-              className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.15rem]"
+              className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-foreground sm:text-5xl lg:text-[3.15rem]"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, amount: 0.4 }}
@@ -244,14 +244,14 @@ export function AboutContent() {
 
 function StoryVisual() {
   return (
-    <div className="absolute inset-0 bg-[#1A202C]">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_srgb,#2C5270_30%,transparent),transparent_64%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,#2C5270_18%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,#2C5270_18%,transparent)_1px,transparent_1px)] bg-[size:44px_44px] opacity-70" />
+    <div className="absolute inset-0 bg-background">
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--primary)_30%,transparent),transparent_64%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--primary)_18%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--primary)_18%,transparent)_1px,transparent_1px)] bg-[size:44px_44px] opacity-70" />
       <div className="absolute left-8 top-8 h-24 w-24 rounded-2xl border border-primary/60 bg-primary/25" />
       <div className="absolute right-10 bottom-12 h-40 w-40 rounded-full border border-primary/40" />
       <div className="absolute right-16 top-16 size-3 rounded-full bg-accent" />
       <div className="absolute bottom-16 left-16 h-1.5 w-16 rounded-full bg-accent" />
-      <p className="absolute bottom-8 left-8 text-[11px] font-medium uppercase tracking-[0.22em] text-white/70">
+      <p className="absolute bottom-8 left-8 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/70">
         Computing Yard
       </p>
     </div>

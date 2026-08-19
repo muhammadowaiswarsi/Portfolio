@@ -19,13 +19,23 @@ export function Logo({ className }: LogoProps) {
       aria-label="Computing Yard home"
     >
       <Image
-        src="/computing-yard-logo.png"
+        src="/computing-yard-logo-dark.png"
         alt="Computing Yard"
         width={132}
         height={136}
-        className="h-16 w-auto sm:h-[4.5rem]"
+        className="logo-dark h-16 w-auto sm:h-[4.5rem]"
         priority
         unoptimized
+      />
+      <Image
+        src="/computing-yard-logo-light.png"
+        alt=""
+        width={132}
+        height={136}
+        className="logo-light hidden h-16 w-auto sm:h-[4.5rem]"
+        priority
+        unoptimized
+        aria-hidden="true"
       />
     </Link>
   );

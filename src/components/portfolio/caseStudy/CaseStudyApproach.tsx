@@ -71,7 +71,7 @@ export function CaseStudyApproach({ items }: CaseStudyApproachProps) {
                     </div>
                   ) : null}
                   <div className="flex flex-1 flex-col p-6 sm:p-7">
-                    <span className="mb-5 flex size-12 items-center justify-center rounded-full border border-primary bg-[#1A202C] text-sm font-medium tracking-wide text-accent">
+                    <span className="mb-5 flex size-12 items-center justify-center rounded-full border border-primary bg-background text-sm font-medium tracking-wide text-accent">
                       {number}
                     </span>
                     <h3 className={`text-xl sm:text-2xl ${caseStudySubheadClass}`}>

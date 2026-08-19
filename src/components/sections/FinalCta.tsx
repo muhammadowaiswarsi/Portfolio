@@ -20,19 +20,19 @@ export function FinalCta() {
     <section className="relative overflow-hidden border-t border-border bg-background py-24 sm:py-28 lg:py-32">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[#1A202C]"
+        className="pointer-events-none absolute inset-0 bg-background"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,#2C5270_32%,transparent),transparent_62%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--primary)_32%,transparent),transparent_62%)]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,color-mix(in_srgb,#F57B00_14%,transparent),transparent_42%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,color-mix(in_srgb,var(--accent)_14%,transparent),transparent_42%)]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,#2C5270_16%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,#2C5270_16%,transparent)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_18%,transparent_72%)]"
+        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--primary)_16%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--primary)_16%,transparent)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_18%,transparent_72%)]"
       />
 
       <Container className="relative">
@@ -49,7 +49,7 @@ export function FinalCta() {
           </motion.p>
 
           <motion.h2
-            className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-white sm:text-5xl lg:text-[3.15rem]"
+            className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-foreground sm:text-5xl lg:text-[3.15rem]"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}

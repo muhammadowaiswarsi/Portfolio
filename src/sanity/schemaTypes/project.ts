@@ -7,6 +7,7 @@ export const project = defineType({
   groups: [
     { name: "overview", title: "Overview", default: true },
     { name: "caseStudy", title: "Case study" },
+    { name: "theme", title: "Theme" },
   ],
   fields: [
     defineField({
@@ -218,6 +219,24 @@ export const project = defineType({
       group: "caseStudy",
       description: "e.g. 4 people, Design + Engineering.",
       validation: (rule) => rule.max(120),
+    }),
+    defineField({
+      name: "lightTheme",
+      title: "Light theme",
+      type: "projectColorTheme",
+      group: "theme",
+    }),
+    defineField({
+      name: "darkTheme",
+      title: "Dark theme",
+      type: "projectColorTheme",
+      group: "theme",
+    }),
+    defineField({
+      name: "typography",
+      title: "Typography",
+      type: "projectTypography",
+      group: "theme",
     }),
   ],
   preview: {

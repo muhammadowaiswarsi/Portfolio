@@ -53,7 +53,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
                 "rounded-full px-5 py-2.5 text-sm font-medium tracking-wide transition-colors duration-200",
                 active
                   ? "bg-accent text-accent-foreground"
-                  : "bg-primary/30 text-white hover:bg-primary/50",
+                  : "border border-border bg-surface text-foreground hover:border-primary hover:bg-primary/10",
               )}
               aria-pressed={active}
             >
