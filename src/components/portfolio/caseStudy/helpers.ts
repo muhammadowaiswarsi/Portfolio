@@ -50,7 +50,33 @@ export const caseStudySectionClass =
 export const caseStudySubheadClass =
   "font-display font-semibold tracking-[-0.02em] text-foreground";
 
+export function isWebMobileProject(project: CaseStudyProject) {
+  const haystack = [
+    project.businessType,
+    ...(project.servicesProvided ?? []),
+  ]
+    .filter(hasText)
+    .join(" ")
+    .toLowerCase();
+
+  return /web\s*(&|and)\s*mobile/.test(haystack);
+}
+
+export function isFrontendProject(project: CaseStudyProject) {
+  const haystack = [
+    project.businessType,
+    ...(project.servicesProvided ?? []),
+  ]
+    .filter(hasText)
+    .join(" ")
+    .toLowerCase();
+
+  return /frontend/.test(haystack);
+}
+
 export function isMobileAppProject(project: CaseStudyProject) {
+  if (isWebMobileProject(project)) return false;
+
   const haystack = [
     project.businessType,
     project.category,
@@ -63,7 +89,20 @@ export function isMobileAppProject(project: CaseStudyProject) {
   return /mobile app|ios|android|react native/.test(haystack);
 }
 
+export function isEcommerceProject(project: CaseStudyProject) {
+  if (isMobileAppProject(project) || isWebMobileProject(project)) return false;
+
+  const haystack = [project.businessType, project.industry]
+    .filter(hasText)
+    .join(" ")
+    .toLowerCase();
+
+  return /e-?commerce|online store|webshop/.test(haystack);
+}
+
 export function isWebAppProject(project: CaseStudyProject) {
+  if (isEcommerceProject(project)) return false;
+  if (isWebMobileProject(project)) return true;
   if (isMobileAppProject(project)) return false;
 
   const type = (project.businessType ?? "").toLowerCase();

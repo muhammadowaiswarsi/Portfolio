@@ -8,10 +8,12 @@ import { CaseStudyItemGrid } from "@/components/portfolio/caseStudy/CaseStudyIte
 import { CaseStudyMoreWork } from "@/components/portfolio/caseStudy/CaseStudyMoreWork";
 import { CaseStudyOverview } from "@/components/portfolio/caseStudy/CaseStudyOverview";
 import { CaseStudyTestimonial } from "@/components/portfolio/caseStudy/CaseStudyTestimonial";
+import { EcommerceCaseStudy } from "@/components/portfolio/caseStudy/EcommerceCaseStudy";
 import { MobileAppCaseStudy } from "@/components/portfolio/caseStudy/MobileAppCaseStudy";
 import { ProjectThemeShell } from "@/components/portfolio/caseStudy/ProjectThemeShell";
 import { WebAppCaseStudy } from "@/components/portfolio/caseStudy/WebAppCaseStudy";
 import {
+  isEcommerceProject,
   isMobileAppProject,
   isWebAppProject,
 } from "@/components/portfolio/caseStudy/helpers";
@@ -30,6 +32,17 @@ export function ProjectCaseStudy({
     return (
       <ProjectThemeShell project={project}>
         <MobileAppCaseStudy
+          project={project}
+          relatedProjects={relatedProjects}
+        />
+      </ProjectThemeShell>
+    );
+  }
+
+  if (isEcommerceProject(project)) {
+    return (
+      <ProjectThemeShell project={project}>
+        <EcommerceCaseStudy
           project={project}
           relatedProjects={relatedProjects}
         />

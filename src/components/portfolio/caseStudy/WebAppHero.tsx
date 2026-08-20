@@ -14,6 +14,8 @@ import {
   hasImage,
   hasText,
   isGraphicShowcase,
+  isFrontendProject,
+  isWebMobileProject,
 } from "@/components/portfolio/caseStudy/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -21,32 +23,58 @@ import type { CaseStudyProject } from "@/types/sanity";
 
 type WebAppHeroProps = {
   project: CaseStudyProject;
+  presentation?: "web-app" | "e-commerce" | "web-mobile";
 };
 
-export function WebAppHero({ project }: WebAppHeroProps) {
+export function WebAppHero({
+  project,
+  presentation = "web-app",
+}: WebAppHeroProps) {
+  const ecommerce = presentation === "e-commerce";
+  const webMobile =
+    presentation === "web-mobile" || isWebMobileProject(project);
+  const frontend = isFrontendProject(project);
   const eyebrow = hasText(project.industry)
     ? project.industry
-    : "Web Application";
+    : ecommerce
+      ? "E-commerce"
+      : webMobile
+        ? "Web & Mobile App"
+        : frontend
+          ? "Educational Platform"
+          : "Web Application";
   const liveUrl = hasText(project.liveUrl) ? project.liveUrl : null;
   const heroImage =
     (hasImage(project.thumbnail) ? project.thumbnail : null) ||
     (project.gallery ?? []).find(hasImage) ||
     project.cardImage;
   const heroUrl = hasImage(heroImage)
-    ? getImageUrl(heroImage, project.slug === "health-share" ? 1600 : 1800)
+    ? getImageUrl(
+        heroImage,
+        project.slug === "health-share" || project.slug === "share-accountz"
+          ? 1600
+          : 1800,
+      )
     : null;
   const heroAlt = heroImage?.alt || project.title;
   const backgroundUrl =
     getImageUrl(
       project.thumbnail,
-      project.slug === "health-share" ? 1600 : 1920,
+      project.slug === "health-share" || project.slug === "share-accountz"
+        ? 1600
+        : 1920,
     ) || heroUrl;
   const landingHero =
-    project.slug === "traino-ai" || project.slug === "tms-system";
+    ecommerce ||
+    project.slug === "traino-ai" ||
+    project.slug === "tms-system" ||
+    project.slug === "askademia";
   const graphicHero =
     isGraphicShowcase(heroImage) ||
     project.slug === "health-share" ||
-    project.slug === "tms-system";
+    project.slug === "tms-system" ||
+    project.slug === "study-panda" ||
+    project.slug === "share-accountz";
 
   return (
     <section className="relative isolate overflow-hidden border-b border-border">
@@ -99,7 +127,13 @@ export function WebAppHero({ project }: WebAppHeroProps) {
               {eyebrow}
             </p>
             <span className="rounded-full border border-foreground/20 bg-foreground/10 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-foreground/80">
-              Web App
+              {ecommerce
+                ? "E-commerce"
+                : webMobile
+                  ? "Web & Mobile"
+                  : frontend
+                    ? "Frontend"
+                    : "Web App"}
             </span>
           </motion.div>
 
@@ -143,7 +177,7 @@ export function WebAppHero({ project }: WebAppHeroProps) {
                 size="lg"
                 className="rounded-full px-7"
               >
-                Open Live Platform
+                {ecommerce ? "Visit Live Store" : "Open Live Platform"}
                 <ArrowUpRight className="size-4" aria-hidden="true" />
               </Button>
             ) : null}

@@ -55,7 +55,7 @@ const catalog: TechDefinition[] = [
   { display: "AWS AppSync", aliases: ["appsync", "aws appsync", "amazon appsync"], icon: Share2 },
   { display: "Amazon S3", aliases: ["s3", "amazon s3", "aws s3"], icon: Cloud },
   { display: "Amazon RDS", aliases: ["rds", "amazon rds", "aws rds"], icon: Database },
-  { display: "React", aliases: ["react"], icon: Component },
+  { display: "React", aliases: ["react", "reactjs", "react.js", "react js"], icon: Component },
   { display: "Python", aliases: ["python"], icon: Braces },
   { display: "Flutter", aliases: ["flutter"], icon: TabletSmartphone },
   { display: "MySQL", aliases: ["mysql"], icon: Table2 },
