@@ -6,12 +6,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { LaptopMockup } from "@/components/portfolio/caseStudy/LaptopMockup";
+import { ShowcaseFrame } from "@/components/portfolio/caseStudy/ShowcaseFrame";
 import {
   caseStudyTitleClass,
   fadeUp,
   getImageUrl,
   hasImage,
   hasText,
+  isGraphicShowcase,
 } from "@/components/portfolio/caseStudy/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
@@ -30,11 +32,21 @@ export function WebAppHero({ project }: WebAppHeroProps) {
     (hasImage(project.thumbnail) ? project.thumbnail : null) ||
     (project.gallery ?? []).find(hasImage) ||
     project.cardImage;
-  const heroUrl = hasImage(heroImage) ? getImageUrl(heroImage, 1800) : null;
+  const heroUrl = hasImage(heroImage)
+    ? getImageUrl(heroImage, project.slug === "health-share" ? 1600 : 1800)
+    : null;
   const heroAlt = heroImage?.alt || project.title;
-  const backgroundUrl = getImageUrl(project.thumbnail, 1920) || heroUrl;
+  const backgroundUrl =
+    getImageUrl(
+      project.thumbnail,
+      project.slug === "health-share" ? 1600 : 1920,
+    ) || heroUrl;
   const landingHero =
     project.slug === "traino-ai" || project.slug === "tms-system";
+  const graphicHero =
+    isGraphicShowcase(heroImage) ||
+    project.slug === "health-share" ||
+    project.slug === "tms-system";
 
   return (
     <section className="relative isolate overflow-hidden border-b border-border">
@@ -145,14 +157,24 @@ export function WebAppHero({ project }: WebAppHeroProps) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.18, ease: "easeOut" }}
           >
-            <LaptopMockup
-              src={heroUrl}
-              alt={heroAlt}
-              priority
-              fit={landingHero ? "cover" : "contain"}
-              aspectClass={landingHero ? "aspect-[16/10]" : "aspect-[3/2]"}
-              sizes="(min-width: 1024px) 48vw, 100vw"
-            />
+            {graphicHero ? (
+              <ShowcaseFrame
+                src={heroUrl}
+                alt={heroAlt}
+                priority
+                layout="wide"
+                sizes="(min-width: 1024px) 48vw, 100vw"
+              />
+            ) : (
+              <LaptopMockup
+                src={heroUrl}
+                alt={heroAlt}
+                priority
+                fit={landingHero ? "cover" : "contain"}
+                aspectClass={landingHero ? "aspect-[16/10]" : "aspect-[3/2]"}
+                sizes="(min-width: 1024px) 48vw, 100vw"
+              />
+            )}
           </motion.div>
         ) : null}
       </Container>

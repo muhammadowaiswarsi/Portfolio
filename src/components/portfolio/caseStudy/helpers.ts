@@ -85,6 +85,11 @@ export function isPhoneScreen(image?: SanityImage | null) {
   );
 }
 
+export function isGraphicShowcase(image?: SanityImage | null) {
+  if (!hasImage(image) || !image) return false;
+  return /^(showcase|portrait)\b/i.test(image.alt || "");
+}
+
 export function imagesMatching(
   images: SanityImage[] | null | undefined,
   pattern: RegExp,

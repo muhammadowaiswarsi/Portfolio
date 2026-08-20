@@ -18,7 +18,7 @@ type CaseStudyItemGridProps = {
   title: string;
   items: CaseStudyItem[] | null | undefined;
   numbered?: boolean;
-  imageFit?: "cover" | "contain";
+  imageFit?: "cover" | "contain" | "natural";
 };
 
 export function CaseStudyItemGrid({
@@ -47,9 +47,9 @@ export function CaseStudyItemGrid({
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:gap-8">
           {visibleItems.map((item, index) => {
             const imageUrl =
-              imageFit === "contain"
-                ? getImageUrl(item.image, 1200)
-                : getImageUrl(item.image, 1200, 750);
+              imageFit === "cover"
+                ? getImageUrl(item.image, 1200, 750)
+                : getImageUrl(item.image, 1400);
             const imageAlt = item.image?.alt || item.title || title;
 
             return (
@@ -66,20 +66,35 @@ export function CaseStudyItemGrid({
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface"
               >
                 {imageUrl ? (
-                  <div className="relative aspect-[16/10] overflow-hidden bg-surface">
-                    <Image
-                      src={imageUrl}
-                      alt={imageAlt}
-                      fill
-                      unoptimized
-                      sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw"
-                      className={
-                        imageFit === "contain"
-                          ? "object-contain"
-                          : "object-cover"
-                      }
-                    />
-                  </div>
+                  imageFit === "natural" ? (
+                    <div className="overflow-hidden bg-surface">
+                      <Image
+                        src={imageUrl}
+                        alt={imageAlt}
+                        width={1400}
+                        height={1800}
+                        unoptimized
+                        sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw"
+                        className="h-auto w-full"
+                        style={{ width: "100%", height: "auto" }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="relative aspect-[16/10] overflow-hidden bg-surface">
+                      <Image
+                        src={imageUrl}
+                        alt={imageAlt}
+                        fill
+                        unoptimized
+                        sizes="(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw"
+                        className={
+                          imageFit === "contain"
+                            ? "object-contain"
+                            : "object-cover"
+                        }
+                      />
+                    </div>
+                  )
                 ) : null}
 
                 <div className="flex flex-1 flex-col p-6 sm:p-7">

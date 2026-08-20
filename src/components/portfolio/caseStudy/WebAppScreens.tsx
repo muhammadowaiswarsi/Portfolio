@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 
 import { LaptopMockup } from "@/components/portfolio/caseStudy/LaptopMockup";
 import { PhoneMockup } from "@/components/portfolio/caseStudy/PhoneMockup";
+import { ShowcaseFrame } from "@/components/portfolio/caseStudy/ShowcaseFrame";
 import {
   getImageUrl,
   hasImage,
   hasItems,
+  isGraphicShowcase,
 } from "@/components/portfolio/caseStudy/helpers";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -30,14 +32,68 @@ function isMobileShot(image: SanityImage) {
 
 export function WebAppScreens({ images, projectTitle }: WebAppScreensProps) {
   const gallery = (hasItems(images) ? images : []).filter(hasImage);
-  const desktop = gallery.filter((image) => !isMobileShot(image));
   const mobile = gallery.filter(isMobileShot);
+  const graphics = gallery.filter(
+    (image) => isGraphicShowcase(image) && !isMobileShot(image),
+  );
+  const desktop = gallery.filter(
+    (image) => !isMobileShot(image) && !isGraphicShowcase(image),
+  );
 
-  if (desktop.length === 0 && mobile.length === 0) return null;
+  if (desktop.length === 0 && graphics.length === 0 && mobile.length === 0) {
+    return null;
+  }
 
   return (
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
       <Container>
+        {graphics.length > 0 ? (
+          <>
+            <SectionHeading
+              eyebrow="Product Screens"
+              title="Inside the platform"
+              description="Product visuals shown at each graphic’s natural proportions so composed screenshots stay readable."
+              headingClassName="font-display font-semibold"
+            />
+
+            <div className="mt-14 grid items-start gap-10 lg:grid-cols-2 lg:gap-12">
+              {graphics.map((image, index) => {
+                const imageUrl = getImageUrl(image, 1000);
+                if (!imageUrl) return null;
+                const tall = /^portrait\b/i.test(image.alt || "");
+
+                return (
+                  <motion.figure
+                    key={image.asset._ref || `graphic-${index}`}
+                    className={tall ? "min-w-0" : "min-w-0 lg:col-span-2"}
+                    initial={{ opacity: 0, y: 28 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.12 }}
+                    transition={{ duration: 0.5, delay: 0.04, ease: "easeOut" }}
+                  >
+                    <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
+                      {caption(image.alt, `Screen ${index + 1}`)}
+                    </p>
+                    <ShowcaseFrame
+                      src={imageUrl}
+                      alt={
+                        image.alt ||
+                        `${projectTitle} platform screen ${index + 1}`
+                      }
+                      layout={tall ? "tall" : "wide"}
+                      sizes={
+                        tall
+                          ? "(min-width: 1024px) 420px, 90vw"
+                          : "(min-width: 1280px) 1100px, 100vw"
+                      }
+                    />
+                  </motion.figure>
+                );
+              })}
+            </div>
+          </>
+        ) : null}
+
         {desktop.length > 0 ? (
           <>
             <SectionHeading
@@ -81,7 +137,7 @@ export function WebAppScreens({ images, projectTitle }: WebAppScreensProps) {
         ) : null}
 
         {mobile.length > 0 ? (
-          <div className={desktop.length > 0 ? "mt-20 border-t border-border pt-16 sm:mt-24 sm:pt-20" : ""}>
+          <div className={desktop.length > 0 || graphics.length > 0 ? "mt-20 border-t border-border pt-16 sm:mt-24 sm:pt-20" : ""}>
             <SectionHeading
               eyebrow="Responsive"
               title="Built for smaller screens"
