@@ -53,11 +53,16 @@ export async function generateMetadata({
 
 export default async function BlogPage({ params }: BlogPageProps) {
   const { slug } = await params;
-  const post = await getBlogBySlug(slug);
+  const [post, posts] = await Promise.all([
+    getBlogBySlug(slug),
+    getAllBlogs(),
+  ]);
 
   if (!post) {
     notFound();
   }
 
-  return <BlogArticleContent post={post} />;
+  const relatedPosts = posts.filter((item) => item.slug !== slug).slice(0, 3);
+
+  return <BlogArticleContent post={post} relatedPosts={relatedPosts} />;
 }

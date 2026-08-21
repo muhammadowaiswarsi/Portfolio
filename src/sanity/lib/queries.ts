@@ -159,7 +159,26 @@ export const homepageServicesQuery = groq`
 `;
 
 export const allServicesQuery = groq`
-  *[_type == "service" && defined(slug.current)] | order(_createdAt asc) {
+  *[_type == "service" && defined(slug.current)] | order(coalesce(order, 9999) asc, _createdAt asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    shortDescription,
+    icon {
+      _type,
+      alt,
+      asset
+    },
+    features[] {
+      _key,
+      title,
+      description
+    }
+  }
+`;
+
+export const serviceBySlugQuery = groq`
+  *[_type == "service" && slug.current == $slug][0] {
     _id,
     title,
     "slug": slug.current,
@@ -169,7 +188,51 @@ export const allServicesQuery = groq`
       _type,
       alt,
       asset
-    }
+    },
+    heroTitle,
+    heroDescription,
+    heroImage {
+      _type,
+      alt,
+      asset
+    },
+    overview,
+    benefits[] {
+      _key,
+      _type,
+      title,
+      description,
+      icon { _type, alt, asset }
+    },
+    features[] {
+      _key,
+      _type,
+      title,
+      description,
+      image { _type, alt, asset }
+    },
+    process[] {
+      _key,
+      _type,
+      stepNumber,
+      title,
+      description
+    },
+    technologies,
+    faqs[] {
+      _key,
+      _type,
+      question,
+      answer
+    },
+    gallery[] {
+      _key,
+      _type,
+      alt,
+      asset
+    },
+    ctaTitle,
+    ctaDescription
   }
 `;
 
@@ -197,6 +260,7 @@ export const allBlogsQuery = groq`
     excerpt,
     author,
     publishedAt,
+    category,
     coverImage {
       _type,
       alt,

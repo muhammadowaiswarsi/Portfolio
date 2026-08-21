@@ -5,8 +5,9 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { urlFor } from "@/sanity/lib/image";
+import { formatPublishedDate, hasText } from "@/components/blogs/helpers";
 import { cn } from "@/lib/cn";
+import { urlFor } from "@/sanity/lib/image";
 import type { BlogListItem } from "@/types/sanity";
 
 type BlogCardProps = {
@@ -14,18 +15,6 @@ type BlogCardProps = {
   index: number;
   featured?: boolean;
 };
-
-function formatPublishedDate(value: string) {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) return null;
-
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
-}
 
 export function BlogCard({ post, index, featured = false }: BlogCardProps) {
   const imageUrl = post.coverImage?.asset
@@ -38,6 +27,7 @@ export function BlogCard({ post, index, featured = false }: BlogCardProps) {
   const imageAlt = post.coverImage?.alt || post.title;
   const href = `/blogs/${post.slug}`;
   const publishedDate = formatPublishedDate(post.publishedAt);
+  const category = hasText(post.category) ? post.category.trim() : null;
 
   return (
     <motion.article
@@ -50,7 +40,7 @@ export function BlogCard({ post, index, featured = false }: BlogCardProps) {
         ease: "easeOut",
       }}
       className={cn(
-        "group overflow-hidden rounded-2xl border border-border bg-surface transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-primary",
+        "group overflow-hidden rounded-[1.75rem] border border-border bg-surface transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-primary",
         featured && "lg:grid lg:grid-cols-2",
         !featured && "flex h-full flex-col",
       )}
@@ -59,7 +49,9 @@ export function BlogCard({ post, index, featured = false }: BlogCardProps) {
         <div
           className={cn(
             "relative bg-primary/35",
-            featured ? "aspect-[16/10] lg:h-full lg:min-h-[22rem] lg:aspect-auto" : "aspect-[16/10]",
+            featured
+              ? "aspect-[16/10] lg:h-full lg:min-h-[22rem] lg:aspect-auto"
+              : "aspect-[16/10]",
           )}
         >
           {imageUrl ? (
@@ -70,21 +62,23 @@ export function BlogCard({ post, index, featured = false }: BlogCardProps) {
               sizes={
                 featured
                   ? "(min-width: 1024px) 50vw, 100vw"
-                  : "(min-width: 1024px) 50vw, 100vw"
+                  : "(min-width: 1280px) 33vw, (min-width: 768px) 50vw, 100vw"
               }
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
               priority={featured}
             />
-          ) : null}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/15 to-transparent opacity-80" />
+          ) : (
+            <div className="absolute inset-0 bg-primary" />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent opacity-70" />
           <span className="absolute left-0 top-0 h-[2px] w-full origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100" />
         </div>
       </Link>
 
       <div className="flex flex-1 flex-col gap-4 p-6 sm:p-7 lg:p-8">
-        {publishedDate ? (
+        {category ? (
           <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-accent">
-            {publishedDate}
+            {category}
           </p>
         ) : null}
 
@@ -104,7 +98,17 @@ export function BlogCard({ post, index, featured = false }: BlogCardProps) {
           </p>
         </div>
 
-        <p className="mt-auto text-sm text-foreground/75">{post.author}</p>
+        <p className="mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-foreground/75">
+          <span>{post.author}</span>
+          {publishedDate ? (
+            <>
+              <span className="text-primary" aria-hidden="true">
+                /
+              </span>
+              <time dateTime={post.publishedAt}>{publishedDate}</time>
+            </>
+          ) : null}
+        </p>
 
         <Link
           href={href}

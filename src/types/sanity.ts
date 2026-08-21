@@ -117,6 +117,37 @@ export type CaseStudyProject = FeaturedProject & {
   typography?: ProjectTypography | null;
 };
 
+export type ServiceBenefit = {
+  _key?: string;
+  _type?: "serviceBenefit";
+  title?: string | null;
+  description?: string | null;
+  icon?: SanityImage | null;
+};
+
+export type ServiceFeature = {
+  _key?: string;
+  _type?: "serviceFeature";
+  title?: string | null;
+  description?: string | null;
+  image?: SanityImage | null;
+};
+
+export type ServiceProcessStep = {
+  _key?: string;
+  _type?: "serviceProcessStep";
+  stepNumber?: number | null;
+  title?: string | null;
+  description?: string | null;
+};
+
+export type ServiceFaq = {
+  _key?: string;
+  _type?: "serviceFaq";
+  question?: string | null;
+  answer?: string | null;
+};
+
 export type Service = {
   _id: string;
   _type: "service";
@@ -125,6 +156,20 @@ export type Service = {
   shortDescription: string;
   description: unknown[];
   icon: SanityImage;
+  heroTitle?: string | null;
+  heroDescription?: string | null;
+  heroImage?: SanityImage | null;
+  overview?: unknown[] | null;
+  benefits?: ServiceBenefit[] | null;
+  features?: ServiceFeature[] | null;
+  process?: ServiceProcessStep[] | null;
+  technologies?: string[] | null;
+  faqs?: ServiceFaq[] | null;
+  gallery?: SanityImage[] | null;
+  ctaTitle?: string | null;
+  ctaDescription?: string | null;
+  featured?: boolean | null;
+  order?: number | null;
 };
 
 export type HomepageService = {
@@ -136,7 +181,32 @@ export type HomepageService = {
 };
 
 export type ServicesPageService = HomepageService & {
+  features?: Array<{
+    _key?: string;
+    title?: string | null;
+    description?: string | null;
+  }> | null;
+};
+
+export type ServiceLanding = {
+  _id: string;
+  title: string;
+  slug: string;
+  shortDescription: string;
   description: unknown[] | null;
+  icon: SanityImage | null;
+  heroTitle?: string | null;
+  heroDescription?: string | null;
+  heroImage?: SanityImage | null;
+  overview?: unknown[] | null;
+  benefits?: ServiceBenefit[] | null;
+  features?: ServiceFeature[] | null;
+  process?: ServiceProcessStep[] | null;
+  technologies?: string[] | null;
+  faqs?: ServiceFaq[] | null;
+  gallery?: SanityImage[] | null;
+  ctaTitle?: string | null;
+  ctaDescription?: string | null;
 };
 
 export type Blog = {
@@ -159,11 +229,11 @@ export type BlogListItem = {
   author: string;
   publishedAt: string;
   coverImage: SanityImage | null;
+  category?: string | null;
 };
 
 export type BlogArticle = BlogListItem & {
   content: unknown[] | null;
-  category?: string | null;
 };
 
 export type Testimonial = {

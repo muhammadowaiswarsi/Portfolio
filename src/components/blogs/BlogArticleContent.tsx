@@ -3,43 +3,26 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 import { BlogPortableText } from "@/components/blogs/BlogPortableText";
+import { BlogRelated } from "@/components/blogs/BlogRelated";
+import { fadeUp, formatPublishedDate, hasText } from "@/components/blogs/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { urlFor } from "@/sanity/lib/image";
-import type { BlogArticle } from "@/types/sanity";
+import type { BlogArticle, BlogListItem } from "@/types/sanity";
 
 type BlogArticleContentProps = {
   post: BlogArticle;
+  relatedPosts?: BlogListItem[];
 };
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, delay, ease: "easeOut" as const },
-  }),
-};
-
-function formatPublishedDate(value: string) {
-  const date = new Date(value);
-
-  if (Number.isNaN(date.getTime())) return null;
-
-  return new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(date);
-}
-
-export function BlogArticleContent({ post }: BlogArticleContentProps) {
-  const category =
-    typeof post.category === "string" && post.category.trim()
-      ? post.category.trim()
-      : null;
+export function BlogArticleContent({
+  post,
+  relatedPosts = [],
+}: BlogArticleContentProps) {
+  const category = hasText(post.category) ? post.category.trim() : null;
   const publishedDate = formatPublishedDate(post.publishedAt);
   const coverUrl = post.coverImage?.asset
     ? urlFor(post.coverImage).width(1920).height(1080).fit("crop").url()
@@ -48,15 +31,38 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
 
   return (
     <article className="bg-background">
-      <header className="py-16 sm:py-20 lg:py-24">
-        <Container>
+      <header className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,color-mix(in_srgb,var(--primary)_22%,transparent),transparent_55%)]"
+        />
+        <Container className="relative">
           <div className="mx-auto max-w-3xl">
+            <motion.p
+              className="mb-5 text-sm font-medium text-accent"
+              initial="hidden"
+              animate="visible"
+              custom={0.04}
+              variants={fadeUp}
+            >
+              <Link href="/" className="transition-colors hover:text-accent-hover">
+                Home
+              </Link>
+              <span className="mx-2 text-muted">»</span>
+              <Link
+                href="/blogs"
+                className="transition-colors hover:text-accent-hover"
+              >
+                Blogs
+              </Link>
+            </motion.p>
+
             {category ? (
               <motion.p
-                className="mb-5 text-[11px] font-medium uppercase tracking-[0.22em] text-accent"
+                className="mb-4 text-[11px] font-medium uppercase tracking-[0.22em] text-accent"
                 initial="hidden"
                 animate="visible"
-                custom={0.04}
+                custom={0.08}
                 variants={fadeUp}
               >
                 {category}
@@ -67,7 +73,7 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
               className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-foreground sm:text-5xl lg:text-[3.15rem]"
               initial="hidden"
               animate="visible"
-              custom={0.1}
+              custom={0.12}
               variants={fadeUp}
             >
               {post.title}
@@ -77,7 +83,7 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
               className="mt-6 text-base leading-7 text-muted sm:text-lg sm:leading-8"
               initial="hidden"
               animate="visible"
-              custom={0.16}
+              custom={0.18}
               variants={fadeUp}
             >
               {post.excerpt}
@@ -87,7 +93,7 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
               className="mt-8 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-foreground/75"
               initial="hidden"
               animate="visible"
-              custom={0.22}
+              custom={0.24}
               variants={fadeUp}
             >
               <span>{post.author}</span>
@@ -104,10 +110,10 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
 
           {coverUrl ? (
             <motion.div
-              className="relative mt-12 overflow-hidden rounded-2xl border border-border bg-primary/30"
+              className="relative mt-12 overflow-hidden rounded-[1.75rem] border border-border bg-primary/30"
               initial="hidden"
               animate="visible"
-              custom={0.28}
+              custom={0.3}
               variants={fadeUp}
             >
               <div className="relative aspect-[16/9]">
@@ -142,7 +148,9 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
         </Container>
       </section>
 
-      <section className="relative overflow-hidden border-t border-border py-20 sm:py-24">
+      <BlogRelated posts={relatedPosts} />
+
+      <section className="relative overflow-hidden border-t border-border py-16 sm:py-20 lg:py-24">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,color-mix(in_srgb,var(--primary)_28%,transparent),transparent_62%)]"
@@ -159,8 +167,12 @@ export function BlogArticleContent({ post }: BlogArticleContentProps) {
             <h2 className="font-display text-3xl font-semibold tracking-[-0.03em] text-foreground sm:text-4xl lg:text-5xl">
               Have a Project in Mind?
             </h2>
+            <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
+              Tell us what you want to build and we will help you turn it into a
+              reliable digital product.
+            </p>
             <div className="mt-8">
-              <Button href="/contact" size="lg">
+              <Button href="/contact" size="lg" className="rounded-full px-7">
                 Let&apos;s Talk
                 <ArrowUpRight className="size-4" aria-hidden="true" />
               </Button>
