@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   description:
     "Computing Yard is a premium software development agency building refined digital products.",
   icons: {
-    icon: "/computing-yard-logo-dark.png",
+    icon: "/computing-yard-icon.png",
   },
 };
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUpRight, Clock, Mail, MapPin, Phone } from "lucide-react";
 
 import { ContactForm } from "@/components/contact/ContactForm";
 import { Container } from "@/components/ui/Container";
@@ -18,24 +18,43 @@ const fadeUp = {
 
 const contactDetails = [
   {
-    label: "Email",
-    value: "To be added",
-    icon: Mail,
-  },
-  {
     label: "Phone",
-    value: "To be added",
+    value: "+92 336 308 3049",
+    href: "tel:+923363083049",
     icon: Phone,
+    external: false,
   },
   {
-    label: "Location",
-    value: "To be added",
+    label: "Email",
+    value: "info@computingyard.com",
+    href: "mailto:info@computingyard.com",
+    icon: Mail,
+    external: false,
+  },
+  {
+    label: "Address",
+    value: "Office No. 08, Faiyaz Center, SMCHS Block A, Shahrah-e-Faisal, Karachi",
     icon: MapPin,
   },
   {
-    label: "Business hours",
-    value: "To be added",
+    label: "Business Hours",
+    value: "Open 24 hours",
     icon: Clock,
+  },
+] as const;
+
+const socialLinks = [
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/computingyard",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/computingyard/",
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/computingyard/",
   },
 ] as const;
 
@@ -78,13 +97,14 @@ export function ContactContent() {
                 Contact Information
               </h2>
               <p className="mt-3 max-w-md text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">
-                Company contact details will appear here once they are added.
-                Until then, use the form to share your project brief.
+                Reach us by phone, email or at our Karachi office. You can also
+                share your project brief using the form.
               </p>
 
               <ul className="mt-8 space-y-4">
                 {contactDetails.map((item) => {
                   const Icon = item.icon;
+                  const href = "href" in item ? item.href : undefined;
 
                   return (
                     <li
@@ -94,16 +114,48 @@ export function ContactContent() {
                       <span className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-primary/50 bg-primary/20 text-accent">
                         <Icon className="size-5" aria-hidden="true" />
                       </span>
-                      <div>
+                      <div className="min-w-0">
                         <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-accent">
                           {item.label}
                         </p>
-                        <p className="mt-1 text-sm text-foreground/80">{item.value}</p>
+                        {href ? (
+                          <a
+                            href={href}
+                            className="mt-1 block break-words text-sm leading-6 text-foreground/80 transition-colors hover:text-accent sm:text-[15px] sm:leading-7"
+                          >
+                            {item.value}
+                          </a>
+                        ) : (
+                          <p className="mt-1 break-words text-sm leading-6 text-foreground/80 sm:text-[15px] sm:leading-7">
+                            {item.value}
+                          </p>
+                        )}
                       </div>
                     </li>
                   );
                 })}
               </ul>
+
+              <div className="mt-8">
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-accent">
+                  Social
+                </p>
+                <ul className="mt-4 flex flex-wrap gap-3">
+                  {socialLinks.map((item) => (
+                    <li key={item.label}>
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-4 py-2.5 text-sm text-foreground/80 transition-colors hover:border-primary hover:text-accent"
+                      >
+                        {item.label}
+                        <ArrowUpRight className="size-4 shrink-0" aria-hidden="true" />
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </motion.div>
 
             <motion.div

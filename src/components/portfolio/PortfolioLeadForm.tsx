@@ -39,7 +39,7 @@ function validate(values: FormState): FormErrors {
     errors.phone = "Please enter a valid phone number.";
   }
 
-  if (values.message.trim().length < 10) {
+  if (values.message.trim().length < 20) {
     errors.message = "Please describe your project needs.";
   }
 
@@ -49,14 +49,16 @@ function validate(values: FormState): FormErrors {
 export function PortfolioLeadForm() {
   const [values, setValues] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<"idle" | "valid">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
+    "idle",
+  );
 
   function update<Key extends keyof FormState>(key: Key, value: FormState[Key]) {
     setValues((current) => ({ ...current, [key]: value }));
     setStatus("idle");
   }
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const nextErrors = validate(values);
     setErrors(nextErrors);
@@ -66,7 +68,39 @@ export function PortfolioLeadForm() {
       return;
     }
 
-    setStatus("valid");
+    setStatus("sending");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: values.fullName.trim(),
+          email: values.email.trim(),
+          company: "",
+          phone: values.phone.trim(),
+          projectType: "Other",
+          message: `Submitted from the website lead form.\n\n${values.message.trim()}`,
+        }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as
+        | { ok?: boolean }
+        | null;
+
+      if (!response.ok || !payload?.ok) {
+        setStatus("error");
+        return;
+      }
+
+      setValues(initialState);
+      setErrors({});
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -135,12 +169,21 @@ export function PortfolioLeadForm() {
       </div>
 
       <div className="mt-8 flex flex-col items-start gap-3">
-        <Button type="submit" className="rounded-full px-8">
-          Submit
+        <Button
+          type="submit"
+          disabled={status === "sending"}
+          className="rounded-full px-8"
+        >
+          {status === "sending" ? "Sending..." : "Submit"}
         </Button>
-        {status === "valid" ? (
-          <p className="text-sm leading-6 text-muted">
-            Your details look complete. Message delivery is not connected yet.
+        {status === "success" ? (
+          <p className="text-sm leading-6 text-muted" role="status">
+            Thanks — we received your message and will get back to you shortly.
+          </p>
+        ) : null}
+        {status === "error" ? (
+          <p className="text-sm leading-6 text-accent" role="alert">
+            Something went wrong. Please try again.
           </p>
         ) : null}
       </div>

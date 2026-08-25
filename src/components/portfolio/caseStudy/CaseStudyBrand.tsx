@@ -106,7 +106,7 @@ export function CaseStudyBrand({ project }: CaseStudyBrandProps) {
             <p className="font-display text-5xl font-semibold tracking-[-0.03em] text-foreground sm:text-6xl lg:text-7xl">
               {fontName}
             </p>
-            <p className="mt-6 max-w-4xl text-sm leading-8 text-muted sm:text-base sm:leading-9">
+            <p className="mt-6 max-w-5xl text-base leading-9 text-muted sm:text-lg sm:leading-10 lg:text-xl lg:leading-[2.4rem]">
               {PREVIEW}
             </p>
           </motion.div>

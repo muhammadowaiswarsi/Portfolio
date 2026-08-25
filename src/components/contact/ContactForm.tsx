@@ -4,16 +4,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-
-const projectTypes = [
-  "Web Development",
-  "Mobile Development",
-  "UI/UX Design",
-  "AI Solutions",
-  "E-commerce",
-  "Cloud & Backend",
-  "Other",
-] as const;
+import { CONTACT_LIMITS, PROJECT_TYPES } from "@/lib/contact";
 
 type FormState = {
   fullName: string;
@@ -62,19 +53,25 @@ function validate(values: FormState): FormErrors {
 }
 
 const fieldClass =
-  "w-full rounded-md border border-border bg-surface px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-foreground/35 focus:border-accent focus:ring-2 focus:ring-accent/30";
+  "w-full rounded-md border border-border bg-surface px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-foreground/35 focus:border-accent focus:ring-2 focus:ring-accent/30 disabled:opacity-60";
 
 export function ContactForm() {
   const [values, setValues] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<FormErrors>({});
-  const [status, setStatus] = useState<"idle" | "valid">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
+    "idle",
+  );
+
+  const isSending = status === "sending";
 
   function update<Key extends keyof FormState>(key: Key, value: FormState[Key]) {
     setValues((current) => ({ ...current, [key]: value }));
-    setStatus("idle");
+    if (status === "success" || status === "error") {
+      setStatus("idle");
+    }
   }
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const nextErrors = validate(values);
@@ -85,7 +82,39 @@ export function ContactForm() {
       return;
     }
 
-    setStatus("valid");
+    setStatus("sending");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fullName: values.fullName.trim(),
+          email: values.email.trim(),
+          company: values.company.trim(),
+          phone: values.phone.trim(),
+          projectType: values.projectType,
+          message: values.message.trim(),
+        }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as
+        | { ok?: boolean }
+        | null;
+
+      if (!response.ok || !payload?.ok) {
+        setStatus("error");
+        return;
+      }
+
+      setValues(initialState);
+      setErrors({});
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   }
 
   return (
@@ -106,10 +135,12 @@ export function ContactForm() {
             name="fullName"
             type="text"
             autoComplete="name"
+            maxLength={CONTACT_LIMITS.fullName.max}
             value={values.fullName}
             onChange={(event) => update("fullName", event.target.value)}
             className={fieldClass}
             aria-invalid={Boolean(errors.fullName)}
+            disabled={isSending}
           />
         </Field>
 
@@ -119,10 +150,12 @@ export function ContactForm() {
             name="email"
             type="email"
             autoComplete="email"
+            maxLength={CONTACT_LIMITS.email.max}
             value={values.email}
             onChange={(event) => update("email", event.target.value)}
             className={fieldClass}
             aria-invalid={Boolean(errors.email)}
+            disabled={isSending}
           />
         </Field>
 
@@ -132,9 +165,11 @@ export function ContactForm() {
             name="company"
             type="text"
             autoComplete="organization"
+            maxLength={CONTACT_LIMITS.company.max}
             value={values.company}
             onChange={(event) => update("company", event.target.value)}
             className={fieldClass}
+            disabled={isSending}
           />
         </Field>
 
@@ -144,10 +179,12 @@ export function ContactForm() {
             name="phone"
             type="tel"
             autoComplete="tel"
+            maxLength={CONTACT_LIMITS.phone.max}
             value={values.phone}
             onChange={(event) => update("phone", event.target.value)}
             className={fieldClass}
             aria-invalid={Boolean(errors.phone)}
+            disabled={isSending}
           />
         </Field>
 
@@ -164,9 +201,10 @@ export function ContactForm() {
             onChange={(event) => update("projectType", event.target.value)}
             className={cn(fieldClass, "appearance-none")}
             aria-invalid={Boolean(errors.projectType)}
+            disabled={isSending}
           >
             <option value="">Select a project type</option>
-            {projectTypes.map((type) => (
+            {PROJECT_TYPES.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -184,21 +222,29 @@ export function ContactForm() {
             id="message"
             name="message"
             rows={6}
+            maxLength={CONTACT_LIMITS.message.max}
             value={values.message}
             onChange={(event) => update("message", event.target.value)}
             className={cn(fieldClass, "resize-y min-h-[9rem]")}
             aria-invalid={Boolean(errors.message)}
+            disabled={isSending}
           />
         </Field>
       </div>
 
       <div className="mt-7 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <Button type="submit" size="lg">
-          Send Message
+        <Button type="submit" size="lg" disabled={isSending}>
+          {isSending ? "Sending..." : "Send Message"}
         </Button>
-        {status === "valid" ? (
-          <p className="text-sm leading-6 text-muted">
-            Your details look complete. Message delivery is not connected yet.
+        {status === "success" ? (
+          <p className="text-sm leading-6 text-muted" role="status">
+            Thank you! Your message has been sent successfully. We&apos;ll get
+            back to you soon.
+          </p>
+        ) : null}
+        {status === "error" ? (
+          <p className="text-sm leading-6 text-accent" role="alert">
+            Something went wrong. Please try again.
           </p>
         ) : null}
       </div>
