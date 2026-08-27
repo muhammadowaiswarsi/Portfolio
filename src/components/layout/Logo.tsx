@@ -7,11 +7,11 @@ type LogoProps = {
   className?: string;
 };
 
-const LOGO_WIDTH = 244;
-const LOGO_HEIGHT = 74;
+const LOGO_WIDTH = 986;
+const LOGO_HEIGHT = 227;
 
 const logoImageClassName =
-  "h-9 w-auto max-w-[min(100%,13.5rem)] shrink-0 object-contain object-left sm:h-11 sm:max-w-none lg:h-12";
+  "h-7 w-auto max-w-[min(100%,11.5rem)] shrink-0 object-contain object-left sm:h-8 sm:max-w-none lg:h-9";
 
 const logoImageStyle = { width: "auto" } as const;
 

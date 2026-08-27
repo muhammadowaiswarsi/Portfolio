@@ -62,8 +62,9 @@ export function ServicesHero() {
             custom={0.16}
             variants={fadeUp}
           >
-            We design, build and optimize digital experiences that help
-            businesses grow, engage customers and move forward.
+            We design, build and optimize digital experiences — from websites
+            and mobile apps to AI-powered chatbots — that help businesses grow,
+            engage customers and move forward.
           </motion.p>
 
           <motion.div

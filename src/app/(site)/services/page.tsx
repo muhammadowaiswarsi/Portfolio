@@ -14,7 +14,7 @@ import { getAllServices } from "@/sanity/lib/services";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "We design, build and optimize digital experiences that help businesses grow, engage customers and move forward.",
+    "We design, build and optimize digital experiences — from websites and mobile apps to AI-powered chatbots — that help businesses grow, engage customers and move forward.",
 };
 
 export default async function ServicesPage() {
@@ -28,13 +28,13 @@ export default async function ServicesPage() {
         <Container>
           <div className="mx-auto mb-14 max-w-3xl text-center lg:mb-20">
             <h2 className="font-display text-4xl font-semibold leading-[1.15] tracking-[-0.03em] text-foreground sm:text-5xl lg:text-[3.15rem]">
-              Our <span className="text-accent">Software Development</span>{" "}
+              Our <span className="text-accent">Software & AI</span>{" "}
               Services
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
               We deliver scalable, secure, and high-performance digital
-              solutions for startups, enterprises, and everything in between,
-              powered by innovation, design thinking, and emerging technologies.
+              solutions — including web, mobile, AI chatbots, UI/UX and SEO —
+              for startups, enterprises, and everything in between.
             </p>
           </div>
 

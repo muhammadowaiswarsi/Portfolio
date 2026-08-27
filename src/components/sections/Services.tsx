@@ -16,7 +16,7 @@ export async function Services() {
           <SectionHeading
             eyebrow="WHAT WE DO"
             title="Digital Solutions Built Around Your Business"
-            description="From strategy and design to development and deployment, we build digital solutions that create real business value."
+            description="From strategy and design to development, AI and launch, we build digital solutions that create real business value."
           />
           <Button href="/services" className="w-fit shrink-0">
             Explore All Services

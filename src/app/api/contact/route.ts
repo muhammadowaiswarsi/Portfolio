@@ -33,10 +33,10 @@ export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY?.trim();
   const fromEmail = process.env.CONTACT_FROM_EMAIL?.trim();
   const toEmail =
-    process.env.CONTACT_RECEIVER_EMAIL?.trim() || "zainzeesan412@gmail.com";
+    process.env.CONTACT_RECEIVER_EMAIL?.trim() || "zainzeeshan412@gmail.com";
 
-  if (!apiKey || !fromEmail) {
-    console.error("Contact form is missing RESEND_API_KEY or CONTACT_FROM_EMAIL.");
+  if (!apiKey || !fromEmail || !fromEmail.includes("@")) {
+    console.error("Contact form is missing RESEND_API_KEY or a valid CONTACT_FROM_EMAIL.");
     return Response.json({ ok: false }, { status: 500 });
   }
 
@@ -78,7 +78,10 @@ export async function POST(request: Request) {
     });
 
     if (error || !data?.id) {
-      console.error("Contact form email was not accepted.");
+      console.error("Contact form email was not accepted.", {
+        name: error?.name,
+        message: error?.message,
+      });
       return Response.json({ ok: false }, { status: 500 });
     }
 

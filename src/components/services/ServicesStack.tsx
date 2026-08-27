@@ -39,6 +39,18 @@ const categories = [
     label: "CMS",
     items: ["Sanity", "WordPress"],
   },
+  {
+    id: "ai",
+    label: "AI",
+    items: [
+      "NumPy",
+      "Vector Database",
+      "Image Recognition",
+      "OpenAI",
+      "OpenCV",
+      "PyTorch",
+    ],
+  },
 ] as const;
 
 export function ServicesStack() {
@@ -68,7 +80,7 @@ export function ServicesStack() {
                 type="button"
                 onClick={() => setActiveId(category.id)}
                 className={cn(
-                  "rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                  "cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition-colors",
                   selected
                     ? "border-accent bg-accent text-accent-foreground"
                     : "border-border bg-surface text-foreground hover:border-primary",
@@ -86,14 +98,17 @@ export function ServicesStack() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
-          className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6"
+          className="mx-auto mt-10 flex flex-wrap justify-center gap-4"
         >
           {active.items.map((item) => {
             const { label, icon: Icon } = getTechMeta(item);
 
             return (
-              <li key={item}>
-                <div className="flex h-full flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-surface px-4 py-7 text-center transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-accent">
+              <li
+                key={item}
+                className="w-[calc(50%-0.5rem)] max-w-[11.5rem] sm:w-44"
+              >
+                <div className="flex h-full cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border border-border bg-surface px-4 py-7 text-center transition-[border-color,transform] duration-200 hover:-translate-y-0.5 hover:border-accent">
                   <Icon className="size-8 text-primary" aria-hidden="true" />
                   <span className="text-sm font-medium text-foreground/90">
                     {label}

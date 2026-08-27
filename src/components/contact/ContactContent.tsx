@@ -83,7 +83,7 @@ export function ContactContent() {
         </Container>
       </section>
 
-      <section className="border-t border-border bg-background pb-20 sm:pb-24 lg:pb-28">
+      <section className="border-t border-border bg-background py-20 sm:py-24 lg:py-28">
         <Container>
           <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-14">
             <motion.div

@@ -36,7 +36,7 @@ const reasons: { title: string; description: string; icon: LucideIcon }[] = [
   {
     title: "Future-Ready Technologies",
     description:
-      "We use modern, proven tools so your product stays maintainable, performant and ready for what comes next.",
+      "We use modern, proven tools — including AI where it creates real value — so your product stays maintainable, performant and ready for what comes next.",
     icon: Zap,
   },
   {

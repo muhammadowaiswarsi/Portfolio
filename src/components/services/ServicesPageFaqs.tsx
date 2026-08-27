@@ -27,7 +27,12 @@ const faqs = [
   {
     question: "What technologies do you work with?",
     answer:
-      "We work with modern web and product stacks including Next.js, React, Node.js, NestJS, PostgreSQL, MongoDB, AWS, Firebase and more — chosen to fit the product.",
+      "We work with modern web, product and AI stacks including Next.js, React, Node.js, NestJS, PostgreSQL, MongoDB, AWS, Firebase, OpenAI and more — chosen to fit the product.",
+  },
+  {
+    question: "Do you build AI products and chatbots?",
+    answer:
+      "Yes. We design and build AI-powered chatbots and intelligent product features that automate conversations, support customers and fit into your existing workflows.",
   },
   {
     question: "How do we get started?",

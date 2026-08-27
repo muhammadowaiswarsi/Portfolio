@@ -145,7 +145,7 @@ export const projectBySlugQuery = groq`
 `;
 
 export const homepageServicesQuery = groq`
-  *[_type == "service" && defined(slug.current)] | order(_createdAt asc) {
+  *[_type == "service" && defined(slug.current)] | order(coalesce(order, 9999) asc, _createdAt asc) {
     _id,
     title,
     "slug": slug.current,
