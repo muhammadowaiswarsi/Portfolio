@@ -23,6 +23,9 @@ export function WebAppCaseStudy({
   const webMobile = isWebMobileProject(project);
   const frontend = isFrontendProject(project);
   const pt360 = project.slug === "purchase-tracker-360";
+  const shareAccountz = project.slug === "share-accountz";
+  const freightOperator = project.slug === "tms-system";
+  const webMobileCase = pt360 || shareAccountz || freightOperator;
   const gallery = (project.gallery ?? []).filter((image) =>
     pt360
       ? !/(?:mobile app\s*[—–-]\s*(sign up|log in|product details)|portrait\s*[—–-]\s*(barcode scanner|product details))/i.test(
@@ -84,9 +87,13 @@ export function WebAppCaseStudy({
             ? "Landing and section screens from the Askademia frontend, shown at desktop scale so the interface stays readable."
             : pt360
               ? "Admin catalog screens on the web and purchase-tracking flows on iOS and Android, shown so the actual interface stays readable."
-              : webMobile
-                ? "Landing, onboarding, dashboard, and sharing screens from the web and mobile product, shown so the actual interface stays readable."
-                : "Key workflows from the web application, shown at desktop scale so the product interface stays readable."
+              : shareAccountz
+                ? "Landing and dashboard on the web, with login, sharing, and QR flows on the phone, shown so the actual interface stays readable."
+                : freightOperator
+                  ? "Admin dashboards on the web and loads, messages, and account flows on the phone, shown so the actual interface stays readable."
+                  : webMobile
+                    ? "Landing, onboarding, dashboard, and sharing screens from the web and mobile product, shown so the actual interface stays readable."
+                    : "Key workflows from the web application, shown at desktop scale so the product interface stays readable."
         }
         mobileEyebrow={webMobile ? "Mobile" : "Responsive"}
         mobileTitle={webMobile ? "On the phone" : "Built for smaller screens"}
@@ -110,7 +117,9 @@ export function WebAppCaseStudy({
               ) || project.gallery?.[0]
             : project.slug === "share-accountz"
               ? (project.gallery ?? []).find((image) =>
-                  /dashboard/i.test(image.alt || ""),
+                  /website\s*[—–-]\s*dashboard|web dashboard/i.test(
+                    image.alt || "",
+                  ),
                 ) || project.gallery?.[0]
               : project.slug === "askademia"
                 ? (project.gallery ?? []).find((image) =>
@@ -130,7 +139,7 @@ export function WebAppCaseStudy({
         title="Key Features"
         items={project.keyFeatures}
         imageFit={containFeatureImages ? "contain" : "cover"}
-        hideImages={pt360}
+        hideImages={webMobileCase}
       />
       <CaseStudyItemGrid
         eyebrow="Outcomes"
