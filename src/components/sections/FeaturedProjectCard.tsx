@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,13 +7,9 @@ import type { FeaturedProject } from "@/types/sanity";
 
 type FeaturedProjectCardProps = {
   project: FeaturedProject;
-  index: number;
 };
 
-export function FeaturedProjectCard({
-  project,
-  index,
-}: FeaturedProjectCardProps) {
+export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
   const cardSource = project.cardImage?.asset
     ? project.cardImage
     : project.thumbnail;
@@ -31,13 +24,7 @@ export function FeaturedProjectCard({
       : null;
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
-      className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-surface"
-    >
+    <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-surface">
       <Link href={href} className="relative block overflow-hidden bg-primary">
         <div className="relative aspect-[5/4]">
           {imageUrl ? (
@@ -47,7 +34,6 @@ export function FeaturedProjectCard({
               fill
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
-              unoptimized
             />
           ) : null}
         </div>
@@ -81,6 +67,6 @@ export function FeaturedProjectCard({
           </Button>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

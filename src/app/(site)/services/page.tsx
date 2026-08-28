@@ -15,6 +15,16 @@ export const metadata: Metadata = {
   title: "Services",
   description:
     "We design, build and optimize digital experiences — from websites and mobile apps to AI-powered chatbots — that help businesses grow, engage customers and move forward.",
+  alternates: {
+    canonical: "/services",
+  },
+  openGraph: {
+    title: "Services",
+    description:
+      "We design, build and optimize digital experiences — from websites and mobile apps to AI-powered chatbots — that help businesses grow, engage customers and move forward.",
+    url: "/services",
+    type: "website",
+  },
 };
 
 export default async function ServicesPage() {

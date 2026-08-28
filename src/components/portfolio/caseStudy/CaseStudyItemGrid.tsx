@@ -19,6 +19,7 @@ type CaseStudyItemGridProps = {
   items: CaseStudyItem[] | null | undefined;
   numbered?: boolean;
   imageFit?: "cover" | "contain" | "natural";
+  hideImages?: boolean;
 };
 
 export function CaseStudyItemGrid({
@@ -27,11 +28,14 @@ export function CaseStudyItemGrid({
   items,
   numbered = false,
   imageFit = "cover",
+  hideImages = false,
 }: CaseStudyItemGridProps) {
   const completeItems = completeCaseStudyItems(items);
   const itemsWithImages = completeItems.filter((item) => hasImage(item.image));
   const visibleItems =
-    itemsWithImages.length > 0 ? itemsWithImages : completeItems;
+    hideImages || itemsWithImages.length === 0
+      ? completeItems
+      : itemsWithImages;
 
   if (visibleItems.length === 0) return null;
 
@@ -44,12 +48,20 @@ export function CaseStudyItemGrid({
           headingClassName="font-display font-semibold"
         />
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:gap-8">
+        <div
+          className={
+            hideImages
+              ? "mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8"
+              : "mt-12 grid gap-6 sm:grid-cols-2 lg:gap-8"
+          }
+        >
           {visibleItems.map((item, index) => {
             const imageUrl =
-              imageFit === "cover"
-                ? getImageUrl(item.image, 1200, 750)
-                : getImageUrl(item.image, 1400);
+              hideImages
+                ? null
+                : imageFit === "cover"
+                  ? getImageUrl(item.image, 1200, 750)
+                  : getImageUrl(item.image, 1400);
             const imageAlt = item.image?.alt || item.title || title;
 
             return (
@@ -97,7 +109,13 @@ export function CaseStudyItemGrid({
                   )
                 ) : null}
 
-                <div className="flex flex-1 flex-col p-6 sm:p-7">
+                <div
+                  className={
+                    hideImages
+                      ? "flex flex-1 flex-col p-7 sm:p-8"
+                      : "flex flex-1 flex-col p-6 sm:p-7"
+                  }
+                >
                   {numbered ? (
                     <p className="mb-3 text-[11px] font-medium uppercase tracking-[0.22em] text-accent">
                       {String(index + 1).padStart(2, "0")}

@@ -26,8 +26,8 @@ export async function Services() {
 
         {services.length > 0 ? (
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {services.map((service, index) => (
-              <ServiceCard key={service._id} service={service} index={index} />
+            {services.map((service) => (
+              <ServiceCard key={service._id} service={service} />
             ))}
           </div>
         ) : (

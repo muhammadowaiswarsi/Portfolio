@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -52,19 +48,8 @@ export function Process() {
             className="absolute top-6 bottom-6 left-6 w-px bg-primary/50 md:hidden"
           />
 
-          {steps.map((step, index) => (
-            <motion.li
-              key={step.number}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{
-                duration: 0.45,
-                delay: index * 0.08,
-                ease: "easeOut",
-              }}
-              className="relative"
-            >
+          {steps.map((step) => (
+            <li key={step.number} className="relative">
               <article className="group h-full rounded-2xl border border-border bg-surface p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-primary sm:p-7">
                 <span className="relative z-10 mb-6 flex size-12 items-center justify-center rounded-full border border-primary bg-background text-sm font-medium tracking-wide text-accent transition-colors duration-300 group-hover:border-accent">
                   {step.number}
@@ -76,7 +61,7 @@ export function Process() {
                   {step.description}
                 </p>
               </article>
-            </motion.li>
+            </li>
           ))}
         </ol>
       </Container>

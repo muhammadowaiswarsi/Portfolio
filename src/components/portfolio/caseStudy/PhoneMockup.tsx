@@ -19,7 +19,7 @@ export function PhoneMockup({
   sizes = "(min-width: 1024px) 280px, 55vw",
   className,
   caption,
-  fit = "contain",
+  fit = "cover",
 }: PhoneMockupProps) {
   return (
     <figure className={cn("mx-auto w-full max-w-[17.5rem]", className)}>
@@ -28,18 +28,28 @@ export function PhoneMockup({
           aria-hidden="true"
           className="mx-auto mb-1.5 h-1.5 w-16 rounded-full bg-black"
         />
-        <div className="relative aspect-[9/19.5] overflow-hidden rounded-[1.55rem] bg-[#e8eef4]">
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            priority={priority}
-            unoptimized
-            sizes={sizes}
-            className={
-              fit === "contain" ? "object-contain" : "object-cover object-top"
-            }
-          />
+        <div
+          className={
+            fit === "contain"
+              ? "relative aspect-[9/19.5] overflow-hidden rounded-[1.55rem] bg-[#f4f6f5] p-3 sm:p-3.5"
+              : "relative aspect-[9/19.5] overflow-hidden rounded-[1.55rem] bg-[#f4f6f5]"
+          }
+        >
+          <div className="relative h-full w-full">
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              priority={priority}
+              unoptimized
+              sizes={sizes}
+              className={
+                fit === "contain"
+                  ? "object-contain object-center"
+                  : "object-cover object-top"
+              }
+            />
+          </div>
         </div>
         <div
           aria-hidden="true"

@@ -34,7 +34,6 @@ export function Logo({ className }: LogoProps) {
         className={cn("logo-dark", logoImageClassName)}
         style={logoImageStyle}
         priority
-        unoptimized
       />
       <Image
         src="/computing-yard-logo-light.png"
@@ -44,7 +43,6 @@ export function Logo({ className }: LogoProps) {
         className={cn("logo-light hidden", logoImageClassName)}
         style={logoImageStyle}
         priority
-        unoptimized
         aria-hidden="true"
       />
     </Link>

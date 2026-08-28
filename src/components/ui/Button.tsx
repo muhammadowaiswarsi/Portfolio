@@ -37,7 +37,7 @@ function buttonClasses(
   className?: string,
 ) {
   return cn(
-    "inline-flex items-center justify-center gap-2 rounded-md font-medium tracking-wide transition-[background-color,border-color,color,transform] duration-200 ease-out",
+    "inline-flex cursor-pointer items-center justify-center gap-2 rounded-md font-medium tracking-wide transition-[background-color,border-color,color,transform] duration-200 ease-out",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
     "disabled:pointer-events-none disabled:opacity-50",
     "active:scale-[0.98]",
@@ -59,6 +59,7 @@ export function Button({
   ariaLabel,
 }: ButtonProps) {
   const classes = buttonClasses(variant, size, className);
+  const labeled = ariaLabel ? { "aria-label": ariaLabel } : undefined;
 
   if (href) {
     const isExternal = /^https?:\/\//.test(href);
@@ -68,7 +69,7 @@ export function Button({
         <a
           href={href}
           className={classes}
-          aria-label={ariaLabel}
+          {...labeled}
           onClick={onClick}
           target="_blank"
           rel="noopener noreferrer"
@@ -82,7 +83,7 @@ export function Button({
       <Link
         href={href}
         className={classes}
-        aria-label={ariaLabel}
+        {...labeled}
         onClick={onClick}
       >
         {children}
@@ -96,7 +97,7 @@ export function Button({
       className={classes}
       disabled={disabled}
       onClick={onClick}
-      aria-label={ariaLabel}
+      {...labeled}
     >
       {children}
     </button>

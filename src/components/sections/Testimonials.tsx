@@ -17,11 +17,10 @@ export async function Testimonials() {
 
         {testimonials.length > 0 ? (
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-            {testimonials.map((testimonial, index) => (
+            {testimonials.map((testimonial) => (
               <TestimonialCard
                 key={testimonial._id}
                 testimonial={testimonial}
-                index={index}
               />
             ))}
           </div>

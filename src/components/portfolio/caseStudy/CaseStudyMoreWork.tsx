@@ -21,12 +21,8 @@ export function CaseStudyMoreWork({ projects }: CaseStudyMoreWorkProps) {
           headingClassName="font-display font-semibold"
         />
         <div className="mt-12 grid gap-6 md:grid-cols-2 lg:gap-8">
-          {projects.map((project, index) => (
-            <FeaturedProjectCard
-              key={project._id}
-              project={project}
-              index={index}
-            />
+          {projects.map((project) => (
+            <FeaturedProjectCard key={project._id} project={project} />
           ))}
         </div>
       </Container>

@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -42,29 +38,15 @@ export function WhyComputingYard() {
             description="We combine strategy, design and engineering to build reliable digital products that help businesses grow, operate smarter and compete in a digital-first world."
           />
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="relative hidden min-h-[18rem] overflow-hidden rounded-2xl border border-border bg-surface lg:block"
-          >
+          <div className="relative hidden min-h-[18rem] overflow-hidden rounded-2xl border border-border bg-surface lg:block">
             <WhyVisual />
-          </motion.div>
+          </div>
         </div>
 
         <div className="mt-14 grid gap-6 md:grid-cols-3 lg:gap-8">
-          {values.map((value, index) => (
-            <motion.article
+          {values.map((value) => (
+            <article
               key={value.number}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{
-                duration: 0.45,
-                delay: index * 0.08,
-                ease: "easeOut",
-              }}
               className="group relative rounded-2xl border border-border bg-surface p-6 sm:p-7"
             >
               <span className="absolute left-0 top-0 h-[2px] w-full origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100" />
@@ -77,7 +59,7 @@ export function WhyComputingYard() {
               <p className="mt-3 text-sm leading-6 text-muted sm:text-[15px] sm:leading-7">
                 {value.description}
               </p>
-            </motion.article>
+            </article>
           ))}
         </div>
       </Container>

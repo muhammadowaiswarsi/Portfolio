@@ -1,19 +1,7 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 16 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.45, delay, ease: "easeOut" as const },
-  }),
-};
 
 export function Hero() {
   return (
@@ -25,44 +13,20 @@ export function Hero() {
 
       <Container className="relative grid items-center gap-14 py-20 sm:py-24 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 lg:py-28 xl:py-32">
         <div className="max-w-2xl">
-          <motion.p
-            className="mb-5 text-[11px] font-medium uppercase tracking-[0.28em] text-accent"
-            initial="hidden"
-            animate="visible"
-            custom={0.05}
-            variants={fadeUp}
-          >
+          <p className="cy-reveal cy-reveal-1 mb-5 text-[11px] font-medium uppercase tracking-[0.28em] text-accent">
             Computing Yard
-          </motion.p>
+          </p>
 
-          <motion.h1
-            className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-foreground uppercase sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem]"
-            initial="hidden"
-            animate="visible"
-            custom={0.12}
-            variants={fadeUp}
-          >
+          <h1 className="cy-reveal cy-reveal-2 font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-foreground uppercase sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem]">
             We build digital products that move businesses forward.
-          </motion.h1>
+          </h1>
 
-          <motion.p
-            className="mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8"
-            initial="hidden"
-            animate="visible"
-            custom={0.2}
-            variants={fadeUp}
-          >
+          <p className="cy-reveal cy-reveal-3 mt-6 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
             We design and develop high-performance websites, web applications,
             mobile apps and digital solutions for ambitious businesses.
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center"
-            initial="hidden"
-            animate="visible"
-            custom={0.28}
-            variants={fadeUp}
-          >
+          <div className="cy-reveal cy-reveal-4 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Button href="/contact" size="lg">
               Start a Project
               <ArrowUpRight className="size-4" aria-hidden="true" />
@@ -70,17 +34,12 @@ export function Hero() {
             <Button href="/portfolio" variant="secondary" size="lg">
               View Our Work
             </Button>
-          </motion.div>
+          </div>
         </div>
 
-        <motion.div
-          className="relative mx-auto w-full max-w-lg lg:max-w-none"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.18, ease: "easeOut" }}
-        >
+        <div className="cy-reveal cy-reveal-3 relative mx-auto w-full max-w-lg lg:max-w-none">
           <HeroVisual />
-        </motion.div>
+        </div>
       </Container>
     </section>
   );
@@ -160,13 +119,12 @@ function HeroVisual() {
         <rect x="334" y="286" width="48" height="8" rx="4" fill="#2C5270" opacity="0.12" />
         <rect x="272" y="326" width="128" height="36" rx="8" fill="#F57B00" opacity="0.16" />
 
-        <motion.circle
+        <circle
+          className="cy-hero-pulse"
           cx="198"
           cy="338"
           r="7"
           fill="#F57B00"
-          animate={{ r: [6, 8.5, 6], opacity: [0.85, 1, 0.85] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
         />
         <circle cx="318" cy="168" r="6" fill="#2C5270" />
         <circle cx="392" cy="278" r="5" fill="#2C5270" opacity="0.7" />

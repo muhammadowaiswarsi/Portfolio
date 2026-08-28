@@ -1,19 +1,7 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 18 },
-  visible: (delay: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, delay, ease: "easeOut" as const },
-  }),
-};
 
 export function FinalCta() {
   return (
@@ -37,49 +25,21 @@ export function FinalCta() {
 
       <Container className="relative">
         <div className="mx-auto max-w-3xl text-center">
-          <motion.p
-            className="mb-5 text-[11px] font-medium uppercase tracking-[0.28em] text-accent"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            custom={0.05}
-            variants={fadeUp}
-          >
+          <p className="mb-5 text-[11px] font-medium uppercase tracking-[0.28em] text-accent">
             LET&apos;S BUILD SOMETHING GREAT
-          </motion.p>
+          </p>
 
-          <motion.h2
-            className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-foreground sm:text-5xl lg:text-[3.15rem]"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            custom={0.12}
-            variants={fadeUp}
-          >
+          <h2 className="font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-foreground sm:text-5xl lg:text-[3.15rem]">
             Have an Idea? Let&apos;s Turn It Into Reality.
-          </motion.h2>
+          </h2>
 
-          <motion.p
-            className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            custom={0.2}
-            variants={fadeUp}
-          >
+          <p className="mx-auto mt-6 max-w-2xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
             Whether you are starting something new or transforming an existing
             business, our team is ready to help you build the right digital
             solution.
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.4 }}
-            custom={0.28}
-            variants={fadeUp}
-          >
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Button href="/contact" size="lg">
               Start a Project
               <ArrowUpRight className="size-4" aria-hidden="true" />
@@ -87,7 +47,7 @@ export function FinalCta() {
             <Button href="/contact" variant="secondary" size="lg">
               Contact Us
             </Button>
-          </motion.div>
+          </div>
         </div>
       </Container>
     </section>

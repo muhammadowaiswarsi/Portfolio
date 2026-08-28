@@ -18,21 +18,19 @@ const FILTERS = [
 
 type FilterId = (typeof FILTERS)[number]["id"];
 
-function getProjectType(project: FeaturedProject) {
-  return project.projectType === "mobile-app" || project.projectType === "web-app"
-    ? project.projectType
-    : null;
+function matchesFilter(project: FeaturedProject, filter: FilterId) {
+  if (filter === "all") return true;
+  if (project.projectType === "web-mobile") {
+    return filter === "mobile-app" || filter === "web-app";
+  }
+  return project.projectType === filter;
 }
 
 export function PortfolioGrid({ projects }: PortfolioGridProps) {
   const [activeFilter, setActiveFilter] = useState<FilterId>("all");
 
   const visibleProjects = useMemo(() => {
-    if (activeFilter === "all") return projects;
-
-    return projects.filter(
-      (project) => getProjectType(project) === activeFilter,
-    );
+    return projects.filter((project) => matchesFilter(project, activeFilter));
   }, [activeFilter, projects]);
 
   return (
@@ -65,12 +63,8 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
 
       {visibleProjects.length > 0 ? (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {visibleProjects.map((project, index) => (
-            <FeaturedProjectCard
-              key={project._id}
-              project={project}
-              index={index}
-            />
+          {visibleProjects.map((project) => (
+            <FeaturedProjectCard key={project._id} project={project} />
           ))}
         </div>
       ) : (

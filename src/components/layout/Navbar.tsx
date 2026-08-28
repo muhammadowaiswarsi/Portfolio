@@ -1,6 +1,5 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -72,11 +71,7 @@ export function Navbar() {
                 >
                   {item.label}
                   {active ? (
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute inset-x-3 -bottom-px h-0.5 bg-accent"
-                      transition={{ duration: 0.25, ease: "easeOut" }}
-                    />
+                    <span className="absolute inset-x-3 -bottom-px h-0.5 bg-accent" />
                   ) : null}
                 </Link>
               );
@@ -98,6 +93,7 @@ export function Navbar() {
               className="inline-flex size-10 items-center justify-center rounded-md text-foreground transition-colors hover:bg-surface hover:text-accent"
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
+              aria-controls="site-mobile-nav"
               onClick={() => setOpen((current) => !current)}
             >
               {open ? (
@@ -110,50 +106,39 @@ export function Navbar() {
         </div>
       </Container>
 
-      <AnimatePresence>
-        {open ? (
-          <motion.div
-            className="border-t border-border bg-background lg:hidden"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.22, ease: "easeOut" }}
-          >
-            <Container className="flex flex-col gap-1 py-4">
-              {navigation.map((item, index) => {
-                const active = isActivePath(pathname, item.href);
+      {open ? (
+        <div
+          id="site-mobile-nav"
+          className="border-t border-border bg-background lg:hidden"
+        >
+          <Container className="flex flex-col gap-1 py-4">
+            {navigation.map((item) => {
+              const active = isActivePath(pathname, item.href);
 
-                return (
-                  <motion.div
-                    key={item.href}
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.03, duration: 0.2 }}
-                  >
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "block rounded-md px-3 py-3 text-base",
-                        active
-                          ? "bg-surface text-foreground"
-                          : "text-foreground/80 hover:bg-surface hover:text-accent",
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  </motion.div>
-                );
-              })}
-              <div className="px-3 pt-3">
-                <Button href="/contact" className="w-full">
-                  Let&apos;s Talk
-                  <ArrowUpRight className="size-4" aria-hidden="true" />
-                </Button>
-              </div>
-            </Container>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={cn(
+                    "block rounded-md px-3 py-3 text-base",
+                    active
+                      ? "bg-surface text-foreground"
+                      : "text-foreground/80 hover:bg-surface hover:text-accent",
+                  )}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+            <div className="px-3 pt-3">
+              <Button href="/contact" className="w-full">
+                Let&apos;s Talk
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+              </Button>
+            </div>
+          </Container>
+        </div>
+      ) : null}
     </header>
   );
 }

@@ -79,7 +79,7 @@ export function ServicesPageFaqs() {
                     aria-expanded={open}
                     aria-controls={panelId}
                     onClick={() => setOpenIndex(open ? null : index)}
-                    className="flex w-full items-center justify-between gap-4 py-5 text-left"
+                    className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70"
                   >
                     <span className="font-display text-sm font-semibold tracking-[-0.02em] text-foreground sm:text-base">
                       {faq.question}

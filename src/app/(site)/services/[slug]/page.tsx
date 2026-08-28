@@ -38,10 +38,14 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `/services/${slug}`,
+    },
     openGraph: {
       title,
       description,
-      type: "article",
+      type: "website",
+      url: `/services/${slug}`,
       images: imageUrl ? [{ url: imageUrl, alt: imageAlt }] : undefined,
     },
     twitter: {

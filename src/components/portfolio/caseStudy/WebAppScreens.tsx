@@ -25,6 +25,7 @@ type WebAppScreensProps = {
   mobileEyebrow?: string;
   mobileTitle?: string;
   mobileDescription?: string;
+  phoneFit?: "cover" | "contain";
 };
 
 type ScreenKind = "mobile" | "graphic" | "desktop";
@@ -72,6 +73,7 @@ export function WebAppScreens({
   mobileEyebrow = "Responsive",
   mobileTitle = "Built for smaller screens",
   mobileDescription = "The same product on mobile, shown in phone frames so the responsive layout stays clear.",
+  phoneFit = "cover",
 }: WebAppScreensProps) {
   const gallery = (hasItems(images) ? images : []).filter(hasImage);
   const groups = clusterScreens(gallery);
@@ -122,7 +124,7 @@ export function WebAppScreens({
                     />
                   ) : null}
                   <div
-                    className={`${hasMain ? "mt-14 " : ""}grid justify-items-center gap-10 sm:grid-cols-2 lg:grid-cols-3`}
+                    className={`${hasMain ? "mt-14 " : ""}grid items-start justify-items-center gap-10 sm:grid-cols-2 lg:grid-cols-3`}
                   >
                     {group.images.map((image, index) => {
                       const imageUrl = getImageUrl(image, 1200);
@@ -148,7 +150,7 @@ export function WebAppScreens({
                               `${projectTitle} mobile screen ${index + 1}`
                             }
                             caption={caption(image.alt, `Screen ${index + 1}`)}
-                            fit="cover"
+                            fit={phoneFit}
                             sizes="(min-width: 1024px) 280px, 70vw"
                             className="max-w-none"
                           />

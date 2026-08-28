@@ -293,3 +293,19 @@ export const blogBySlugQuery = groq`
     }
   }
 `;
+
+export const sitemapEntriesQuery = groq`{
+  "projects": *[_type == "project" && defined(slug.current)] | order(_updatedAt desc) {
+    "slug": slug.current,
+    _updatedAt
+  },
+  "services": *[_type == "service" && defined(slug.current)] | order(_updatedAt desc) {
+    "slug": slug.current,
+    _updatedAt
+  },
+  "blogs": *[_type == "blog" && defined(slug.current) && defined(publishedAt)] | order(publishedAt desc) {
+    "slug": slug.current,
+    _updatedAt,
+    publishedAt
+  }
+}`;

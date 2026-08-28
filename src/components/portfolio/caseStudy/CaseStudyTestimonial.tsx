@@ -52,6 +52,7 @@ export function CaseStudyTestimonial({
           {rating > 0 ? (
             <div
               className="mt-5 flex justify-center gap-1"
+              role="img"
               aria-label={`${rating} out of 5 stars`}
             >
               {Array.from({ length: 5 }, (_, starIndex) => (

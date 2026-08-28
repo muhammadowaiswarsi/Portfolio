@@ -51,6 +51,8 @@ export const caseStudySubheadClass =
   "font-display font-semibold tracking-[-0.02em] text-foreground";
 
 export function isWebMobileProject(project: CaseStudyProject) {
+  if (project.projectType === "web-mobile") return true;
+
   const haystack = [
     project.businessType,
     ...(project.servicesProvided ?? []),

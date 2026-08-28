@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Quote, Star } from "lucide-react";
 import Image from "next/image";
 
@@ -9,13 +6,9 @@ import type { FeaturedTestimonial } from "@/types/sanity";
 
 type TestimonialCardProps = {
   testimonial: FeaturedTestimonial;
-  index: number;
 };
 
-export function TestimonialCard({
-  testimonial,
-  index,
-}: TestimonialCardProps) {
+export function TestimonialCard({ testimonial }: TestimonialCardProps) {
   const avatarUrl = testimonial.avatar?.asset
     ? urlFor(testimonial.avatar).width(160).height(160).fit("crop").url()
     : null;
@@ -23,16 +16,14 @@ export function TestimonialCard({
   const rating = Math.min(5, Math.max(0, Math.round(testimonial.rating || 0)));
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
-      className="group flex h-full flex-col rounded-2xl border border-border bg-surface p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-primary sm:p-7"
-    >
+    <article className="group flex h-full flex-col rounded-2xl border border-border bg-surface p-6 transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-primary sm:p-7">
       <Quote className="size-7 text-accent" aria-hidden="true" />
 
-      <div className="mt-4 flex gap-1" aria-label={`${rating} out of 5 stars`}>
+      <div
+        className="mt-4 flex gap-1"
+        role="img"
+        aria-label={`${rating} out of 5 stars`}
+      >
         {Array.from({ length: 5 }, (_, starIndex) => (
           <Star
             key={starIndex}
@@ -71,6 +62,6 @@ export function TestimonialCard({
           </p>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

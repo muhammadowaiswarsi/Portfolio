@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import {
   Cloud,
   Database,
@@ -57,20 +54,12 @@ export function Technologies() {
         />
 
         <div className="mt-14 space-y-5">
-          {groups.map((group, groupIndex) => {
+          {groups.map((group) => {
             const GroupIcon = group.icon;
 
             return (
-              <motion.div
+              <div
                 key={group.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{
-                  duration: 0.45,
-                  delay: groupIndex * 0.06,
-                  ease: "easeOut",
-                }}
                 className="rounded-2xl border border-border bg-surface p-5 sm:p-6"
               >
                 <div className="mb-4 flex items-center gap-3">
@@ -89,7 +78,7 @@ export function Technologies() {
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </div>
             );
           })}
         </div>

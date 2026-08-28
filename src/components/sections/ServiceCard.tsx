@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,10 +7,9 @@ import type { HomepageService } from "@/types/sanity";
 
 type ServiceCardProps = {
   service: HomepageService;
-  index: number;
 };
 
-export function ServiceCard({ service, index }: ServiceCardProps) {
+export function ServiceCard({ service }: ServiceCardProps) {
   const iconUrl = service.icon?.asset
     ? urlFor(service.icon).width(160).height(160).fit("crop").url()
     : null;
@@ -21,13 +17,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
   const href = `/services/${service.slug}`;
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, delay: index * 0.08, ease: "easeOut" }}
-      className="group relative flex h-full flex-col rounded-2xl border border-border bg-surface p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_24px_60px_color-mix(in_srgb,var(--primary)_22%,transparent)] sm:p-7"
-    >
+    <article className="group relative flex h-full flex-col rounded-2xl border border-border bg-surface p-6 transition-[border-color,transform,box-shadow] duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[0_24px_60px_color-mix(in_srgb,var(--primary)_22%,transparent)] sm:p-7">
       <span className="absolute left-0 top-0 h-[2px] w-full origin-left scale-x-0 bg-accent transition-transform duration-300 group-hover:scale-x-100" />
 
       <div className="mb-6 flex size-14 items-center justify-center overflow-hidden rounded-xl border border-primary/40 bg-primary/20 transition-colors duration-300 group-hover:border-accent/50 group-hover:bg-accent/10">
@@ -64,6 +54,6 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
           aria-hidden="true"
         />
       </Link>
-    </motion.article>
+    </article>
   );
 }

@@ -10,6 +10,16 @@ export const metadata: Metadata = {
   title: "Blogs",
   description:
     "Explore practical insights, ideas and strategies across technology, design, AI and digital growth.",
+  alternates: {
+    canonical: "/blogs",
+  },
+  openGraph: {
+    title: "Blogs",
+    description:
+      "Explore practical insights, ideas and strategies across technology, design, AI and digital growth.",
+    url: "/blogs",
+    type: "website",
+  },
 };
 
 export default async function BlogsPage() {

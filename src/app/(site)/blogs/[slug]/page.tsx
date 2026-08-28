@@ -34,10 +34,14 @@ export async function generateMetadata({
   return {
     title: post.title,
     description: post.excerpt,
+    alternates: {
+      canonical: `/blogs/${slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: "article",
+      url: `/blogs/${slug}`,
       publishedTime: post.publishedAt,
       authors: post.author ? [post.author] : undefined,
       images: coverUrl ? [{ url: coverUrl, alt: post.coverImage?.alt || post.title }] : undefined,

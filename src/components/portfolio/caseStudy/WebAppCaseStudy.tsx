@@ -22,6 +22,14 @@ export function WebAppCaseStudy({
 }: WebAppCaseStudyProps) {
   const webMobile = isWebMobileProject(project);
   const frontend = isFrontendProject(project);
+  const pt360 = project.slug === "purchase-tracker-360";
+  const gallery = (project.gallery ?? []).filter((image) =>
+    pt360
+      ? !/(?:mobile app\s*[—–-]\s*(sign up|log in|product details)|portrait\s*[—–-]\s*(barcode scanner|product details))/i.test(
+          image.alt || "",
+        )
+      : true,
+  );
   const containFeatureImages =
     project.slug === "traino-ai" ||
     project.slug === "tms-system" ||
@@ -55,7 +63,7 @@ export function WebAppCaseStudy({
         items={project.projectGoals}
       />
       <WebAppScreens
-        images={project.gallery}
+        images={gallery}
         projectTitle={project.title}
         eyebrow={
           frontend
@@ -74,9 +82,11 @@ export function WebAppCaseStudy({
         description={
           frontend
             ? "Landing and section screens from the Askademia frontend, shown at desktop scale so the interface stays readable."
-            : webMobile
-              ? "Landing, onboarding, dashboard, and sharing screens from the web and mobile product, shown so the actual interface stays readable."
-              : "Key workflows from the web application, shown at desktop scale so the product interface stays readable."
+            : pt360
+              ? "Admin catalog screens on the web and purchase-tracking flows on iOS and Android, shown so the actual interface stays readable."
+              : webMobile
+                ? "Landing, onboarding, dashboard, and sharing screens from the web and mobile product, shown so the actual interface stays readable."
+                : "Key workflows from the web application, shown at desktop scale so the product interface stays readable."
         }
         mobileEyebrow={webMobile ? "Mobile" : "Responsive"}
         mobileTitle={webMobile ? "On the phone" : "Built for smaller screens"}
@@ -85,6 +95,7 @@ export function WebAppCaseStudy({
             ? "The mobile experience, shown in phone frames so the app layout stays clear."
             : "The same product on mobile, shown in phone frames so the responsive layout stays clear."
         }
+        phoneFit={webMobile ? "contain" : "cover"}
       />
       <CaseStudyChallenges
         challenges={project.challenges}
@@ -105,7 +116,11 @@ export function WebAppCaseStudy({
                 ? (project.gallery ?? []).find((image) =>
                     /explore|tutor search|classroom/i.test(image.alt || ""),
                   ) || project.gallery?.[0]
-                : undefined
+                : pt360
+                  ? gallery.find((image) =>
+                      /product catalog|web dashboard/i.test(image.alt || ""),
+                    ) || gallery[0]
+                  : undefined
         }
         projectTitle={project.title}
       />
@@ -115,6 +130,7 @@ export function WebAppCaseStudy({
         title="Key Features"
         items={project.keyFeatures}
         imageFit={containFeatureImages ? "contain" : "cover"}
+        hideImages={pt360}
       />
       <CaseStudyItemGrid
         eyebrow="Outcomes"

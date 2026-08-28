@@ -99,11 +99,12 @@ export const project = defineType({
       title: "Project type",
       type: "string",
       group: "overview",
-      description: "Used by the portfolio listing filters: Mobile Apps or Web Apps.",
+      description: "Used by the portfolio listing filters: Mobile Apps or Web Apps. Web & Mobile appears in both.",
       options: {
         list: [
           { title: "Mobile App", value: "mobile-app" },
           { title: "Web App", value: "web-app" },
+          { title: "Web & Mobile", value: "web-mobile" },
         ],
         layout: "radio",
       },

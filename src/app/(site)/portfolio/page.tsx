@@ -10,6 +10,16 @@ export const metadata: Metadata = {
   title: "Portfolio",
   description:
     "Explore a selection of digital products and solutions we've built for ambitious businesses.",
+  alternates: {
+    canonical: "/portfolio",
+  },
+  openGraph: {
+    title: "Portfolio",
+    description:
+      "Explore a selection of digital products and solutions we've built for ambitious businesses.",
+    url: "/portfolio",
+    type: "website",
+  },
 };
 
 export default async function PortfolioPage() {

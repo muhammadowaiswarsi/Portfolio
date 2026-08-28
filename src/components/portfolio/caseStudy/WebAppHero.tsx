@@ -74,7 +74,8 @@ export function WebAppHero({
     project.slug === "health-share" ||
     project.slug === "tms-system" ||
     project.slug === "study-panda" ||
-    project.slug === "share-accountz";
+    project.slug === "share-accountz" ||
+    project.slug === "purchase-tracker-360";
 
   return (
     <section className="relative isolate overflow-hidden border-b border-border">
