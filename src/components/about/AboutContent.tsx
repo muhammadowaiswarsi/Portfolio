@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
   Cloud,
   Handshake,
@@ -119,9 +120,15 @@ export function AboutContent() {
               viewport={{ once: true, amount: 0.3 }}
               custom={0.16}
               variants={fadeUp}
-              className="relative min-h-[18rem] overflow-hidden rounded-2xl border border-border bg-surface lg:min-h-[26rem]"
+              className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_24px_70px_color-mix(in_srgb,var(--primary)_16%,transparent)] lg:aspect-auto lg:min-h-[26rem]"
             >
-              <StoryVisual />
+              <Image
+                src="/about-story.png"
+                alt="Strategy, design and engineering turning an idea into a digital product"
+                fill
+                sizes="(min-width: 1024px) 42vw, 100vw"
+                className="object-cover object-center"
+              />
             </motion.div>
           </div>
         </Container>
@@ -239,21 +246,5 @@ export function AboutContent() {
         </Container>
       </section>
     </>
-  );
-}
-
-function StoryVisual() {
-  return (
-    <div className="absolute inset-0 bg-background">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--primary)_30%,transparent),transparent_64%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--primary)_18%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--primary)_18%,transparent)_1px,transparent_1px)] bg-[size:44px_44px] opacity-70" />
-      <div className="absolute left-8 top-8 h-24 w-24 rounded-2xl border border-primary/60 bg-primary/25" />
-      <div className="absolute right-10 bottom-12 h-40 w-40 rounded-full border border-primary/40" />
-      <div className="absolute right-16 top-16 size-3 rounded-full bg-accent" />
-      <div className="absolute bottom-16 left-16 h-1.5 w-16 rounded-full bg-accent" />
-      <p className="absolute bottom-8 left-8 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/70">
-        Computing Yard
-      </p>
-    </div>
   );
 }
