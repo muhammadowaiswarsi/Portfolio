@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -31,15 +33,21 @@ export function WhyComputingYard() {
       />
 
       <Container className="relative">
-        <div className="grid items-end gap-12 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16">
+        <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16">
           <SectionHeading
             eyebrow="WHY COMPUTING YARD"
             title="Technology That Solves Real Business Problems"
             description="We combine strategy, design and engineering to build reliable digital products that help businesses grow, operate smarter and compete in a digital-first world."
           />
 
-          <div className="relative hidden min-h-[18rem] overflow-hidden rounded-2xl border border-border bg-surface lg:block">
-            <WhyVisual />
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_24px_70px_color-mix(in_srgb,var(--primary)_16%,transparent)]">
+            <Image
+              src="/why-computing-yard.png"
+              alt="Strategy, design and engineering working together on a digital product"
+              fill
+              sizes="(min-width: 1024px) 38vw, 100vw"
+              className="object-cover object-center"
+            />
           </div>
         </div>
 
@@ -64,23 +72,5 @@ export function WhyComputingYard() {
         </div>
       </Container>
     </section>
-  );
-}
-
-function WhyVisual() {
-  return (
-    <div className="absolute inset-0 bg-background">
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--primary)_28%,transparent),transparent_62%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--primary)_18%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--primary)_18%,transparent)_1px,transparent_1px)] bg-[size:44px_44px] opacity-70" />
-
-      <div className="absolute left-8 top-8 h-24 w-24 rounded-2xl border border-primary/60 bg-primary/25" />
-      <div className="absolute bottom-10 right-10 h-36 w-36 rounded-full border border-primary/40" />
-      <div className="absolute right-16 top-16 size-3 rounded-full bg-accent" />
-      <div className="absolute bottom-16 left-16 h-1.5 w-16 rounded-full bg-accent" />
-
-      <p className="absolute bottom-8 left-8 text-[11px] font-medium uppercase tracking-[0.22em] text-foreground/70">
-        Computing Yard
-      </p>
-    </div>
   );
 }

@@ -1,18 +1,32 @@
 import { ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-background">
+    <section className="relative isolate overflow-hidden bg-background">
+      <Image
+        src="/hero-background.png"
+        alt=""
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center"
+        aria-hidden="true"
+      />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,color-mix(in_srgb,var(--primary)_8%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_srgb,var(--primary)_8%,transparent)_1px,transparent_1px)] bg-[size:72px_72px] [mask-image:radial-gradient(ellipse_at_center,black_18%,transparent_72%)]"
+        className="absolute inset-0 bg-background/40"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background to-transparent"
       />
 
-      <Container className="relative grid items-center gap-14 py-20 sm:py-24 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] lg:gap-16 lg:py-28 xl:py-32">
-        <div className="max-w-2xl">
+      <Container className="relative flex min-h-[34rem] items-center py-20 sm:min-h-[38rem] sm:py-24 lg:min-h-[42rem] lg:py-28 xl:min-h-[46rem] xl:py-32">
+        <div className="max-w-2xl lg:max-w-[38rem] [text-shadow:0_8px_28px_color-mix(in_srgb,var(--background)_75%,transparent)]">
           <p className="cy-reveal cy-reveal-1 mb-5 text-[11px] font-medium uppercase tracking-[0.28em] text-accent">
             Computing Yard
           </p>
@@ -36,116 +50,7 @@ export function Hero() {
             </Button>
           </div>
         </div>
-
-        <div className="cy-reveal cy-reveal-3 relative mx-auto w-full max-w-lg lg:max-w-none">
-          <HeroVisual />
-        </div>
       </Container>
     </section>
-  );
-}
-
-function HeroVisual() {
-  return (
-    <div className="relative aspect-square w-full max-h-[34rem]">
-      <div className="absolute inset-0 rounded-[2rem] border border-border bg-surface shadow-[0_24px_80px_color-mix(in_srgb,var(--primary)_12%,transparent)]" />
-
-      <svg
-        viewBox="0 0 520 520"
-        className="relative h-full w-full"
-        aria-hidden="true"
-      >
-        <defs>
-          <radialGradient id="hero-glow" cx="50%" cy="42%" r="48%">
-            <stop offset="0%" stopColor="#F57B00" stopOpacity="0.18" />
-            <stop offset="100%" stopColor="#2C5270" stopOpacity="0" />
-          </radialGradient>
-        </defs>
-
-        <rect width="520" height="520" rx="32" fill="url(#hero-glow)" />
-
-        <g opacity="0.22" stroke="#2C5270" strokeWidth="1">
-          {Array.from({ length: 7 }, (_, index) => (
-            <line
-              key={`v-${index}`}
-              x1={80 + index * 60}
-              y1="70"
-              x2={80 + index * 60}
-              y2="450"
-            />
-          ))}
-          {Array.from({ length: 7 }, (_, index) => (
-            <line
-              key={`h-${index}`}
-              x1="70"
-              y1={80 + index * 60}
-              x2="450"
-              y2={80 + index * 60}
-            />
-          ))}
-        </g>
-
-        <rect
-          x="96"
-          y="118"
-          width="210"
-          height="132"
-          rx="18"
-          fill="#2C5270"
-          fillOpacity="0.28"
-          stroke="#2C5270"
-          strokeWidth="1.5"
-        />
-        <circle cx="118" cy="140" r="5" fill="#F57B00" />
-        <circle cx="136" cy="140" r="5" fill="#2C5270" opacity="0.35" />
-        <circle cx="154" cy="140" r="5" fill="#2C5270" opacity="0.35" />
-        <rect x="118" y="168" width="128" height="8" rx="4" fill="#2C5270" opacity="0.18" />
-        <rect x="118" y="186" width="168" height="8" rx="4" fill="#2C5270" opacity="0.12" />
-        <rect x="118" y="204" width="96" height="8" rx="4" fill="#F57B00" opacity="0.55" />
-
-        <rect
-          x="248"
-          y="232"
-          width="176"
-          height="158"
-          rx="18"
-          fill="#2C5270"
-          fillOpacity="0.28"
-          stroke="#2C5270"
-          strokeWidth="1.5"
-        />
-        <rect x="272" y="258" width="48" height="48" rx="10" fill="#2C5270" />
-        <rect x="334" y="268" width="64" height="8" rx="4" fill="#2C5270" opacity="0.2" />
-        <rect x="334" y="286" width="48" height="8" rx="4" fill="#2C5270" opacity="0.12" />
-        <rect x="272" y="326" width="128" height="36" rx="8" fill="#F57B00" opacity="0.16" />
-
-        <circle
-          className="cy-hero-pulse"
-          cx="198"
-          cy="338"
-          r="7"
-          fill="#F57B00"
-        />
-        <circle cx="318" cy="168" r="6" fill="#2C5270" />
-        <circle cx="392" cy="278" r="5" fill="#2C5270" opacity="0.7" />
-
-        <path
-          d="M198 338C198 338 238 286 318 168"
-          fill="none"
-          stroke="#2C5270"
-          strokeWidth="1.5"
-          strokeDasharray="5 7"
-          opacity="0.45"
-        />
-        <path
-          d="M198 338C248 352 330 320 392 278"
-          fill="none"
-          stroke="#F57B00"
-          strokeWidth="1.5"
-          strokeDasharray="5 7"
-          opacity="0.7"
-        />
-      </svg>
-    </div>
   );
 }
