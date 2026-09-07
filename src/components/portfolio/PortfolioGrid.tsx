@@ -1,7 +1,3 @@
-"use client";
-
-import { useMemo, useState } from "react";
-
 import { FeaturedProjectCard } from "@/components/sections/FeaturedProjectCard";
 import { cn } from "@/lib/cn";
 import type { FeaturedProject } from "@/types/sanity";
@@ -16,64 +12,52 @@ const FILTERS = [
   { id: "web-app", label: "Web Apps" },
 ] as const;
 
-type FilterId = (typeof FILTERS)[number]["id"];
-
-function matchesFilter(project: FeaturedProject, filter: FilterId) {
-  if (filter === "all") return true;
-  if (project.projectType === "web-mobile") {
-    return filter === "mobile-app" || filter === "web-app";
-  }
-  return project.projectType === filter;
+function typeClass(projectType: FeaturedProject["projectType"]) {
+  if (projectType === "web-mobile") return "type-web type-mobile";
+  if (projectType === "mobile-app") return "type-mobile";
+  return "type-web";
 }
 
 export function PortfolioGrid({ projects }: PortfolioGridProps) {
-  const [activeFilter, setActiveFilter] = useState<FilterId>("all");
-
-  const visibleProjects = useMemo(() => {
-    return projects.filter((project) => matchesFilter(project, activeFilter));
-  }, [activeFilter, projects]);
-
   return (
-    <div>
+    <div
+      className={cn(
+        "has-[#portfolio-filter-mobile-app:checked]:[&_.type-web:not(.type-mobile)]:hidden",
+        "has-[#portfolio-filter-web-app:checked]:[&_.type-mobile:not(.type-web)]:hidden",
+      )}
+    >
       <div
         className="mb-12 flex flex-wrap justify-center gap-3"
+        role="radiogroup"
         aria-label="Filter projects by type"
       >
-        {FILTERS.map((filter) => {
-          const active = activeFilter === filter.id;
-
-          return (
-            <button
-              key={filter.id}
-              type="button"
-              onClick={() => setActiveFilter(filter.id)}
-              className={cn(
-                "rounded-full px-5 py-2.5 text-sm font-medium tracking-wide transition-colors duration-200",
-                active
-                  ? "bg-accent text-accent-foreground"
-                  : "border border-border bg-surface text-foreground hover:border-primary hover:bg-primary/10",
-              )}
-              aria-pressed={active}
-            >
-              {filter.label}
-            </button>
-          );
-        })}
+        {FILTERS.map((filter, index) => (
+          <label
+            key={filter.id}
+            className="cursor-pointer rounded-full border border-border bg-surface px-5 py-2.5 text-sm font-medium tracking-wide text-foreground transition-colors duration-200 has-[:checked]:border-accent has-[:checked]:bg-accent has-[:checked]:text-accent-foreground hover:border-primary hover:bg-primary/10 has-[:checked]:hover:border-accent has-[:checked]:hover:bg-accent"
+          >
+            <input
+              id={`portfolio-filter-${filter.id}`}
+              type="radio"
+              name="portfolio-filter"
+              defaultChecked={index === 0}
+              className="sr-only"
+            />
+            {filter.label}
+          </label>
+        ))}
       </div>
 
-      {visibleProjects.length > 0 ? (
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {visibleProjects.map((project) => (
-            <FeaturedProjectCard key={project._id} project={project} />
-          ))}
-        </div>
-      ) : (
-        <div className="rounded-2xl border border-border bg-surface px-6 py-16 text-center sm:py-20">
-          <p className="text-sm text-muted sm:text-base">
-            No projects in this category yet.
-          </p>
-        </div>
-      )}
+      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {projects.map((project) => (
+          <div
+            key={project._id}
+            className={`portfolio-card ${typeClass(project.projectType)}`}
+          >
+            <FeaturedProjectCard project={project} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

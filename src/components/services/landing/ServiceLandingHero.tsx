@@ -13,6 +13,7 @@ import {
 } from "@/components/services/landing/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { getServiceIllustration } from "@/lib/service-illustrations";
 import type { ServiceLanding } from "@/types/sanity";
 
 type ServiceLandingHeroProps = {
@@ -24,10 +25,11 @@ export function ServiceLandingHero({ service }: ServiceLandingHeroProps) {
   const description = hasText(service.heroDescription)
     ? service.heroDescription
     : service.shortDescription;
+  const illustrationSrc = getServiceIllustration(service.slug);
   const iconUrl = hasImage(service.icon)
     ? getImageUrl(service.icon, 240, 240)
     : null;
-  const visualAlt = service.icon?.alt || title;
+  const visualAlt = `${title} illustration`;
 
   return (
     <section className="relative overflow-hidden bg-background">
@@ -105,42 +107,35 @@ export function ServiceLandingHero({ service }: ServiceLandingHeroProps) {
           </motion.div>
         </div>
 
-        <motion.div
-          className="relative mx-auto aspect-square w-full max-w-[34rem] overflow-hidden rounded-[2rem] bg-primary"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.55, delay: 0.16, ease: "easeOut" }}
-        >
-          <span
-            aria-hidden="true"
-            className="absolute top-8 left-8 size-24 rounded-3xl bg-white/10"
-          />
-          <span
-            aria-hidden="true"
-            className="absolute right-10 bottom-16 size-16 rounded-full border border-white/20"
-          />
-          <span
-            aria-hidden="true"
-            className="absolute top-1/2 left-1/3 size-10 rounded-xl bg-accent/80"
-          />
-
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex size-28 items-center justify-center rounded-[1.75rem] border border-white/20 bg-background/20 backdrop-blur-sm sm:size-32">
-              {iconUrl ? (
-                <Image
-                  src={iconUrl}
-                  alt={visualAlt}
-                  width={96}
-                  height={96}
-                  priority
-                  className="size-16 object-contain sm:size-20"
-                />
-              ) : (
-                <span className="size-10 rounded-lg bg-accent" />
-              )}
+        <div className="relative mx-auto aspect-square w-full max-w-[34rem] overflow-hidden rounded-[2rem] bg-primary">
+          {illustrationSrc ? (
+            <Image
+              src={illustrationSrc}
+              alt={visualAlt}
+              fill
+              priority
+              sizes="(min-width: 1024px) 34rem, 100vw"
+              className="object-cover"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="flex size-28 items-center justify-center rounded-[1.75rem] border border-white/20 bg-background/20 backdrop-blur-sm sm:size-32">
+                {iconUrl ? (
+                  <Image
+                    src={iconUrl}
+                    alt={visualAlt}
+                    width={96}
+                    height={96}
+                    priority
+                    className="size-16 object-contain sm:size-20"
+                  />
+                ) : (
+                  <span className="size-10 rounded-lg bg-accent" />
+                )}
+              </div>
             </div>
-          </div>
-        </motion.div>
+          )}
+        </div>
       </Container>
     </section>
   );

@@ -23,6 +23,7 @@ type ButtonProps = {
   variant?: ButtonVariant;
   size?: ButtonSize;
   href?: string;
+  prefetch?: boolean;
   className?: string;
   children: React.ReactNode;
   type?: "button" | "submit" | "reset";
@@ -51,6 +52,7 @@ export function Button({
   variant = "primary",
   size = "md",
   href,
+  prefetch,
   className,
   children,
   type = "button",
@@ -64,7 +66,7 @@ export function Button({
   if (href) {
     const isExternal = /^https?:\/\//.test(href);
 
-    if (isExternal) {
+    if (isExternal || href.startsWith("#") || href.startsWith("mailto:")) {
       return (
         <a
           href={href}
@@ -82,6 +84,7 @@ export function Button({
     return (
       <Link
         href={href}
+        prefetch={prefetch}
         className={classes}
         {...labeled}
         onClick={onClick}

@@ -13,6 +13,7 @@ import {
 } from "@/components/services/landing/helpers";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { getServiceIllustration } from "@/lib/service-illustrations";
 import type { SanityImage, ServiceLanding } from "@/types/sanity";
 
 type ServiceOverviewProps = {
@@ -43,6 +44,8 @@ export function ServiceOverview({ service }: ServiceOverviewProps) {
 
   const image = overviewImage(service);
   const imageUrl = image ? getImageUrl(image, 1400, 1400) : null;
+  const illustrationSrc = getServiceIllustration(service.slug);
+  const visualSrc = imageUrl ?? illustrationSrc;
   const iconUrl = hasImage(service.icon)
     ? getImageUrl(service.icon, 240, 240)
     : null;
@@ -68,9 +71,9 @@ export function ServiceOverview({ service }: ServiceOverviewProps) {
               className="absolute right-10 bottom-16 size-16 rounded-full border border-white/20"
             />
 
-            {imageUrl ? (
+            {visualSrc ? (
               <Image
-                src={imageUrl}
+                src={visualSrc}
                 alt={imageAlt}
                 fill
                 sizes="(min-width: 1024px) 34rem, 100vw"

@@ -21,6 +21,7 @@ export function Footer() {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  prefetch={false}
                   className="transition-colors duration-200 hover:text-accent"
                 >
                   {item.label}

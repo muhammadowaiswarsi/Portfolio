@@ -14,13 +14,6 @@ type FormState = {
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
 
-const initialState: FormState = {
-  fullName: "",
-  email: "",
-  phone: "",
-  message: "",
-};
-
 const underlineField =
   "w-full border-0 border-b border-border bg-transparent px-0 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-foreground/40 focus:border-accent";
 
@@ -47,19 +40,21 @@ function validate(values: FormState): FormErrors {
 }
 
 export function PortfolioLeadForm() {
-  const [values, setValues] = useState<FormState>(initialState);
   const [errors, setErrors] = useState<FormErrors>({});
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
     "idle",
   );
 
-  function update<Key extends keyof FormState>(key: Key, value: FormState[Key]) {
-    setValues((current) => ({ ...current, [key]: value }));
-    setStatus("idle");
-  }
-
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const form = event.currentTarget;
+    const data = new FormData(form);
+    const values: FormState = {
+      fullName: String(data.get("fullName") ?? ""),
+      email: String(data.get("email") ?? ""),
+      phone: String(data.get("phone") ?? ""),
+      message: String(data.get("message") ?? ""),
+    };
     const nextErrors = validate(values);
     setErrors(nextErrors);
 
@@ -95,7 +90,7 @@ export function PortfolioLeadForm() {
         return;
       }
 
-      setValues(initialState);
+      form.reset();
       setErrors({});
       setStatus("success");
     } catch {
@@ -110,7 +105,7 @@ export function PortfolioLeadForm() {
       noValidate
       className="rounded-[1.5rem] border border-border bg-surface p-6 shadow-[0_24px_80px_color-mix(in_srgb,var(--primary)_18%,transparent)] sm:p-8"
     >
-      <h2 className="font-display text-xl font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
+      <h2 className="cy-system-font text-xl font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
         Get In Touch With Us!
       </h2>
 
@@ -122,8 +117,6 @@ export function PortfolioLeadForm() {
             type="text"
             autoComplete="name"
             placeholder="Full Name *"
-            value={values.fullName}
-            onChange={(event) => update("fullName", event.target.value)}
             className={underlineField}
             aria-invalid={Boolean(errors.fullName)}
           />
@@ -135,8 +128,6 @@ export function PortfolioLeadForm() {
             type="email"
             autoComplete="email"
             placeholder="Business Email *"
-            value={values.email}
-            onChange={(event) => update("email", event.target.value)}
             className={underlineField}
             aria-invalid={Boolean(errors.email)}
           />
@@ -148,8 +139,6 @@ export function PortfolioLeadForm() {
             type="tel"
             autoComplete="tel"
             placeholder="Phone Number *"
-            value={values.phone}
-            onChange={(event) => update("phone", event.target.value)}
             className={underlineField}
             aria-invalid={Boolean(errors.phone)}
           />
@@ -160,8 +149,6 @@ export function PortfolioLeadForm() {
             name="message"
             rows={4}
             placeholder="Describe your project needs"
-            value={values.message}
-            onChange={(event) => update("message", event.target.value)}
             className={cn(underlineField, "min-h-[6.5rem] resize-y")}
             aria-invalid={Boolean(errors.message)}
           />

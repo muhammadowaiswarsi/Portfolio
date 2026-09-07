@@ -7,14 +7,18 @@ import type { FeaturedProject } from "@/types/sanity";
 
 type FeaturedProjectCardProps = {
   project: FeaturedProject;
+  priority?: boolean;
 };
 
-export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
+export function FeaturedProjectCard({
+  project,
+  priority = false,
+}: FeaturedProjectCardProps) {
   const cardSource = project.cardImage?.asset
     ? project.cardImage
     : project.thumbnail;
   const imageUrl = cardSource?.asset
-    ? urlFor(cardSource).width(1400).height(1120).fit("crop").url()
+    ? urlFor(cardSource).width(800).height(640).fit("crop").url()
     : null;
   const imageAlt = cardSource?.alt || project.title;
   const href = `/portfolio/${project.slug}`;
@@ -25,13 +29,19 @@ export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-border bg-surface">
-      <Link href={href} className="relative block overflow-hidden bg-primary">
+      <Link
+        href={href}
+        prefetch={false}
+        className="relative block overflow-hidden bg-primary"
+      >
         <div className="relative aspect-[5/4]">
           {imageUrl ? (
             <Image
               src={imageUrl}
               alt={imageAlt}
               fill
+              loading={priority ? "eager" : "lazy"}
+              quality={60}
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
               className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
             />
@@ -46,8 +56,12 @@ export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
           </p>
         ) : null}
 
-        <h3 className="font-display text-[1.35rem] font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
-          <Link href={href} className="transition-colors hover:text-accent">
+        <h3 className="text-[1.35rem] font-semibold tracking-[-0.02em] text-foreground sm:text-2xl">
+          <Link
+            href={href}
+            prefetch={false}
+            className="transition-colors hover:text-accent"
+          >
             {project.title}
           </Link>
         </h3>
@@ -59,6 +73,7 @@ export function FeaturedProjectCard({ project }: FeaturedProjectCardProps) {
         <div className="mt-auto pt-8">
           <Button
             href={href}
+            prefetch={false}
             variant="secondary"
             size="sm"
             className="rounded-full border-border px-6 leading-none hover:border-accent hover:bg-transparent hover:text-accent"

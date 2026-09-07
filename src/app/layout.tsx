@@ -9,20 +9,23 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
+  preload: false,
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
+  preload: false,
 });
 
 const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
-  weight: ["600", "700"],
-  display: "swap",
+  weight: ["600"],
+  display: "optional",
+  preload: false,
 });
 
 const siteUrl = getSiteUrl();
@@ -47,7 +50,7 @@ export const metadata: Metadata = {
     "Computing Yard",
   ],
   icons: {
-    icon: "/computing-yard-icon.png",
+    icon: "/favicon-32.png",
   },
   openGraph: {
     type: "website",
@@ -80,7 +83,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full antialiased`}
     >
-      <body className="flex min-h-full flex-col font-sans">
+      <body className="flex min-h-full flex-col">
         <Script id="cy-color-mode" strategy="beforeInteractive">
           {`try{var m=localStorage.getItem('cy-color-mode');if(m==='light'||m==='dark'){document.documentElement.setAttribute('data-color-mode',m);document.documentElement.style.colorScheme=m}}catch(e){}`}
         </Script>
