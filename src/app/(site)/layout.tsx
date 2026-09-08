@@ -1,3 +1,4 @@
+import { MixpanelPageTracker } from "@/components/analytics/MixpanelPageTracker";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { SiteJsonLd } from "@/components/seo/SiteJsonLd";
@@ -12,6 +13,7 @@ export default function SiteLayout({
 }>) {
   return (
     <ColorModeProvider>
+      <MixpanelPageTracker />
       <SiteJsonLd />
       <div className="flex min-h-full flex-1 flex-col">
         <Navbar />

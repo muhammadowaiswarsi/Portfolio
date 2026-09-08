@@ -19,6 +19,7 @@ import {
 } from "@/components/portfolio/caseStudy/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
 import type { CaseStudyProject } from "@/types/sanity";
 
 type WebAppHeroProps = {
@@ -167,7 +168,12 @@ export function WebAppHero({
             custom={0.28}
             variants={fadeUp}
           >
-            <Button href="/contact" size="lg" className="rounded-full px-7">
+            <Button
+              href="/contact"
+              size="lg"
+              className="rounded-full px-7"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_START_A_PROJECT}
+            >
               Start a Project
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Button>

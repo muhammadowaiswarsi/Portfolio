@@ -4,6 +4,7 @@ import { NavLinks } from "@/components/layout/NavLinks";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel-events";
 
 function ArrowIcon() {
   return (
@@ -29,7 +30,12 @@ export function Navbar() {
           <NavLinks className="hidden items-center gap-1 lg:flex" />
           <div className="hidden items-center gap-3 lg:flex">
             <ThemeToggle />
-            <Button href="/contact" prefetch={false} size="sm">
+            <Button
+              href="/contact"
+              prefetch={false}
+              size="sm"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
+            >
               Let&apos;s Talk
               <ArrowIcon />
             </Button>

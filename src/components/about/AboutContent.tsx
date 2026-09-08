@@ -18,6 +18,7 @@ import {
 
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
 const beliefs: { title: string; description: string; icon: LucideIcon }[] = [
@@ -237,7 +238,11 @@ export function AboutContent() {
               custom={0.16}
               variants={fadeUp}
             >
-              <Button href="/contact" size="lg">
+              <Button
+                href="/contact"
+                size="lg"
+                trackEvent={MIXPANEL_EVENTS.CLICKED_START_A_PROJECT}
+              >
                 Start a Project
                 <ArrowUpRight className="size-4" aria-hidden="true" />
               </Button>

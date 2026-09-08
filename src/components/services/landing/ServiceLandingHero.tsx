@@ -13,6 +13,7 @@ import {
 } from "@/components/services/landing/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
 import { getServiceIllustration } from "@/lib/service-illustrations";
 import type { ServiceLanding } from "@/types/sanity";
 
@@ -100,7 +101,12 @@ export function ServiceLandingHero({ service }: ServiceLandingHeroProps) {
             custom={0.24}
             variants={fadeUp}
           >
-            <Button href="/contact" size="lg" className="rounded-full px-7">
+            <Button
+              href="/contact"
+              size="lg"
+              className="rounded-full px-7"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
+            >
               Let&apos;s Talk
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Button>

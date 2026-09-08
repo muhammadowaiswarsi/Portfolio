@@ -1,6 +1,7 @@
 import { PortfolioLeadForm } from "@/components/portfolio/PortfolioLeadForm";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel-events";
 
 export function PortfolioHero() {
   return (
@@ -17,7 +18,12 @@ export function PortfolioHero() {
             build next.
           </p>
           <div className="mt-8">
-            <Button href="#get-in-touch" size="lg" className="rounded-full px-7">
+            <Button
+              href="#get-in-touch"
+              size="lg"
+              className="rounded-full px-7"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_START_A_PROJECT}
+            >
               Start a Project
             </Button>
           </div>

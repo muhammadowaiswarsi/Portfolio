@@ -4,6 +4,7 @@ import { PortfolioGrid } from "@/components/portfolio/PortfolioGrid";
 import { PortfolioHero } from "@/components/portfolio/PortfolioHero";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel-events";
 import { getAllProjects } from "@/sanity/lib/projects";
 
 export const metadata: Metadata = {
@@ -41,7 +42,11 @@ export default async function PortfolioPage() {
               <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-muted sm:text-base sm:leading-7">
                 Projects will appear here once they are published in Sanity.
               </p>
-              <Button href="/contact" className="mt-8 rounded-full">
+              <Button
+                href="/contact"
+                className="mt-8 rounded-full"
+                trackEvent={MIXPANEL_EVENTS.CLICKED_START_A_PROJECT}
+              >
                 Start a Project
               </Button>
             </div>

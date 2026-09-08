@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+import { MIXPANEL_EVENTS, track } from "@/lib/mixpanel";
 
 type FormState = {
   fullName: string;
@@ -44,6 +45,13 @@ export function PortfolioLeadForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
     "idle",
   );
+  const hasStartedRef = useRef(false);
+
+  function markFormStarted() {
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
+    track(MIXPANEL_EVENTS.STARTED_CONTACT_FORM);
+  }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -93,6 +101,7 @@ export function PortfolioLeadForm() {
       form.reset();
       setErrors({});
       setStatus("success");
+      track(MIXPANEL_EVENTS.CONTACT_FORM_SUBMITTED);
     } catch {
       setStatus("error");
     }
@@ -102,6 +111,7 @@ export function PortfolioLeadForm() {
     <form
       id="get-in-touch"
       onSubmit={onSubmit}
+      onFocus={markFormStarted}
       noValidate
       className="rounded-[1.5rem] border border-border bg-surface p-6 shadow-[0_24px_80px_color-mix(in_srgb,var(--primary)_18%,transparent)] sm:p-8"
     >

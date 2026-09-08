@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel-events";
 
 export function Hero() {
   return (
@@ -34,7 +35,11 @@ export function Hero() {
           </p>
 
           <div className="cy-reveal cy-reveal-4 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button href="/contact" size="lg">
+            <Button
+              href="/contact"
+              size="lg"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_START_A_PROJECT}
+            >
               Start a Project
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Button>
@@ -43,6 +48,7 @@ export function Hero() {
               variant="secondary"
               size="lg"
               className="border-white/40 text-white hover:border-white hover:bg-white hover:text-[#1a202c]"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_VIEW_OUR_WORK}
             >
               View Our Work
             </Button>

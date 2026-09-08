@@ -1,3 +1,4 @@
+import { MixpanelEntityView } from "@/components/analytics/MixpanelEntityView";
 import { ServiceBenefits } from "@/components/services/landing/ServiceBenefits";
 import { ServiceFaqs } from "@/components/services/landing/ServiceFaqs";
 import { ServiceFeatures } from "@/components/services/landing/ServiceFeatures";
@@ -7,6 +8,7 @@ import { ServiceLandingHero } from "@/components/services/landing/ServiceLanding
 import { ServiceOverview } from "@/components/services/landing/ServiceOverview";
 import { ServiceProcess } from "@/components/services/landing/ServiceProcess";
 import { ServiceTechnologies } from "@/components/services/landing/ServiceTechnologies";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel-events";
 import type { ServiceLanding } from "@/types/sanity";
 
 type ServiceLandingPageProps = {
@@ -16,6 +18,11 @@ type ServiceLandingPageProps = {
 export function ServiceLandingPage({ service }: ServiceLandingPageProps) {
   return (
     <article>
+      <MixpanelEntityView
+        event={MIXPANEL_EVENTS.VIEWED_SERVICE}
+        name={service.title}
+        slug={service.slug}
+      />
       <ServiceLandingHero service={service} />
       <ServiceOverview service={service} />
       <ServiceBenefits service={service} />

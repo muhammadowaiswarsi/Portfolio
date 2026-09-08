@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import { CONTACT_LIMITS, PROJECT_TYPES } from "@/lib/contact";
+import { MIXPANEL_EVENTS, track } from "@/lib/mixpanel";
 
 type FormState = {
   fullName: string;
@@ -61,8 +62,15 @@ export function ContactForm() {
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
     "idle",
   );
+  const hasStartedRef = useRef(false);
 
   const isSending = status === "sending";
+
+  function markFormStarted() {
+    if (hasStartedRef.current) return;
+    hasStartedRef.current = true;
+    track(MIXPANEL_EVENTS.STARTED_CONTACT_FORM);
+  }
 
   function update<Key extends keyof FormState>(key: Key, value: FormState[Key]) {
     setValues((current) => ({ ...current, [key]: value }));
@@ -112,6 +120,7 @@ export function ContactForm() {
       setValues(initialState);
       setErrors({});
       setStatus("success");
+      track(MIXPANEL_EVENTS.CONTACT_FORM_SUBMITTED);
     } catch {
       setStatus("error");
     }
@@ -120,6 +129,7 @@ export function ContactForm() {
   return (
     <form
       onSubmit={onSubmit}
+      onFocus={markFormStarted}
       noValidate
       className="rounded-2xl border border-border bg-surface p-6 sm:p-8"
     >

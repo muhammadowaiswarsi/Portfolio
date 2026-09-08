@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { caseStudySectionClass, fadeUp } from "@/components/portfolio/caseStudy/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
 
 export function CaseStudyCta() {
   return (
@@ -34,7 +35,11 @@ export function CaseStudyCta() {
             reliable digital product.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button href="/contact" size="lg">
+            <Button
+              href="/contact"
+              size="lg"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_START_A_PROJECT}
+            >
               Start a Project
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Button>

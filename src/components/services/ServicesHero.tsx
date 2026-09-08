@@ -6,6 +6,7 @@ import Link from "next/link";
 import { PortfolioLeadForm } from "@/components/portfolio/PortfolioLeadForm";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -74,7 +75,12 @@ export function ServicesHero() {
             custom={0.24}
             variants={fadeUp}
           >
-            <Button href="#get-in-touch" size="lg" className="rounded-full px-7">
+            <Button
+              href="#get-in-touch"
+              size="lg"
+              className="rounded-full px-7"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
+            >
               Let&apos;s Talk
             </Button>
           </motion.div>

@@ -7,6 +7,7 @@ import { fadeUp, hasText } from "@/components/services/landing/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
 import type { ServiceLanding } from "@/types/sanity";
 
 type ServiceLandingCtaProps = {
@@ -42,7 +43,12 @@ export function ServiceLandingCta({ service }: ServiceLandingCtaProps) {
             description={description}
           />
           <div className="mt-8">
-            <Button href="/contact" size="lg" className="rounded-full px-7">
+            <Button
+              href="/contact"
+              size="lg"
+              className="rounded-full px-7"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
+            >
               Let&apos;s Talk
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Button>

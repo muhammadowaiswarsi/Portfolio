@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
 import type { CaseStudyProject, SanityImage } from "@/types/sanity";
 
 type CaseStudyHeroProps = {
@@ -264,7 +265,12 @@ export function CaseStudyHero({ project }: CaseStudyHeroProps) {
             custom={0.28}
             variants={fadeUp}
           >
-            <Button href="/contact" size="lg" className="rounded-full px-7">
+            <Button
+              href="/contact"
+              size="lg"
+              className="rounded-full px-7"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_START_A_PROJECT}
+            >
               Start a Project
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Button>

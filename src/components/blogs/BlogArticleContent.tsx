@@ -5,11 +5,13 @@ import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { MixpanelEntityView } from "@/components/analytics/MixpanelEntityView";
 import { BlogPortableText } from "@/components/blogs/BlogPortableText";
 import { BlogRelated } from "@/components/blogs/BlogRelated";
 import { fadeUp, formatPublishedDate, hasText } from "@/components/blogs/helpers";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
 import { urlFor } from "@/sanity/lib/image";
 import type { BlogArticle, BlogListItem } from "@/types/sanity";
 
@@ -31,6 +33,11 @@ export function BlogArticleContent({
 
   return (
     <article className="bg-background">
+      <MixpanelEntityView
+        event={MIXPANEL_EVENTS.VIEWED_BLOG}
+        title={post.title}
+        slug={post.slug}
+      />
       <header className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
         <div
           aria-hidden="true"
@@ -172,7 +179,12 @@ export function BlogArticleContent({
               reliable digital product.
             </p>
             <div className="mt-8">
-              <Button href="/contact" size="lg" className="rounded-full px-7">
+              <Button
+                href="/contact"
+                size="lg"
+                className="rounded-full px-7"
+                trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
+              >
                 Let&apos;s Talk
                 <ArrowUpRight className="size-4" aria-hidden="true" />
               </Button>

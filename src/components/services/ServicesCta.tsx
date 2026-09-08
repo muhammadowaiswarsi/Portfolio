@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -36,7 +37,12 @@ export function ServicesCta() {
               reliable digital product.
             </p>
           </div>
-          <Button href="/contact" size="lg" className="w-fit shrink-0 rounded-full px-7">
+          <Button
+            href="/contact"
+            size="lg"
+            className="w-fit shrink-0 rounded-full px-7"
+            trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
+          >
             Let&apos;s Talk
             <ArrowUpRight className="size-4" aria-hidden="true" />
           </Button>

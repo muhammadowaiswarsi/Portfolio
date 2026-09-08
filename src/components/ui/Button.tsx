@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 
 import { cn } from "@/lib/cn";
+import { track, type MixpanelClickEventName } from "@/lib/mixpanel";
 
 const variants = {
   primary:
@@ -29,6 +32,7 @@ type ButtonProps = {
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
   onClick?: React.MouseEventHandler<HTMLElement>;
+  trackEvent?: MixpanelClickEventName;
   ariaLabel?: string;
 };
 
@@ -58,10 +62,18 @@ export function Button({
   type = "button",
   disabled,
   onClick,
+  trackEvent,
   ariaLabel,
 }: ButtonProps) {
   const classes = buttonClasses(variant, size, className);
   const labeled = ariaLabel ? { "aria-label": ariaLabel } : undefined;
+
+  const handleClick: React.MouseEventHandler<HTMLElement> = (event) => {
+    if (trackEvent) {
+      track(trackEvent);
+    }
+    onClick?.(event);
+  };
 
   if (href) {
     const isExternal = /^https?:\/\//.test(href);
@@ -72,7 +84,7 @@ export function Button({
           href={href}
           className={classes}
           {...labeled}
-          onClick={onClick}
+          onClick={handleClick}
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -87,7 +99,7 @@ export function Button({
         prefetch={prefetch}
         className={classes}
         {...labeled}
-        onClick={onClick}
+        onClick={handleClick}
       >
         {children}
       </Link>
@@ -99,7 +111,7 @@ export function Button({
       type={type}
       className={classes}
       disabled={disabled}
-      onClick={onClick}
+      onClick={handleClick}
       {...labeled}
     >
       {children}

@@ -9,6 +9,7 @@ import { ServicesStack } from "@/components/services/ServicesStack";
 import { ServicesWhyChoose } from "@/components/services/ServicesWhyChoose";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel-events";
 import { getAllServices } from "@/sanity/lib/services";
 
 export const metadata: Metadata = {
@@ -66,7 +67,11 @@ export default async function ServicesPage() {
               <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-muted sm:text-base sm:leading-7">
                 Services will appear here once they are published in Sanity.
               </p>
-              <Button href="/contact" className="mt-8 rounded-full">
+              <Button
+                href="/contact"
+                className="mt-8 rounded-full"
+                trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
+              >
                 Let&apos;s Talk
               </Button>
             </div>

@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel-events";
 
 export function FinalCta() {
   return (
@@ -40,7 +41,11 @@ export function FinalCta() {
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button href="/contact" size="lg">
+            <Button
+              href="/contact"
+              size="lg"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_START_A_PROJECT}
+            >
               Start a Project
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Button>

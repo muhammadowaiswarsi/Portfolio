@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
+import { MIXPANEL_EVENTS } from "@/lib/mixpanel-events";
 import { navigation } from "@/lib/navigation";
 
 export function MobileNav() {
@@ -43,7 +44,12 @@ export function MobileNav() {
             </a>
           ))}
           <div className="px-3 pt-3">
-            <Button href="/contact" prefetch={false} className="w-full">
+            <Button
+              href="/contact"
+              prefetch={false}
+              className="w-full"
+              trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
+            >
               Let&apos;s Talk
             </Button>
           </div>
