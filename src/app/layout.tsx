@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Syne } from "next/font/google";
 import Script from "next/script";
 
-import { getSiteUrl, siteDescription, siteName } from "@/lib/site";
+import { getSiteUrl, siteDescription, siteName, siteOgImage } from "@/lib/site";
 
 import "./globals.css";
 
@@ -59,11 +59,13 @@ export const metadata: Metadata = {
     title: siteName,
     description: siteDescription,
     url: siteUrl,
+    images: [siteOgImage],
   },
   twitter: {
     card: "summary_large_image",
     title: siteName,
     description: siteDescription,
+    images: [siteOgImage.url],
   },
   robots: {
     index: true,
