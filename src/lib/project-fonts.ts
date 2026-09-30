@@ -1,46 +1,15 @@
-import { Inter, Montserrat, Open_Sans, Roboto, Rubik } from "next/font/google";
-
-const openSans = Open_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-open-sans",
-  display: "swap",
-});
-
-const roboto = Roboto({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-  variable: "--font-roboto",
-  display: "swap",
-});
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-montserrat",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const rubik = Rubik({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-rubik",
-  display: "swap",
-});
+/**
+ * Project typography metadata only — no next/font imports.
+ * Fonts are loaded once in src/app/layout.tsx so client components
+ * never pull Turbopack Google-font modules (avoids module-not-found).
+ */
 
 const catalog: Record<string, { className: string; cssVar: string }> = {
-  "Open Sans": { className: openSans.variable, cssVar: "var(--font-open-sans)" },
-  Roboto: { className: roboto.variable, cssVar: "var(--font-roboto)" },
-  Montserrat: { className: montserrat.variable, cssVar: "var(--font-montserrat)" },
-  Inter: { className: inter.variable, cssVar: "var(--font-inter)" },
-  Rubik: { className: rubik.variable, cssVar: "var(--font-rubik)" },
+  "Open Sans": { className: "", cssVar: "var(--font-open-sans)" },
+  Roboto: { className: "", cssVar: "var(--font-roboto)" },
+  Montserrat: { className: "", cssVar: "var(--font-montserrat)" },
+  Inter: { className: "", cssVar: "var(--font-inter)" },
+  Rubik: { className: "", cssVar: "var(--font-rubik)" },
   Syne: { className: "", cssVar: "var(--font-syne)" },
 };
 

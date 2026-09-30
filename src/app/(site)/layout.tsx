@@ -1,4 +1,5 @@
 import { MixpanelPageTracker } from "@/components/analytics/MixpanelPageTracker";
+import { ChatbotWidget } from "@/components/chatbot/ChatbotWidget";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
 import { SiteJsonLd } from "@/components/seo/SiteJsonLd";
@@ -19,6 +20,7 @@ export default function SiteLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <ChatbotWidget />
       </div>
     </ColorModeProvider>
   );

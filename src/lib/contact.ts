@@ -17,10 +17,14 @@ export type ContactPayload = {
   phone: string;
   projectType: ProjectType;
   message: string;
+  source: ContactSource;
 };
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const CONTROL_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g;
+
+export const CONTACT_SOURCES = ["website", "chatbot"] as const;
+export type ContactSource = (typeof CONTACT_SOURCES)[number];
 
 export const CONTACT_LIMITS = {
   fullName: { min: 2, max: 80 },
@@ -36,8 +40,16 @@ function clean(value: unknown) {
   return value.replace(CONTROL_CHARS, "").trim();
 }
 
-function isProjectType(value: string): value is ProjectType {
+export function isProjectType(value: string): value is ProjectType {
   return (PROJECT_TYPES as readonly string[]).includes(value);
+}
+
+export function isValidEmail(value: string) {
+  return EMAIL_PATTERN.test(value) && value.length <= CONTACT_LIMITS.email.max;
+}
+
+function isContactSource(value: string): value is ContactSource {
+  return (CONTACT_SOURCES as readonly string[]).includes(value);
 }
 
 export function parseContactPayload(
@@ -88,6 +100,9 @@ export function parseContactPayload(
     return { ok: false };
   }
 
+  const sourceRaw = clean(body.source).toLowerCase();
+  const source: ContactSource = isContactSource(sourceRaw) ? sourceRaw : "website";
+
   return {
     ok: true,
     data: {
@@ -97,6 +112,7 @@ export function parseContactPayload(
       phone,
       projectType,
       message,
+      source,
     },
   };
 }

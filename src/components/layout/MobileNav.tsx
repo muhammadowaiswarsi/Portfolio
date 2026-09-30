@@ -1,9 +1,20 @@
+"use client";
+
+import { usePathname } from "next/navigation";
+
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { MIXPANEL_EVENTS } from "@/lib/mixpanel-events";
 import { navigation } from "@/lib/navigation";
 
+function isActivePath(pathname: string, href: string) {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
 export function MobileNav() {
+  const pathname = usePathname() || "/";
+
   return (
     <details className="group lg:hidden">
       <summary
@@ -33,16 +44,22 @@ export function MobileNav() {
       </summary>
       <div className="fixed inset-x-0 top-[5.5rem] z-50 border-t border-border bg-background lg:top-24">
         <Container className="flex flex-col gap-1 py-4">
-          {navigation.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              data-nav={item.href}
-              className="block rounded-md px-3 py-3 text-base text-foreground/80 hover:bg-surface hover:text-accent data-[active]:bg-surface data-[active]:text-foreground"
-            >
-              {item.label}
-            </a>
-          ))}
+          {navigation.map((item) => {
+            const active = isActivePath(pathname, item.href);
+
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                data-nav={item.href}
+                data-active={active ? "" : undefined}
+                aria-current={active ? "page" : undefined}
+                className="block rounded-md px-3 py-3 text-base text-foreground/80 hover:bg-surface hover:text-accent data-[active]:bg-surface data-[active]:text-foreground"
+              >
+                {item.label}
+              </a>
+            );
+          })}
           <div className="px-3 pt-3">
             <Button
               href="/contact"

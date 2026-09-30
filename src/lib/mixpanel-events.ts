@@ -8,6 +8,12 @@ export const MIXPANEL_EVENTS = {
   VIEWED_BLOG: "Viewed Blog",
   STARTED_CONTACT_FORM: "Started Contact Form",
   CONTACT_FORM_SUBMITTED: "Contact Form Submitted",
+  CHATBOT_OPENED: "Chatbot Opened",
+  CHATBOT_MESSAGE_SENT: "Chatbot Message Sent",
+  CHATBOT_SOURCE_CLICKED: "Chatbot Source Clicked",
+  CHATBOT_LEAD_STARTED: "Chatbot Lead Started",
+  CHATBOT_LEAD_SUBMITTED: "Chatbot Lead Submitted",
+  CHATBOT_LEAD_SUBMISSION_FAILED: "Chatbot Lead Submission Failed",
 } as const;
 
 export type MixpanelEventName =
@@ -40,4 +46,22 @@ export type MixpanelEventProperties = {
   };
   [MIXPANEL_EVENTS.STARTED_CONTACT_FORM]: undefined;
   [MIXPANEL_EVENTS.CONTACT_FORM_SUBMITTED]: undefined;
+  [MIXPANEL_EVENTS.CHATBOT_OPENED]: {
+    path: string;
+  };
+  [MIXPANEL_EVENTS.CHATBOT_MESSAGE_SENT]: {
+    channel: "website";
+    message_type: "info" | "lead";
+    retrieval_mode?: "hybrid" | "sanity_fallback";
+    reranker_used?: boolean;
+    source_count?: number;
+    retrieval_success?: boolean;
+  };
+  [MIXPANEL_EVENTS.CHATBOT_SOURCE_CLICKED]: {
+    source_type: string;
+    source_title: string;
+  };
+  [MIXPANEL_EVENTS.CHATBOT_LEAD_STARTED]: undefined;
+  [MIXPANEL_EVENTS.CHATBOT_LEAD_SUBMITTED]: undefined;
+  [MIXPANEL_EVENTS.CHATBOT_LEAD_SUBMISSION_FAILED]: undefined;
 };

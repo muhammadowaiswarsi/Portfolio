@@ -46,11 +46,6 @@ export function Navbar() {
           </div>
         </div>
       </Container>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `(()=>{var p=location.pathname;document.querySelectorAll("[data-nav]").forEach(function(a){var h=a.getAttribute("data-nav");if(!h)return;if(h==="/"?p==="/":p===h||p.indexOf(h+"/")===0)a.setAttribute("data-active","")})})()`,
-        }}
-      />
     </header>
   );
 }
