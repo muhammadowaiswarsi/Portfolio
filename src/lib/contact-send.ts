@@ -19,16 +19,31 @@ function sourceLabel(source: ContactPayload["source"]) {
   return source === "chatbot" ? "Website Chatbot" : "Website Contact Form";
 }
 
+/** Strip wrapping quotes often pasted into host env UIs (Vercel, etc.). */
+function envValue(name: string) {
+  const raw = process.env[name]?.trim();
+  if (!raw) return undefined;
+  if (
+    (raw.startsWith('"') && raw.endsWith('"')) ||
+    (raw.startsWith("'") && raw.endsWith("'"))
+  ) {
+    return raw.slice(1, -1).trim();
+  }
+  return raw;
+}
+
 export async function sendContactInquiry(
   payload: ContactPayload,
 ): Promise<{ ok: true } | { ok: false }> {
-  const apiKey = process.env.RESEND_API_KEY?.trim();
-  const fromEmail = process.env.CONTACT_FROM_EMAIL?.trim();
-  const toEmail =
-    process.env.CONTACT_RECEIVER_EMAIL?.trim() || "zainzeeshan412@gmail.com";
+  const apiKey = envValue("RESEND_API_KEY");
+  const fromEmail = envValue("CONTACT_FROM_EMAIL");
+  const toEmail = envValue("CONTACT_RECEIVER_EMAIL") || "zainzeeshan412@gmail.com";
 
   if (!apiKey || !fromEmail || !fromEmail.includes("@")) {
-    console.error("Contact form is missing RESEND_API_KEY or a valid CONTACT_FROM_EMAIL.");
+    console.error("Contact form is missing RESEND_API_KEY or a valid CONTACT_FROM_EMAIL.", {
+      hasApiKey: Boolean(apiKey),
+      hasFromEmail: Boolean(fromEmail),
+    });
     return { ok: false };
   }
 
@@ -74,16 +89,26 @@ export async function sendContactInquiry(
 
     if (error || !data?.id) {
       console.error("Contact inquiry email was not accepted.", {
-        name: error?.name,
         source,
+        name: error?.name,
+        message: error?.message,
+        statusCode:
+          error && typeof error === "object" && "statusCode" in error
+            ? (error as { statusCode?: number }).statusCode
+            : undefined,
+        toDomain: toEmail.includes("@") ? toEmail.split("@")[1] : undefined,
+        fromUsesOnboarding: fromEmail.includes("onboarding@resend.dev"),
       });
       return { ok: false };
     }
 
     console.info("Contact inquiry email accepted.", { source });
     return { ok: true };
-  } catch {
-    console.error("Contact inquiry email failed to send.", { source });
+  } catch (error) {
+    console.error("Contact inquiry email failed to send.", {
+      source,
+      message: error instanceof Error ? error.message : "unknown",
+    });
     return { ok: false };
   }
 }

@@ -86,7 +86,7 @@ export function detectIntentBoosts(query: string): Partial<Record<KnowledgeKind,
   }
 
   if (/\b(tech|technology|technologies|stack|framework|react|next|node|aws)\b/.test(q)) {
-    boosts.technology = 4;
+    boosts.technology = 5;
   }
 
   if (/\b(website|websites|web app|web development|mobile app|chatbot|seo|ui\/?ux)\b/.test(q)) {
@@ -103,6 +103,45 @@ export function detectIntentBoosts(query: string): Partial<Record<KnowledgeKind,
   }
 
   return boosts;
+}
+
+/**
+ * Preferred knowledge kinds for a catalog-style question.
+ * Used to keep UI sources aligned with the visitor's ask.
+ */
+export function preferredKnowledgeKinds(query: string): KnowledgeKind[] {
+  const boosts = detectIntentBoosts(query);
+  const primary = primaryIntent(boosts);
+  if (!primary) return [];
+
+  // For "what services do you offer?", prioritize service pages over FAQs.
+  if (primary === "service") {
+    if (isCatalogListQuery(query)) return ["service"];
+    return ["service", "faq"];
+  }
+  if (primary === "project") return ["project"];
+  if (primary === "technology") return ["technology"];
+  if (primary === "blog") return ["blog"];
+  if (primary === "testimonial") return ["testimonial"];
+  if (primary === "company") return ["company", "service"];
+  return [primary];
+}
+
+/**
+ * Clear list-style asks where type preference matters more than deep rerank.
+ * Used to skip the Cohere rerank hop and cut latency.
+ */
+export function isCatalogListQuery(query: string) {
+  const q = query.toLowerCase().trim();
+  if (q.length > 160) return false;
+
+  return (
+    /\b(what services|which services|services do you offer|list (your )?services)\b/.test(q) ||
+    /\b(what projects|which projects|tell me about (your )?projects|list (your )?projects|show (me )?(your )?portfolio)\b/.test(
+      q,
+    ) ||
+    /\b(what technolog|which technolog|technologies do you use|tech stack|what stack)\b/.test(q)
+  );
 }
 
 export function titleMatchScore(title: string, terms: string[]) {

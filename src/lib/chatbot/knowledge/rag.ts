@@ -10,6 +10,10 @@ import {
   formatKnowledgeContext,
   getKnowledgeProvider,
 } from "@/lib/chatbot/knowledge";
+import {
+  isCatalogListQuery,
+  preferredKnowledgeKinds,
+} from "@/lib/chatbot/knowledge/score";
 import type {
   ChatSource,
   KnowledgeKind,
@@ -20,9 +24,11 @@ import {
   HybridRetrievalError,
   retrieve,
 } from "@/lib/rag/hybrid";
-import type { HybridSearchResult } from "@/lib/rag/types";
+import type { HybridSearchResult, RagDocumentType } from "@/lib/rag/types";
 
 const MAX_UI_SOURCES = 4;
+/** Prefer at least this many intent-matching sources before mixing other types. */
+const MIN_PREFERRED_SOURCES = 2;
 
 export type ChatRetrievalMode = "hybrid" | "sanity_fallback";
 
@@ -122,6 +128,50 @@ function toKnowledgeResult(item: HybridSearchResult): KnowledgeSearchResult {
 }
 
 /**
+ * Soft preference: keep preferred document types first while preserving relative order.
+ */
+export function preferMatchingTypes(
+  items: HybridSearchResult[],
+  preferred: KnowledgeKind[],
+): HybridSearchResult[] {
+  if (preferred.length === 0 || items.length === 0) return items;
+
+  const preferredSet = new Set(preferred);
+  const matched: HybridSearchResult[] = [];
+  const rest: HybridSearchResult[] = [];
+
+  for (const item of items) {
+    const kind = mapDocumentType(item.documentType);
+    if (preferredSet.has(kind)) matched.push(item);
+    else rest.push(item);
+  }
+
+  // If we found enough preferred chunks, drop unrelated types from context.
+  if (matched.length >= MIN_PREFERRED_SOURCES) {
+    return matched;
+  }
+
+  return [...matched, ...rest];
+}
+
+export function preferKnowledgeResults(
+  results: KnowledgeSearchResult[],
+  preferred: KnowledgeKind[],
+): KnowledgeSearchResult[] {
+  if (preferred.length === 0 || results.length === 0) return results;
+
+  const preferredSet = new Set(preferred);
+  const matched = results.filter((item) => preferredSet.has(item.kind));
+  const rest = results.filter((item) => !preferredSet.has(item.kind));
+
+  if (matched.length >= MIN_PREFERRED_SOURCES) {
+    return matched;
+  }
+
+  return [...matched, ...rest];
+}
+
+/**
  * Drop weakly relevant final candidates when scores are available.
  * Thresholds are optional/env-configurable — not claimed optimal.
  */
@@ -179,11 +229,28 @@ export function filterUsefulContext(
 export function uniqueChatSources(
   results: KnowledgeSearchResult[],
   limit = MAX_UI_SOURCES,
+  preferred: KnowledgeKind[] = [],
 ): ChatSource[] {
   const sources: ChatSource[] = [];
   const seen = new Set<string>();
+  const preferredSet = new Set(preferred);
 
-  for (const item of results) {
+  const ordered =
+    preferred.length > 0
+      ? [
+          ...results.filter((item) => preferredSet.has(item.kind)),
+          ...results.filter((item) => !preferredSet.has(item.kind)),
+        ]
+      : results;
+
+  const preferredOnly =
+    preferred.length > 0 &&
+    ordered.filter((item) => preferredSet.has(item.kind)).length >=
+      MIN_PREFERRED_SOURCES
+      ? ordered.filter((item) => preferredSet.has(item.kind))
+      : ordered;
+
+  for (const item of preferredOnly) {
     const key = item.url || `${item.kind}:${item.title}` || item.id;
     if (seen.has(key)) continue;
     seen.add(key);
@@ -253,6 +320,19 @@ async function sanityFallbackSearch(
   }
 }
 
+function preferredAsFilters(preferred: KnowledgeKind[]): RagDocumentType[] {
+  const types = new Set<RagDocumentType>();
+  for (const kind of preferred) {
+    if (kind === "company") {
+      types.add("company");
+      types.add("process");
+      continue;
+    }
+    types.add(kind);
+  }
+  return [...types];
+}
+
 /**
  * Primary chat knowledge retrieval for Phase 9.
  */
@@ -260,16 +340,27 @@ export async function retrieveChatKnowledge(
   query: string,
 ): Promise<ChatKnowledgeBundle> {
   const started = Date.now();
+  const preferred = preferredKnowledgeKinds(query);
+  const catalogQuery = isCatalogListQuery(query);
 
   try {
     const pipeline = await retrieve(query, {
       mode: "hybrid",
-      rerank: true,
+      // Catalog list asks: skip Cohere rerank to cut latency; type preference is enough.
+      rerank: !catalogQuery,
+      filters:
+        catalogQuery && preferred.length > 0
+          ? { documentType: preferredAsFilters(preferred) }
+          : undefined,
     });
 
     const useful = filterUsefulContext(pipeline.context);
-    const results = useful.map(toKnowledgeResult);
-    const sources = uniqueChatSources(results);
+    const ranked = preferMatchingTypes(useful, preferred);
+    const results = preferKnowledgeResults(
+      ranked.map(toKnowledgeResult),
+      preferred,
+    );
+    const sources = uniqueChatSources(results, MAX_UI_SOURCES, preferred);
     const contextBlock = formatRetrievedContext(results);
 
     const diagnostics: ChatRetrievalDiagnostics = {
@@ -289,8 +380,11 @@ export async function retrieveChatKnowledge(
       candidateCount: diagnostics.candidateCount,
       contextCount: diagnostics.contextCount,
       sourceCount: diagnostics.sourceCount,
+      preferredKinds: preferred,
+      catalogQuery,
       fallbackUsed: false,
       latencyMs: diagnostics.latencyMs,
+      sourceKinds: sources.map((source) => source.kind),
     });
 
     return {
@@ -308,8 +402,11 @@ export async function retrieveChatKnowledge(
       latencyMs: Date.now() - started,
     });
 
-    const results = await sanityFallbackSearch(query);
-    const sources = uniqueChatSources(results);
+    const results = preferKnowledgeResults(
+      await sanityFallbackSearch(query),
+      preferred,
+    );
+    const sources = uniqueChatSources(results, MAX_UI_SOURCES, preferred);
     // Keep legacy formatting for fallback so behavior stays familiar.
     const contextBlock = formatKnowledgeContext(results);
 

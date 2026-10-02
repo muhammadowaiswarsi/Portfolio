@@ -130,18 +130,35 @@ export async function retrieve(
   const runSemantic = mode === "semantic" || mode === "hybrid";
   const runLexical = mode === "lexical" || mode === "hybrid";
 
-  if (runSemantic) {
-    try {
-      semantic = await semanticSearch(cleaned, {
-        limit: semanticLimit,
-        scoreThreshold: options.scoreThreshold,
-        filters: options.filters,
-      });
-    } catch (error) {
+  // Run independent retrieval stages in parallel to cut end-to-end latency.
+  const [semanticOutcome, lexicalOutcome] = await Promise.all([
+    runSemantic
+      ? semanticSearch(cleaned, {
+          limit: semanticLimit,
+          scoreThreshold: options.scoreThreshold,
+          filters: options.filters,
+        })
+          .then((results) => ({ ok: true as const, results }))
+          .catch((error: unknown) => ({ ok: false as const, error }))
+      : Promise.resolve(null),
+    runLexical
+      ? lexicalSearch(cleaned, {
+          limit: lexicalLimit,
+          filters: options.filters,
+        })
+          .then((results) => ({ ok: true as const, results }))
+          .catch((error: unknown) => ({ ok: false as const, error }))
+      : Promise.resolve(null),
+  ]);
+
+  if (semanticOutcome) {
+    if (semanticOutcome.ok) {
+      semantic = semanticOutcome.results;
+    } else {
       semanticFailed = true;
       const message =
-        error instanceof SemanticSearchError
-          ? error.message
+        semanticOutcome.error instanceof SemanticSearchError
+          ? semanticOutcome.error.message
           : "Semantic retrieval failed.";
       notes.push(`Semantic stage failed: ${message}`);
       if (mode === "semantic") {
@@ -150,17 +167,14 @@ export async function retrieve(
     }
   }
 
-  if (runLexical) {
-    try {
-      lexical = await lexicalSearch(cleaned, {
-        limit: lexicalLimit,
-        filters: options.filters,
-      });
-    } catch (error) {
+  if (lexicalOutcome) {
+    if (lexicalOutcome.ok) {
+      lexical = lexicalOutcome.results;
+    } else {
       lexicalFailed = true;
       const message =
-        error instanceof LexicalSearchError
-          ? error.message
+        lexicalOutcome.error instanceof LexicalSearchError
+          ? lexicalOutcome.error.message
           : "Lexical retrieval failed.";
       notes.push(`Lexical stage failed: ${message}`);
       if (mode === "lexical") {
