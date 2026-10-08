@@ -60,6 +60,8 @@ export type ChatResponse = {
     channel?: ChatChannel;
     sources?: ChatSource[];
     lead?: ChatLeadMetadata;
+    /** True when this turn was saved to Mongo under the visitor session. */
+    persisted?: boolean;
     retrieval?: {
       mode: "hybrid" | "sanity_fallback";
       rerankerUsed: boolean;

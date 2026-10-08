@@ -6,6 +6,7 @@ export {
 export { getChatDb, getMongoClient } from "@/lib/chatbot/persistence/client";
 export {
   CHAT_SESSION_COOKIE,
+  chatSessionCookieOptions,
   createSessionToken,
   ensureChatSession,
   hashSessionToken,

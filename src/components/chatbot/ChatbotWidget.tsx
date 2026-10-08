@@ -35,6 +35,7 @@ type ChatApiSuccess = {
   metadata?: {
     sources?: ChatSource[];
     lead?: ChatLeadMetadata;
+    persisted?: boolean;
     retrieval?: {
       mode?: "hybrid" | "sanity_fallback";
       rerankerUsed?: boolean;
@@ -175,11 +176,13 @@ export function ChatbotWidget() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [historyOpen, setHistoryOpen] = useState(false);
   const [historyLoading, setHistoryLoading] = useState(false);
+  const [historyLoadError, setHistoryLoadError] = useState<string | null>(null);
   const [conversations, setConversations] = useState<ChatConversationListItem[]>([]);
   const [restoring, setRestoring] = useState(false);
+  const [persistenceEnabled, setPersistenceEnabled] = useState(true);
   const leadPhaseRef = useRef<ChatLeadPhase>("idle");
   const ctaUsedRef = useRef(false);
-  const restoredRef = useRef(false);
+  const restoreAttemptKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -196,6 +199,7 @@ export function ChatbotWidget() {
 
   const loadConversationList = useCallback(async () => {
     setHistoryLoading(true);
+    setHistoryLoadError(null);
     try {
       const response = await fetch("/api/chat/conversations", {
         method: "GET",
@@ -208,12 +212,22 @@ export function ChatbotWidget() {
 
       if (!response.ok || !payload || payload.ok !== true) {
         setConversations([]);
+        if (response.status === 503) {
+          setPersistenceEnabled(false);
+          setHistoryLoadError(
+            "Chat history is unavailable right now. Messages still work in this session.",
+          );
+        } else {
+          setHistoryLoadError("Unable to load conversations right now.");
+        }
         return;
       }
 
+      setPersistenceEnabled(true);
       setConversations(payload.conversations);
     } catch {
       setConversations([]);
+      setHistoryLoadError("Unable to load conversations right now.");
     } finally {
       setHistoryLoading(false);
     }
@@ -243,9 +257,19 @@ export function ChatbotWidget() {
         writeStoredConversationId(undefined);
         setConversationId(undefined);
         setMessages([]);
-        if (response.status !== 404) {
-          setError("Unable to restore the previous conversation. You can start a new one.");
+        restoreAttemptKeyRef.current = null;
+        if (response.status === 404) {
+          // Stale local id / other session — quiet reset.
+          return;
         }
+        if (response.status === 503) {
+          setPersistenceEnabled(false);
+          setError(
+            "Chat history is unavailable right now. You can continue in a new chat.",
+          );
+          return;
+        }
+        setError("Unable to restore the previous conversation. You can start a new one.");
         return;
       }
 
@@ -256,12 +280,14 @@ export function ChatbotWidget() {
           sources: parseSources(message.sources),
         }));
 
+      setPersistenceEnabled(true);
       setConversationId(payload.conversation.id);
       writeStoredConversationId(payload.conversation.id);
       setMessages(restored);
       leadPhaseRef.current = "idle";
       setShowLeadCta(false);
     } catch {
+      restoreAttemptKeyRef.current = null;
       setError("Unable to restore the previous conversation. You can start a new one.");
     } finally {
       setRestoring(false);
@@ -274,20 +300,23 @@ export function ChatbotWidget() {
       path: window.location.pathname,
     });
 
-    if (!restoredRef.current) {
-      restoredRef.current = true;
-      const id = readStoredConversationId();
-      if (id) {
-        void restoreConversation(id);
-      }
-    }
-  }, [restoreConversation]);
+    // Restore from the server whenever the transcript is empty.
+    // Close→reopen used to look "restored" only because React state survived.
+    const id = conversationId || readStoredConversationId();
+    if (!id || messages.length > 0 || restoring) return;
+
+    const attemptKey = id;
+    if (restoreAttemptKeyRef.current === attemptKey) return;
+    restoreAttemptKeyRef.current = attemptKey;
+    void restoreConversation(id);
+  }, [conversationId, messages.length, restoreConversation, restoring]);
 
   const startNewChat = useCallback(async () => {
     setError(null);
     setHistoryOpen(false);
     setMessages([]);
     setShowLeadCta(false);
+    restoreAttemptKeyRef.current = null;
     leadPhaseRef.current = "idle";
     ctaUsedRef.current = false;
 
@@ -431,7 +460,31 @@ export function ChatbotWidget() {
       }
 
       setConversationId(payload.conversationId);
-      writeStoredConversationId(payload.conversationId);
+      // Only remember IDs that were actually saved — avoids broken refresh restore.
+      if (payload.metadata?.persisted === true) {
+        setPersistenceEnabled(true);
+        writeStoredConversationId(payload.conversationId);
+        restoreAttemptKeyRef.current = null;
+        setConversations((current) => {
+          const title =
+            current.find((item) => item.id === payload.conversationId)?.title ||
+            content.slice(0, 48);
+          return [
+            {
+              id: payload.conversationId,
+              title,
+              updatedAt: new Date().toISOString(),
+            },
+            ...current.filter((item) => item.id !== payload.conversationId),
+          ];
+        });
+      } else if (payload.metadata?.persisted === false) {
+        setPersistenceEnabled(false);
+        writeStoredConversationId(undefined);
+      } else {
+        writeStoredConversationId(payload.conversationId);
+      }
+
       setMessages((current) => [
         ...current,
         sources ? { ...payload.message, sources } : payload.message,
@@ -456,6 +509,12 @@ export function ChatbotWidget() {
             showLeadCta={showLeadCta}
             historyOpen={historyOpen}
             historyLoading={historyLoading}
+            historyLoadError={
+              historyLoadError ||
+              (!persistenceEnabled
+                ? "Chat history is unavailable right now. Messages still work in this session."
+                : null)
+            }
             conversations={conversations}
             activeConversationId={conversationId}
             onInputChange={setInput}

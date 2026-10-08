@@ -294,9 +294,9 @@ async function persistTurn(input: {
   userContent: string;
   assistant: ChatMessage;
   lead: LeadSession;
-}) {
-  if (!input.persistenceReady || !input.sessionId) return;
-  if (!isChatPersistenceConfigured()) return;
+}): Promise<boolean> {
+  if (!input.persistenceReady || !input.sessionId) return false;
+  if (!isChatPersistenceConfigured()) return false;
 
   try {
     await appendMessage({
@@ -315,13 +315,16 @@ async function persistTurn(input: {
       sessionId: input.sessionId,
       lead: input.lead,
     });
+    return true;
   } catch (error) {
     console.error("Chat persistence save failed.", {
       code:
         error && typeof error === "object" && "code" in error
           ? String((error as { code?: unknown }).code)
           : "SAVE_FAILED",
+      message: error instanceof Error ? error.message : "unknown",
     });
+    return false;
   }
 }
 
@@ -377,7 +380,7 @@ export async function createChatReply(
       lead,
     });
 
-    await persistTurn({
+    const persisted = await persistTurn({
       persistenceReady,
       sessionId,
       conversationId,
@@ -392,6 +395,7 @@ export async function createChatReply(
       metadata: {
         channel: request.channel,
         lead: leadMetadata(lead),
+        persisted,
         retrieval: {
           mode: "hybrid",
           rerankerUsed: false,
@@ -479,7 +483,7 @@ export async function createChatReply(
     lead,
   });
 
-  await persistTurn({
+  const persisted = await persistTurn({
     persistenceReady,
     sessionId,
     conversationId,
@@ -496,6 +500,7 @@ export async function createChatReply(
       channel: request.channel,
       sources: sources.length > 0 ? sources : undefined,
       lead: leadMetadata(lead),
+      persisted,
       retrieval: retrievalMeta,
     },
   };

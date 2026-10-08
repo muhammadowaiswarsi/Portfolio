@@ -1,4 +1,8 @@
+import { NextResponse } from "next/server";
+
 import {
+  CHAT_SESSION_COOKIE,
+  chatSessionCookieOptions,
   ensureChatSession,
   getConversationDetail,
   isChatPersistenceConfigured,
@@ -6,7 +10,16 @@ import {
 import { consumeRateLimit, getRequestIp } from "@/lib/chatbot/rate-limit";
 
 function jsonError(error: string, status: number) {
-  return Response.json({ ok: false, error }, { status });
+  return NextResponse.json({ ok: false, error }, { status });
+}
+
+function withSessionCookie(response: NextResponse, token: string) {
+  response.cookies.set(
+    CHAT_SESSION_COOKIE,
+    token,
+    chatSessionCookieOptions(),
+  );
+  return response;
 }
 
 const CONVERSATION_ID_PATTERN =
@@ -38,12 +51,20 @@ export async function GET(request: Request, context: RouteContext) {
 
     if (!detail) {
       // Ownership failure and missing conversation look the same.
-      return jsonError("Conversation not found.", 404);
+      return withSessionCookie(
+        jsonError("Conversation not found.", 404),
+        session.token,
+      );
     }
 
-    return Response.json({ ok: true, conversation: detail });
-  } catch {
-    console.error("Load conversation failed.");
+    return withSessionCookie(
+      NextResponse.json({ ok: true, conversation: detail }),
+      session.token,
+    );
+  } catch (error) {
+    console.error("Load conversation failed.", {
+      message: error instanceof Error ? error.message : "unknown",
+    });
     return jsonError("Unable to load this conversation right now.", 500);
   }
 }

@@ -17,6 +17,22 @@ declare global {
 
 let indexesEnsured = false;
 
+/** Ensure Atlas-friendly query params when the URI omits them. */
+function normalizeMongoUri(uri: string) {
+  const trimmed = uri.trim();
+  if (!trimmed) return trimmed;
+
+  const hasQuery = trimmed.includes("?");
+  const params: string[] = [];
+  if (!/[?&]retryWrites=/.test(trimmed)) params.push("retryWrites=true");
+  if (!/[?&]w=/.test(trimmed)) params.push("w=majority");
+  if (params.length === 0) return trimmed;
+
+  return hasQuery
+    ? `${trimmed}&${params.join("&")}`
+    : `${trimmed}?${params.join("&")}`;
+}
+
 export async function getMongoClient(): Promise<MongoClient> {
   if (!isChatPersistenceConfigured()) {
     throw new ChatDbConfigError(
@@ -26,11 +42,13 @@ export async function getMongoClient(): Promise<MongoClient> {
   }
 
   const { uri } = getChatMongoConfig();
+  const normalizedUri = normalizeMongoUri(uri);
 
   if (!global.__cyMongoClientPromise) {
-    const client = new MongoClient(uri, {
+    const client = new MongoClient(normalizedUri, {
       maxPoolSize: 5,
       serverSelectionTimeoutMS: 8_000,
+      connectTimeoutMS: 10_000,
     });
     global.__cyMongoClientPromise = client.connect().catch((error) => {
       global.__cyMongoClientPromise = undefined;

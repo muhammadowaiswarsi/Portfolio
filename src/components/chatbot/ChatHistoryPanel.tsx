@@ -13,6 +13,8 @@ type ChatHistoryPanelProps = {
   loading: boolean;
   conversations: ChatConversationListItem[];
   activeId?: string;
+  /** When set, history API failed (vs truly empty). */
+  loadError?: string | null;
   onClose: () => void;
   onSelect: (id: string) => void;
   onNewChat: () => void;
@@ -34,6 +36,7 @@ export function ChatHistoryPanel({
   loading,
   conversations,
   activeId,
+  loadError = null,
   onClose,
   onSelect,
   onNewChat,
@@ -69,6 +72,8 @@ export function ChatHistoryPanel({
 
         {loading ? (
           <p className="px-2.5 py-3 text-xs text-muted">Loading…</p>
+        ) : loadError ? (
+          <p className="px-2.5 py-3 text-xs text-accent">{loadError}</p>
         ) : conversations.length === 0 ? (
           <p className="px-2.5 py-3 text-xs text-muted">No saved conversations yet.</p>
         ) : (

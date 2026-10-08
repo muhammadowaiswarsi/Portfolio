@@ -2,7 +2,7 @@
 
 import { History, Plus, X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import {
   ChatHistoryPanel,
@@ -14,6 +14,9 @@ import { ChatMessage } from "@/components/chatbot/ChatMessage";
 import { CHAT_SUGGESTIONS } from "@/lib/chatbot/ui";
 import type { ChatMessage as ChatMessageModel, ChatSource } from "@/lib/chatbot/types";
 
+/** Delay typing label so fast replies don't flash a long "typing…" state. */
+const TYPING_INDICATOR_DELAY_MS = 450;
+
 type ChatWindowProps = {
   messages: ChatMessageModel[];
   input: string;
@@ -23,6 +26,7 @@ type ChatWindowProps = {
   showLeadCta: boolean;
   historyOpen: boolean;
   historyLoading: boolean;
+  historyLoadError?: string | null;
   conversations: ChatConversationListItem[];
   activeConversationId?: string;
   onInputChange: (value: string) => void;
@@ -46,6 +50,7 @@ export function ChatWindow({
   showLeadCta,
   historyOpen,
   historyLoading,
+  historyLoadError = null,
   conversations,
   activeConversationId,
   onInputChange,
@@ -60,6 +65,7 @@ export function ChatWindow({
   onNewChat,
 }: ChatWindowProps) {
   const listRef = useRef<HTMLDivElement>(null);
+  const [showTyping, setShowTyping] = useState(false);
   const busy = sending || loading;
   const empty = messages.length === 0 && !busy;
 
@@ -67,7 +73,20 @@ export function ChatWindow({
     const list = listRef.current;
     if (!list) return;
     list.scrollTop = list.scrollHeight;
-  }, [messages, sending, loading, error]);
+  }, [messages, sending, loading, showTyping, error]);
+
+  useEffect(() => {
+    if (!sending) {
+      setShowTyping(false);
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      setShowTyping(true);
+    }, TYPING_INDICATOR_DELAY_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [sending]);
 
   return (
     <section
@@ -129,6 +148,7 @@ export function ChatWindow({
       <ChatHistoryPanel
         open={historyOpen}
         loading={historyLoading}
+        loadError={historyLoadError}
         conversations={conversations}
         activeId={activeConversationId}
         onClose={onCloseHistory}
@@ -193,7 +213,7 @@ export function ChatWindow({
             Loading…
           </p>
         ) : null}
-        {sending ? (
+        {showTyping ? (
           <p className="text-xs text-muted" role="status">
             Computing Yard is typing…
           </p>

@@ -21,7 +21,7 @@ export function createSessionToken() {
   return randomBytes(32).toString("base64url");
 }
 
-function cookieOptions() {
+export function chatSessionCookieOptions() {
   const secure = process.env.NODE_ENV === "production";
   return {
     httpOnly: true,
@@ -32,11 +32,19 @@ function cookieOptions() {
   };
 }
 
-export async function ensureChatSession(): Promise<{
+export type EnsuredChatSession = {
   sessionId: string;
   token: string;
   isNew: boolean;
-}> {
+};
+
+/**
+ * Resolve or create the anonymous chat session.
+ * Sets the httpOnly cookie via next/headers when available.
+ * Callers that build NextResponse should also set the cookie on that response
+ * using `token` + `chatSessionCookieOptions()` for reliability.
+ */
+export async function ensureChatSession(): Promise<EnsuredChatSession> {
   const jar = await cookies();
   const existing = jar.get(CHAT_SESSION_COOKIE)?.value?.trim();
   const db = await getChatDb();
@@ -50,8 +58,11 @@ export async function ensureChatSession(): Promise<{
         { _id: found._id },
         { $set: { updatedAt: new Date() } },
       );
-      // Refresh cookie max-age
-      jar.set(CHAT_SESSION_COOKIE, existing, cookieOptions());
+      try {
+        jar.set(CHAT_SESSION_COOKIE, existing, chatSessionCookieOptions());
+      } catch {
+        // Response-level cookie set by the route is the fallback.
+      }
       return { sessionId: found._id, token: existing, isNew: false };
     }
   }
@@ -68,7 +79,12 @@ export async function ensureChatSession(): Promise<{
     updatedAt: now,
   });
 
-  jar.set(CHAT_SESSION_COOKIE, token, cookieOptions());
+  try {
+    jar.set(CHAT_SESSION_COOKIE, token, chatSessionCookieOptions());
+  } catch {
+    // Response-level cookie set by the route is the fallback.
+  }
+
   return { sessionId, token, isNew: true };
 }
 
