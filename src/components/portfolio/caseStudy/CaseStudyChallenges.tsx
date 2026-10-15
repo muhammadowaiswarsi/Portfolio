@@ -18,12 +18,16 @@ import type { CaseStudyChallenge, SanityImage } from "@/types/sanity";
 type CaseStudyChallengesProps = {
   challenges?: CaseStudyChallenge[] | null;
   mockupImage?: SanityImage | null;
+  mockupSrc?: string;
+  mockupAlt?: string;
   projectTitle: string;
 };
 
 export function CaseStudyChallenges({
   challenges,
   mockupImage,
+  mockupSrc,
+  mockupAlt,
   projectTitle,
 }: CaseStudyChallengesProps) {
   const items = (hasItems(challenges) ? challenges : []).filter(
@@ -32,10 +36,11 @@ export function CaseStudyChallenges({
 
   if (items.length === 0) return null;
 
-  const mockupUrl = hasImage(mockupImage)
-    ? getImageUrl(mockupImage, 1800)
-    : null;
-  const mockupAlt = mockupImage?.alt || `${projectTitle} website`;
+  const mockupUrl =
+    mockupSrc ||
+    (hasImage(mockupImage) ? getImageUrl(mockupImage, 1800) : null);
+  const resolvedMockupAlt =
+    mockupAlt || mockupImage?.alt || `${projectTitle} website`;
 
   return (
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
@@ -96,7 +101,7 @@ export function CaseStudyChallenges({
               <div className="relative lg:-rotate-6 lg:translate-x-3">
                 <LaptopMockup
                   src={mockupUrl}
-                  alt={mockupAlt}
+                  alt={resolvedMockupAlt}
                   sizes="(min-width: 1024px) 42vw, 90vw"
                   fit="contain"
                   aspectClass="aspect-[16/9]"

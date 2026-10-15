@@ -6,6 +6,8 @@ import { CaseStudyItemGrid } from "@/components/portfolio/caseStudy/CaseStudyIte
 import { CaseStudyMoreWork } from "@/components/portfolio/caseStudy/CaseStudyMoreWork";
 import { CaseStudyOverview } from "@/components/portfolio/caseStudy/CaseStudyOverview";
 import { CaseStudyTestimonial } from "@/components/portfolio/caseStudy/CaseStudyTestimonial";
+import { FreightOperatorOverview } from "@/components/portfolio/caseStudy/FreightOperatorOverview";
+import { FreightOperatorScreens } from "@/components/portfolio/caseStudy/FreightOperatorScreens";
 import { WebAppHero } from "@/components/portfolio/caseStudy/WebAppHero";
 import { WebAppScreens } from "@/components/portfolio/caseStudy/WebAppScreens";
 import { isFrontendProject, isWebMobileProject } from "@/components/portfolio/caseStudy/helpers";
@@ -28,7 +30,7 @@ export function WebAppCaseStudy({
   const webMobileCase = pt360 || shareAccountz || freightOperator;
   const gallery = (project.gallery ?? []).filter((image) =>
     pt360
-      ? !/(?:mobile app\s*[—–-]\s*(sign up|log in|product details)|portrait\s*[—–-]\s*(barcode scanner|product details))/i.test(
+      ? !/(?:mobile app\s*[—–-]\s*(sign up|log in|product details)|portrait\s*[—–-]\s*(barcode scanner|product details)|category hierarchy)/i.test(
           image.alt || "",
         )
       : true,
@@ -46,6 +48,7 @@ export function WebAppCaseStudy({
         project={project}
         presentation={webMobile ? "web-mobile" : "web-app"}
       />
+      {freightOperator ? <FreightOperatorOverview /> : null}
       <CaseStudyOverview
         project={project}
         eyebrow={
@@ -65,6 +68,9 @@ export function WebAppCaseStudy({
         title="Project Goals"
         items={project.projectGoals}
       />
+      {freightOperator ? (
+        <FreightOperatorScreens />
+      ) : (
       <WebAppScreens
         images={gallery}
         projectTitle={project.title}
@@ -89,9 +95,7 @@ export function WebAppCaseStudy({
               ? "Admin catalog screens on the web and purchase-tracking flows on iOS and Android, shown so the actual interface stays readable."
               : shareAccountz
                 ? "Landing and dashboard on the web, with login, sharing, and QR flows on the phone, shown so the actual interface stays readable."
-                : freightOperator
-                  ? "Admin dashboards on the web and loads, messages, and account flows on the phone, shown so the actual interface stays readable."
-                  : webMobile
+                : webMobile
                     ? "Landing, onboarding, dashboard, and sharing screens from the web and mobile product, shown so the actual interface stays readable."
                     : "Key workflows from the web application, shown at desktop scale so the product interface stays readable."
         }
@@ -104,11 +108,21 @@ export function WebAppCaseStudy({
         }
         phoneFit={webMobile ? "contain" : "cover"}
       />
+      )}
       <CaseStudyChallenges
         challenges={project.challenges}
+        mockupSrc={
+          freightOperator
+            ? "/portfolio/freight-operator/dispatch.jpg"
+            : undefined
+        }
+        mockupAlt={
+          freightOperator
+            ? "FreightOperator dispatch board with container counts and load alerts"
+            : undefined
+        }
         mockupImage={
           project.slug === "traino-ai" ||
-          project.slug === "tms-system" ||
           project.slug === "study-panda"
             ? (project.gallery ?? []).find((image) =>
                 /create training|platform admin|load info|live recording|oreo/i.test(
@@ -133,7 +147,10 @@ export function WebAppCaseStudy({
         }
         projectTitle={project.title}
       />
-      <CaseStudyApproach items={project.approach} />
+      <CaseStudyApproach
+        items={project.approach}
+        hideImages={freightOperator}
+      />
       <CaseStudyItemGrid
         eyebrow="Highlights"
         title="Key Features"

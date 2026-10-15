@@ -22,12 +22,26 @@ export function hasImage(image?: SanityImage | null) {
   return Boolean(image?.asset);
 }
 
+function localCaseStudyImage(image?: SanityImage | null) {
+  const alt = image?.alt || "";
+  if (/^showcase\b/i.test(alt) && /purchase tracker 360/i.test(alt)) {
+    return "/portfolio/purchase-tracker/showcase.jpg";
+  }
+  if (/web dashboard\b/i.test(alt) && /product catalog/i.test(alt)) {
+    return "/portfolio/purchase-tracker/catalog.jpg";
+  }
+  return null;
+}
+
 export function getImageUrl(
   image: SanityImage | null | undefined,
   width: number,
   height?: number,
 ) {
   if (!image?.asset) return null;
+
+  const localImage = localCaseStudyImage(image);
+  if (localImage) return localImage;
 
   const builder = urlFor(image).width(width);
   return (height ? builder.height(height).fit("crop") : builder.fit("max")).url();

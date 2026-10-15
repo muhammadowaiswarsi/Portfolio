@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { LaptopMockup } from "@/components/portfolio/caseStudy/LaptopMockup";
+import { PhoneMockup } from "@/components/portfolio/caseStudy/PhoneMockup";
 import { ShowcaseFrame } from "@/components/portfolio/caseStudy/ShowcaseFrame";
 import {
   caseStudyTitleClass,
@@ -26,6 +27,23 @@ type WebAppHeroProps = {
   project: CaseStudyProject;
   presentation?: "web-app" | "e-commerce" | "web-mobile";
 };
+
+function purchaseTrackerHeroPhones(project: CaseStudyProject) {
+  const gallery = project.gallery ?? [];
+  const tracking = gallery.find((image) =>
+    /purchase tracking/i.test(image.alt || ""),
+  );
+  const details = gallery.find((image) =>
+    /add product details/i.test(image.alt || ""),
+  );
+
+  return [tracking, details].flatMap((image) => {
+    if (!hasImage(image) || !image) return [];
+    const url = getImageUrl(image, 1200);
+    if (!url) return [];
+    return [{ url, alt: image.alt || project.title }];
+  });
+}
 
 export function WebAppHero({
   project,
@@ -49,22 +67,34 @@ export function WebAppHero({
     (hasImage(project.thumbnail) ? project.thumbnail : null) ||
     (project.gallery ?? []).find(hasImage) ||
     project.cardImage;
-  const heroUrl = hasImage(heroImage)
-    ? getImageUrl(
-        heroImage,
+  const freightHero = project.slug === "tms-system";
+  const purchaseTracker = project.slug === "purchase-tracker-360";
+  const purchasePhones = purchaseTracker
+    ? purchaseTrackerHeroPhones(project)
+    : [];
+  const heroUrl = freightHero
+    ? "/portfolio/freight-operator/website-hero.jpg"
+    : hasImage(heroImage)
+      ? getImageUrl(
+          heroImage,
+          project.slug === "health-share" || project.slug === "share-accountz"
+            ? 1600
+            : 1800,
+        )
+      : null;
+  const heroAlt = freightHero
+    ? "FreightOperator website hero with container tracking and carrier stats"
+    : heroImage?.alt || project.title;
+  const backgroundUrl = freightHero
+    ? "/portfolio/freight-operator/website-hero.jpg"
+    : purchaseTracker
+      ? null
+      : getImageUrl(
+        project.thumbnail,
         project.slug === "health-share" || project.slug === "share-accountz"
           ? 1600
-          : 1800,
-      )
-    : null;
-  const heroAlt = heroImage?.alt || project.title;
-  const backgroundUrl =
-    getImageUrl(
-      project.thumbnail,
-      project.slug === "health-share" || project.slug === "share-accountz"
-        ? 1600
-        : 1920,
-    ) || heroUrl;
+          : 1920,
+      ) || heroUrl;
   const landingHero =
     ecommerce ||
     project.slug === "traino-ai" ||
@@ -75,8 +105,7 @@ export function WebAppHero({
     project.slug === "health-share" ||
     project.slug === "tms-system" ||
     project.slug === "study-panda" ||
-    project.slug === "share-accountz" ||
-    project.slug === "purchase-tracker-360";
+    project.slug === "share-accountz";
 
   return (
     <section className="relative isolate overflow-hidden border-b border-border">
@@ -191,7 +220,41 @@ export function WebAppHero({
           </motion.div>
         </div>
 
-        {heroUrl ? (
+        {purchasePhones.length === 2 ? (
+          <motion.div
+            className="relative mx-auto w-full max-w-[36rem] px-1 py-6 sm:px-0 sm:py-4"
+            initial={{ opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.18, ease: "easeOut" }}
+          >
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute top-1/2 left-1/2 h-[70%] w-[70%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-3xl"
+            />
+            <div className="relative grid grid-cols-2 items-center gap-2 sm:gap-6">
+              <div className="origin-bottom -translate-y-2 -rotate-3 sm:-translate-y-4 sm:-rotate-6">
+                <PhoneMockup
+                  src={purchasePhones[0].url}
+                  alt={purchasePhones[0].alt}
+                  priority
+                  fit="contain"
+                  sizes="(min-width: 1024px) 280px, 42vw"
+                  className="max-w-none"
+                />
+              </div>
+              <div className="origin-bottom translate-y-5 rotate-3 sm:translate-y-8 sm:rotate-6">
+                <PhoneMockup
+                  src={purchasePhones[1].url}
+                  alt={purchasePhones[1].alt}
+                  priority
+                  fit="contain"
+                  sizes="(min-width: 1024px) 280px, 42vw"
+                  className="max-w-none"
+                />
+              </div>
+            </div>
+          </motion.div>
+        ) : heroUrl ? (
           <motion.div
             className="relative min-w-0 w-full"
             initial={{ opacity: 0, y: 28 }}

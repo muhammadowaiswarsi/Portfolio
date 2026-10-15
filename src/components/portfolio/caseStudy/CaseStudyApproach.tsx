@@ -14,9 +14,13 @@ import type { CaseStudyItem } from "@/types/sanity";
 
 type CaseStudyApproachProps = {
   items?: CaseStudyItem[] | null;
+  hideImages?: boolean;
 };
 
-export function CaseStudyApproach({ items }: CaseStudyApproachProps) {
+export function CaseStudyApproach({
+  items,
+  hideImages = false,
+}: CaseStudyApproachProps) {
   const steps = completeCaseStudyItems(items);
 
   if (steps.length === 0) return null;
@@ -41,7 +45,9 @@ export function CaseStudyApproach({ items }: CaseStudyApproachProps) {
 
         <ol className={`mt-12 grid gap-6 lg:gap-8 ${columnClass}`}>
           {steps.map((step, index) => {
-            const imageUrl = getImageUrl(step.image, 1200, 750);
+            const imageUrl = hideImages
+              ? null
+              : getImageUrl(step.image, 1200, 750);
             const imageAlt = step.image?.alt || step.title || "Approach step";
             const number = String(index + 1).padStart(2, "0");
 

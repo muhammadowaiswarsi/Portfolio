@@ -12,22 +12,22 @@ const categories = [
   {
     id: "frontend",
     label: "Frontend",
-    items: ["Next.js", "React", "TypeScript", "JavaScript", "Tailwind CSS", "HTML"],
+    items: ["Next.js", "React", "Angular", "TypeScript", "JavaScript", "Tailwind CSS", "HTML"],
   },
   {
     id: "backend",
     label: "Backend",
-    items: ["Node.js", "NestJS", "Express.js", "GraphQL", "Python"],
+    items: ["Node.js", "NestJS", "Express.js", "GraphQL", "Python", "Django", "FastAPI"],
   },
   {
     id: "database",
     label: "Database",
-    items: ["PostgreSQL", "MongoDB", "MySQL", "Redis"],
+    items: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "Amazon DynamoDB", "SQLite"],
   },
   {
     id: "cloud",
     label: "Cloud",
-    items: ["AWS", "Firebase", "Docker", "Vercel"],
+    items: ["AWS", "Firebase", "Docker", "Vercel", "Heroku"],
   },
   {
     id: "uiux",
