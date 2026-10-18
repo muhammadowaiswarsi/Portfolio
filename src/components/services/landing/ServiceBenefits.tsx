@@ -30,6 +30,7 @@ import {
   completeBenefits,
   getImageUrl,
   hasImage,
+  hasText,
 } from "@/components/services/landing/helpers";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -59,6 +60,12 @@ const BENEFIT_ICONS: Record<string, LucideIcon> = {
   "works with your data": Database,
   "faster, clearer decisions": Lightbulb,
   "built to improve": RefreshCw,
+  "flexible team scaling": Users,
+  "specialized technical skills": Sparkles,
+  "faster than a permanent hire": Clock,
+  "works with your existing team": HeartHandshake,
+  "you keep control of priorities": Target,
+  "engagement sized to the project": RefreshCw,
 };
 
 function iconForBenefit(title: string): LucideIcon {
@@ -93,7 +100,9 @@ export function ServiceBenefits({ service }: ServiceBenefitsProps) {
       <Container>
         <SectionHeading
           eyebrow="BENEFITS"
-          title="Benefits"
+          title={
+            hasText(service.benefitsTitle) ? service.benefitsTitle : "Benefits"
+          }
           headingClassName="font-display font-semibold"
         />
 

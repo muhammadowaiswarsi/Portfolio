@@ -95,7 +95,7 @@ export function ServiceLandingHero({ service }: ServiceLandingHeroProps) {
           </motion.p>
 
           <motion.div
-            className="mt-8"
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
             initial="hidden"
             animate="visible"
             custom={0.24}
@@ -107,9 +107,23 @@ export function ServiceLandingHero({ service }: ServiceLandingHeroProps) {
               className="rounded-full px-7"
               trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
             >
-              Let&apos;s Talk
+              {hasText(service.primaryCtaLabel)
+                ? service.primaryCtaLabel
+                : "Let's Talk"}
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Button>
+            {hasText(service.secondaryCtaLabel) ? (
+              <Button
+                href="/contact"
+                variant="secondary"
+                size="lg"
+                className="rounded-full px-7"
+                trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
+              >
+                {service.secondaryCtaLabel}
+                <ArrowUpRight className="size-4" aria-hidden="true" />
+              </Button>
+            ) : null}
           </motion.div>
         </div>
 

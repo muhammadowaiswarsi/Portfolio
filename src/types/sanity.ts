@@ -166,8 +166,20 @@ export type Service = {
   technologies?: string[] | null;
   faqs?: ServiceFaq[] | null;
   gallery?: SanityImage[] | null;
+  featuresTitle?: string | null;
+  benefitsTitle?: string | null;
+  processTitle?: string | null;
+  engagementsTitle?: string | null;
+  engagements?: ServiceBenefit[] | null;
+  highlightsTitle?: string | null;
+  highlights?: ServiceBenefit[] | null;
   ctaTitle?: string | null;
   ctaDescription?: string | null;
+  primaryCtaLabel?: string | null;
+  secondaryCtaLabel?: string | null;
+  ctaButtonLabel?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
   featured?: boolean | null;
   order?: number | null;
 };
@@ -205,8 +217,20 @@ export type ServiceLanding = {
   technologies?: string[] | null;
   faqs?: ServiceFaq[] | null;
   gallery?: SanityImage[] | null;
+  featuresTitle?: string | null;
+  benefitsTitle?: string | null;
+  processTitle?: string | null;
+  engagementsTitle?: string | null;
+  engagements?: ServiceBenefit[] | null;
+  highlightsTitle?: string | null;
+  highlights?: ServiceBenefit[] | null;
   ctaTitle?: string | null;
   ctaDescription?: string | null;
+  primaryCtaLabel?: string | null;
+  secondaryCtaLabel?: string | null;
+  ctaButtonLabel?: string | null;
+  seoTitle?: string | null;
+  seoDescription?: string | null;
 };
 
 export type Blog = {

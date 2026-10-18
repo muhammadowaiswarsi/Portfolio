@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -30,7 +30,7 @@ export function ServiceCard({ service }: ServiceCardProps) {
             className="size-10 object-contain"
           />
         ) : (
-          <span className="size-5 rounded-sm bg-primary transition-colors duration-300 group-hover:bg-accent" />
+          <Users className="size-6 text-accent" aria-hidden="true" />
         )}
       </div>
 

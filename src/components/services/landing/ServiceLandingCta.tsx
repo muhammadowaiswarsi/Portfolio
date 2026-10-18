@@ -49,7 +49,9 @@ export function ServiceLandingCta({ service }: ServiceLandingCtaProps) {
               className="rounded-full px-7"
               trackEvent={MIXPANEL_EVENTS.CLICKED_LETS_TALK}
             >
-              Let&apos;s Talk
+              {hasText(service.ctaButtonLabel)
+                ? service.ctaButtonLabel
+                : "Let's Talk"}
               <ArrowUpRight className="size-4" aria-hidden="true" />
             </Button>
           </div>

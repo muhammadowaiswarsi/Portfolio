@@ -5,6 +5,7 @@ export const serviceIllustrations: Record<string, string> = {
   "ui-ux-revamp": "/services/ui-ux.webp",
   seo: "/services/seo.webp",
   "ai-solutions": "/services/ai.webp",
+  "staff-augmentation": "/services/staff-augmentation.webp",
 };
 
 export function getServiceIllustration(slug: string | null | undefined) {

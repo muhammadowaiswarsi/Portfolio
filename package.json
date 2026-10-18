@@ -9,7 +9,9 @@
     "lint": "eslint",
     "rag:index": "tsx --env-file=.env.local scripts/rag-index.ts",
     "rag:search": "tsx --env-file=.env.local scripts/rag-search.ts",
-    "seed:testimonials": "tsx --env-file=.env.local scripts/seed-upwork-testimonials.ts"
+    "seed:testimonials": "tsx --env-file=.env.local scripts/seed-upwork-testimonials.ts",
+    "seed:staff-augmentation": "tsx --env-file=.env.local scripts/seed-staff-augmentation.ts",
+    "postinstall": "node scripts/patch-next-google-font.js"
   },
   "dependencies": {
     "@qdrant/js-client-rest": "^1.19.0",

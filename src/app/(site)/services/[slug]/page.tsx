@@ -27,10 +27,16 @@ export async function generateMetadata({
     };
   }
 
-  const title = hasText(service.heroTitle) ? service.heroTitle : service.title;
-  const description = hasText(service.heroDescription)
-    ? service.heroDescription
-    : service.shortDescription;
+  const title = hasText(service.seoTitle)
+    ? service.seoTitle
+    : hasText(service.heroTitle)
+      ? service.heroTitle
+      : service.title;
+  const description = hasText(service.seoDescription)
+    ? service.seoDescription
+    : hasText(service.heroDescription)
+      ? service.heroDescription
+      : service.shortDescription;
   const seoImage = service.heroImage?.asset ? service.heroImage : service.icon;
   const imageUrl = getImageUrl(seoImage, 1200, 630);
   const imageAlt = seoImage?.alt || title;

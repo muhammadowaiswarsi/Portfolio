@@ -231,8 +231,32 @@ export const serviceBySlugQuery = groq`
       alt,
       asset
     },
+    featuresTitle,
+    benefitsTitle,
+    processTitle,
+    engagementsTitle,
+    engagements[] {
+      _key,
+      _type,
+      title,
+      description,
+      icon { _type, alt, asset }
+    },
+    highlightsTitle,
+    highlights[] {
+      _key,
+      _type,
+      title,
+      description,
+      icon { _type, alt, asset }
+    },
     ctaTitle,
-    ctaDescription
+    ctaDescription,
+    primaryCtaLabel,
+    secondaryCtaLabel,
+    ctaButtonLabel,
+    seoTitle,
+    seoDescription
   }
 `;
 

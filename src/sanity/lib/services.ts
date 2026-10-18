@@ -1,5 +1,11 @@
 import { cache } from "react";
 
+import {
+  STAFF_AUGMENTATION_SLUG,
+  staffAugmentationHomepage,
+  staffAugmentationLanding,
+  staffAugmentationListing,
+} from "@/sanity/content/staffAugmentation";
 import { sanityFetch } from "@/sanity/lib/client";
 import {
   allServicesQuery,
@@ -30,11 +36,24 @@ function pinAiSolutionsFirst<T extends { title?: string | null; slug?: string | 
   return [...services].sort((a, b) => Number(isAiSolutions(b)) - Number(isAiSolutions(a)));
 }
 
+function withStaffAugmentation<T extends { slug?: string | null }>(
+  services: T[],
+  entry: T,
+) {
+  if (services.some((service) => service.slug === STAFF_AUGMENTATION_SLUG)) {
+    return services;
+  }
+
+  return [...services, entry];
+}
+
 export async function getHomepageServices(): Promise<HomepageService[]> {
   try {
     const services = await sanityFetch<HomepageService[]>(homepageServicesQuery);
 
-    return pinAiSolutionsFirst(services ?? []);
+    return pinAiSolutionsFirst(
+      withStaffAugmentation(services ?? [], staffAugmentationHomepage),
+    );
   } catch {
     return [];
   }
@@ -44,7 +63,9 @@ export async function getAllServices(): Promise<ServicesPageService[]> {
   try {
     const services = await sanityFetch<ServicesPageService[]>(allServicesQuery);
 
-    return pinAiSolutionsFirst(services ?? []);
+    return pinAiSolutionsFirst(
+      withStaffAugmentation(services ?? [], staffAugmentationListing),
+    );
   } catch {
     return [];
   }
@@ -58,9 +79,11 @@ export const getServiceBySlug = cache(
         { slug },
       );
 
-      return service ?? null;
+      if (service) return service;
     } catch {
-      return null;
+      // Fall through to the local Staff Augmentation document when Sanity is unavailable.
     }
+
+    return slug === STAFF_AUGMENTATION_SLUG ? staffAugmentationLanding : null;
   },
 );

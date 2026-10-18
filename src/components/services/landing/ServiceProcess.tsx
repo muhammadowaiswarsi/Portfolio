@@ -2,7 +2,10 @@
 
 import { motion } from "framer-motion";
 
-import { completeProcessSteps } from "@/components/services/landing/helpers";
+import {
+  completeProcessSteps,
+  hasText,
+} from "@/components/services/landing/helpers";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import type { ServiceLanding } from "@/types/sanity";
@@ -20,8 +23,10 @@ export function ServiceProcess({ service }: ServiceProcessProps) {
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
       <Container>
         <SectionHeading
-          eyebrow="HOW WE WORK"
-          title="Our Process"
+          eyebrow={hasText(service.processTitle) ? "PROCESS" : "HOW WE WORK"}
+          title={
+            hasText(service.processTitle) ? service.processTitle : "Our Process"
+          }
           headingClassName="font-display font-semibold"
         />
 

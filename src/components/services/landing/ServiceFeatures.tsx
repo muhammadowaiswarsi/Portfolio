@@ -7,6 +7,7 @@ import {
   completeFeatures,
   getImageUrl,
   hasImage,
+  hasText,
 } from "@/components/services/landing/helpers";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -28,8 +29,12 @@ export function ServiceFeatures({ service }: ServiceFeaturesProps) {
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
       <Container>
         <SectionHeading
-          eyebrow="FEATURES"
-          title="What We Deliver"
+          eyebrow={hasText(service.featuresTitle) ? "TALENT" : "FEATURES"}
+          title={
+            hasText(service.featuresTitle)
+              ? service.featuresTitle
+              : "What We Deliver"
+          }
           headingClassName="font-display font-semibold"
         />
 
