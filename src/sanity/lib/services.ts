@@ -29,11 +29,21 @@ function isAiSolutions(service: { title?: string | null; slug?: string | null })
   );
 }
 
-/** Keep CMS order, but always show AI Solutions first. */
-function pinAiSolutionsFirst<T extends { title?: string | null; slug?: string | null }>(
+function isStaffAugmentation(service: { slug?: string | null }) {
+  return service.slug === STAFF_AUGMENTATION_SLUG;
+}
+
+/** Keep CMS order, with Staff Augmentation first and AI Solutions second. */
+function pinFeaturedServices<T extends { title?: string | null; slug?: string | null }>(
   services: T[],
 ) {
-  return [...services].sort((a, b) => Number(isAiSolutions(b)) - Number(isAiSolutions(a)));
+  const rank = (service: T) => {
+    if (isStaffAugmentation(service)) return 0;
+    if (isAiSolutions(service)) return 1;
+    return 2;
+  };
+
+  return [...services].sort((a, b) => rank(a) - rank(b));
 }
 
 function withStaffAugmentation<T extends { slug?: string | null }>(
@@ -51,7 +61,7 @@ export async function getHomepageServices(): Promise<HomepageService[]> {
   try {
     const services = await sanityFetch<HomepageService[]>(homepageServicesQuery);
 
-    return pinAiSolutionsFirst(
+    return pinFeaturedServices(
       withStaffAugmentation(services ?? [], staffAugmentationHomepage),
     );
   } catch {
@@ -63,7 +73,7 @@ export async function getAllServices(): Promise<ServicesPageService[]> {
   try {
     const services = await sanityFetch<ServicesPageService[]>(allServicesQuery);
 
-    return pinAiSolutionsFirst(
+    return pinFeaturedServices(
       withStaffAugmentation(services ?? [], staffAugmentationListing),
     );
   } catch {
