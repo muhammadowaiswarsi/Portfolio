@@ -49,7 +49,10 @@ export function ServiceOverview({ service }: ServiceOverviewProps) {
   const iconUrl = hasImage(service.icon)
     ? getImageUrl(service.icon, 240, 240)
     : null;
-  const imageAlt = image?.alt || `${service.title} overview`;
+  const repeatsHeroIllustration = !imageUrl && Boolean(illustrationSrc);
+  const imageAlt = repeatsHeroIllustration
+    ? ""
+    : image?.alt || service.icon?.alt || service.title;
 
   return (
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">

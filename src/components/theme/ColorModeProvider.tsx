@@ -4,9 +4,8 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
-  useState,
+  useSyncExternalStore,
   type ReactNode,
 } from "react";
 
@@ -22,6 +21,21 @@ type ColorModeContextValue = {
 };
 
 const ColorModeContext = createContext<ColorModeContextValue | null>(null);
+const COLOR_MODE_EVENT = "cy-color-mode-change";
+
+function subscribeToColorMode(onStoreChange: () => void) {
+  window.addEventListener(COLOR_MODE_EVENT, onStoreChange);
+  return () => window.removeEventListener(COLOR_MODE_EVENT, onStoreChange);
+}
+
+function publishColorMode(mode: ColorMode) {
+  applyMode(mode);
+  window.dispatchEvent(new Event(COLOR_MODE_EVENT));
+}
+
+function serverColorMode(): ColorMode {
+  return "dark";
+}
 
 function readStoredMode(): ColorMode {
   if (typeof document === "undefined") return "dark";
@@ -46,25 +60,18 @@ function applyMode(mode: ColorMode) {
 }
 
 export function ColorModeProvider({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<ColorMode>("dark");
-
-  useEffect(() => {
-    const next = readStoredMode();
-    setModeState(next);
-    applyMode(next);
-  }, []);
+  const mode = useSyncExternalStore(
+    subscribeToColorMode,
+    readStoredMode,
+    serverColorMode,
+  );
 
   const setMode = useCallback((next: ColorMode) => {
-    setModeState(next);
-    applyMode(next);
+    publishColorMode(next);
   }, []);
 
   const toggleMode = useCallback(() => {
-    setModeState((current) => {
-      const next = current === "dark" ? "light" : "dark";
-      applyMode(next);
-      return next;
-    });
+    publishColorMode(readStoredMode() === "dark" ? "light" : "dark");
   }, []);
 
   const value = useMemo<ColorModeContextValue>(

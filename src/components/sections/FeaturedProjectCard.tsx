@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/Button";
+import { portfolioImageAlt } from "@/lib/portfolio-image-alt";
 import { urlFor } from "@/sanity/lib/image";
 import type { FeaturedProject } from "@/types/sanity";
 
@@ -20,7 +21,11 @@ export function FeaturedProjectCard({
   const imageUrl = cardSource?.asset
     ? urlFor(cardSource).width(800).height(640).fit("crop").url()
     : null;
-  const imageAlt = cardSource?.alt || project.title;
+  const imageAlt = portfolioImageAlt(
+    project.slug,
+    cardSource?.alt,
+    project.title,
+  );
   const href = `/portfolio/${project.slug}`;
   const category =
     typeof project.category === "string" && project.category.trim()

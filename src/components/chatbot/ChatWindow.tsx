@@ -76,16 +76,16 @@ export function ChatWindow({
   }, [messages, sending, loading, showTyping, error]);
 
   useEffect(() => {
-    if (!sending) {
-      setShowTyping(false);
-      return;
-    }
+    if (!sending) return;
 
     const timer = window.setTimeout(() => {
       setShowTyping(true);
     }, TYPING_INDICATOR_DELAY_MS);
 
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(timer);
+      setShowTyping(false);
+    };
   }, [sending]);
 
   return (

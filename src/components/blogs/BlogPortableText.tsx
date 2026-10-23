@@ -11,7 +11,7 @@ const components: PortableTextComponents = {
       const alt =
         typeof value.alt === "string" && value.alt.trim()
           ? value.alt
-          : "Article image";
+          : "Illustration in this article";
 
       return (
         <figure className="my-10 overflow-hidden rounded-2xl border border-border">

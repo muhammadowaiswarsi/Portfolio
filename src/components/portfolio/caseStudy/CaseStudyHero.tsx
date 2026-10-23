@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/cn";
 import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
+import { portfolioImageAlt } from "@/lib/portfolio-image-alt";
 import type { CaseStudyProject, SanityImage } from "@/types/sanity";
 
 type CaseStudyHeroProps = {
@@ -53,7 +54,7 @@ function collectHeroShots(project: CaseStudyProject): HeroShot[] {
     shots.push({
       key,
       url,
-      alt: image.alt || fallbackAlt,
+      alt: portfolioImageAlt(project.slug, image.alt, fallbackAlt),
     });
   };
 

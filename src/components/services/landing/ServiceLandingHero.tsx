@@ -14,7 +14,10 @@ import {
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { MIXPANEL_EVENTS } from "@/lib/mixpanel";
-import { getServiceIllustration } from "@/lib/service-illustrations";
+import {
+  getServiceIllustration,
+  getServiceIllustrationAlt,
+} from "@/lib/service-illustrations";
 import type { ServiceLanding } from "@/types/sanity";
 
 type ServiceLandingHeroProps = {
@@ -30,7 +33,8 @@ export function ServiceLandingHero({ service }: ServiceLandingHeroProps) {
   const iconUrl = hasImage(service.icon)
     ? getImageUrl(service.icon, 240, 240)
     : null;
-  const visualAlt = `${title} illustration`;
+  const visualAlt =
+    getServiceIllustrationAlt(service.slug) || service.icon?.alt || title;
 
   return (
     <section className="relative overflow-hidden bg-background">

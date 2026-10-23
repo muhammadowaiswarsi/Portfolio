@@ -62,7 +62,7 @@ export function ServiceGallery({ service }: ServiceGalleryProps) {
                   <Image
                     src={imageUrl}
                     alt={
-                      image.alt || `${service.title} gallery image ${index + 1}`
+                      image.alt || `${service.title} screenshot ${index + 1}`
                     }
                     fill
                     sizes={

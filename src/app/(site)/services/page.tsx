@@ -15,14 +15,14 @@ import { getAllServices } from "@/sanity/lib/services";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "We design, build and optimize digital experiences — from websites and mobile apps to AI-powered chatbots — that help businesses grow, engage customers and move forward.",
+    "Software development services from Computing Yard: websites, web apps, mobile apps, AI, chatbots, UI/UX, SEO, and staff augmentation.",
   alternates: {
     canonical: "/services",
   },
   openGraph: {
     title: "Services",
     description:
-      "We design, build and optimize digital experiences — from websites and mobile apps to AI-powered chatbots — that help businesses grow, engage customers and move forward.",
+      "Software development services from Computing Yard: websites, web apps, mobile apps, AI, chatbots, UI/UX, SEO, and staff augmentation.",
     url: "/services",
     type: "website",
   },

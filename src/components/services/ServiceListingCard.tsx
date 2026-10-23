@@ -6,7 +6,10 @@ import Image from "next/image";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-import { getServiceIllustration } from "@/lib/service-illustrations";
+import {
+  getServiceIllustration,
+  getServiceIllustrationAlt,
+} from "@/lib/service-illustrations";
 import { urlFor } from "@/sanity/lib/image";
 import type { ServicesPageService } from "@/types/sanity";
 
@@ -32,7 +35,10 @@ export function ServiceListingCard({
   const iconUrl = service.icon?.asset
     ? urlFor(service.icon).width(240).height(240).fit("crop").url()
     : null;
-  const visualAlt = `${service.title} illustration`;
+  const visualAlt =
+    getServiceIllustrationAlt(service.slug) ||
+    service.icon?.alt ||
+    service.title;
 
   return (
     <article className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">

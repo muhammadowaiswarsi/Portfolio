@@ -26,12 +26,13 @@ export function Hero() {
           </p>
 
           <h1 className="cy-reveal cy-reveal-2 font-display text-4xl font-semibold leading-[1.12] tracking-[-0.035em] text-white uppercase sm:text-5xl lg:text-[3.35rem] xl:text-[3.75rem]">
-            We build digital products that move businesses forward.
+            Software development that moves businesses forward.
           </h1>
 
           <p className="cy-reveal cy-reveal-3 mt-6 max-w-xl text-base leading-7 text-white/80 sm:text-lg sm:leading-8">
-            We design and develop high-performance websites, web applications,
-            mobile apps and digital solutions for ambitious businesses.
+            Computing Yard is a software development company. We build
+            websites, web applications, mobile apps, and AI solutions, and we
+            provide staff augmentation that moves businesses forward.
           </p>
 
           <div className="cy-reveal cy-reveal-4 mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">

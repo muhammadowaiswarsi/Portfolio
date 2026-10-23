@@ -1,9 +1,10 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { useId, useState } from "react";
 
+import { FaqJsonLd } from "@/components/seo/FaqJsonLd";
 import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { cn } from "@/lib/cn";
@@ -52,6 +53,7 @@ export function ServicesPageFaqs() {
 
   return (
     <section className="border-t border-border py-16 sm:py-20 lg:py-24">
+      <FaqJsonLd faqs={faqs} />
       <Container>
         <SectionHeading
           align="center"
@@ -93,24 +95,25 @@ export function ServicesPageFaqs() {
                     />
                   </button>
                 </h3>
-                <AnimatePresence initial={false}>
-                  {open ? (
-                    <motion.div
-                      id={panelId}
-                      role="region"
-                      aria-labelledby={headerId}
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.25, ease: "easeOut" }}
-                      className="overflow-hidden"
-                    >
-                      <p className="pb-5 text-sm leading-6 text-muted">
-                        {faq.answer}
-                      </p>
-                    </motion.div>
-                  ) : null}
-                </AnimatePresence>
+                <motion.div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={headerId}
+                  aria-hidden={!open}
+                  inert={!open}
+                  initial={false}
+                  animate={
+                    open
+                      ? { height: "auto", opacity: 1 }
+                      : { height: 0, opacity: 0 }
+                  }
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="overflow-hidden"
+                >
+                  <p className="pb-5 text-sm leading-6 text-muted">
+                    {faq.answer}
+                  </p>
+                </motion.div>
               </div>
             );
           })}
