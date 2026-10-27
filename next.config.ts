@@ -11,6 +11,11 @@ const nextConfig: NextConfig = {
         destination: `${canonicalSiteUrl}/:path*`,
         statusCode: 301,
       },
+      {
+        source: "/blog",
+        destination: "/blogs",
+        statusCode: 301,
+      },
     ];
   },
   images: {

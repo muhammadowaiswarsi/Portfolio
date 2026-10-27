@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 import { getSitemapEntries } from "@/sanity/lib/sitemap";
-import { getSiteUrl } from "@/lib/site";
+import { getHomepageUrl, getSiteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 
@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { projects, services, blogs } = await getSitemapEntries();
 
   const staticPages: MetadataRoute.Sitemap = [
-    page("/", undefined, "weekly", 1),
+    { ...page("/", undefined, "weekly", 1), url: getHomepageUrl() },
     page("/about", undefined, "monthly", 0.7),
     page("/portfolio", undefined, "weekly", 0.9),
     page("/services", undefined, "weekly", 0.9),

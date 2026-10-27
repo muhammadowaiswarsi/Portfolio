@@ -49,6 +49,11 @@ export function getSiteUrl() {
   return "http://localhost:3000";
 }
 
+/** Homepage URL, including the trailing slash used by the sitemap. */
+export function getHomepageUrl() {
+  return `${getSiteUrl()}/`;
+}
+
 export const siteName = "Computing Yard";
 
 export const siteDescription =

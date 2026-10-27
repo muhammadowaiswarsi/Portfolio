@@ -6,7 +6,7 @@ import { Services } from "@/components/sections/Services";
 import { Technologies } from "@/components/sections/Technologies";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { WhyComputingYard } from "@/components/sections/WhyComputingYard";
-import { siteDescription, siteName, siteOgImage } from "@/lib/site";
+import { getHomepageUrl, siteDescription, siteName, siteOgImage } from "@/lib/site";
 import type { Metadata } from "next";
 
 const homeTitle = `${siteName} | Web, Mobile & AI Software Development`;
@@ -16,9 +16,6 @@ export const metadata: Metadata = {
     absolute: homeTitle,
   },
   description: siteDescription,
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     title: homeTitle,
     description: siteDescription,
@@ -39,6 +36,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      <link rel="canonical" href={getHomepageUrl()} />
       <Hero />
       <FeaturedPortfolio />
       <Services />
