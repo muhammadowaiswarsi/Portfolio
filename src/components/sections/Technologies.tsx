@@ -4,6 +4,7 @@ import {
   Monitor,
   Server,
   Smartphone,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
 
@@ -37,9 +38,14 @@ const groups: {
     items: ["PostgreSQL", "MongoDB", "MySQL"],
   },
   {
-    title: "AI & Cloud",
+    title: "AI",
+    icon: Sparkles,
+    items: ["OpenAI", "Qdrant", "OpenCV", "NumPy", "PyTorch"],
+  },
+  {
+    title: "Cloud",
     icon: Cloud,
-    items: ["OpenAI", "AWS", "Firebase", "Docker"],
+    items: ["AWS", "Firebase", "Docker"],
   },
 ];
 

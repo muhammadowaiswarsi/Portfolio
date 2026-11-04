@@ -1,4 +1,5 @@
 import { CaseStudyApproach } from "@/components/portfolio/caseStudy/CaseStudyApproach";
+import { CaseStudyProductVideo } from "@/components/portfolio/caseStudy/CaseStudyProductVideo";
 import { CaseStudyBrand } from "@/components/portfolio/caseStudy/CaseStudyBrand";
 import { CaseStudyCta } from "@/components/portfolio/caseStudy/CaseStudyCta";
 import { CaseStudyItemGrid } from "@/components/portfolio/caseStudy/CaseStudyItemGrid";
@@ -27,6 +28,14 @@ export function MobileAppCaseStudy({
   return (
     <article className="overflow-x-hidden bg-background">
       <MobileAppHero project={project} />
+      {project.slug === "paylinkz" ? (
+        <CaseStudyProductVideo
+          src="/portfolio/paylinkz/overview.mp4"
+          label="Paylinkz product video"
+          title="See Paylinkz in action"
+          description={project.shortDescription}
+        />
+      ) : null}
       <CaseStudyOverview
         project={project}
         eyebrow="The Product"

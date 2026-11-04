@@ -10,12 +10,21 @@ const FILTERS = [
   { id: "all", label: "All" },
   { id: "mobile-app", label: "Mobile Apps" },
   { id: "web-app", label: "Web Apps" },
+  { id: "ai", label: "AI" },
 ] as const;
 
-function typeClass(projectType: FeaturedProject["projectType"]) {
-  if (projectType === "web-mobile") return "type-web type-mobile";
-  if (projectType === "mobile-app") return "type-mobile";
-  return "type-web";
+const AI_PROJECTS = new Set(["tms-system", "traino-ai", "study-panda"]);
+
+function typeClass(project: FeaturedProject) {
+  const classes =
+    project.projectType === "web-mobile"
+      ? ["type-web", "type-mobile"]
+      : project.projectType === "mobile-app"
+        ? ["type-mobile"]
+        : ["type-web"];
+
+  if (AI_PROJECTS.has(project.slug)) classes.push("type-ai");
+  return classes.join(" ");
 }
 
 export function PortfolioGrid({ projects }: PortfolioGridProps) {
@@ -24,10 +33,11 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
       className={cn(
         "has-[#portfolio-filter-mobile-app:checked]:[&_.type-web:not(.type-mobile)]:hidden",
         "has-[#portfolio-filter-web-app:checked]:[&_.type-mobile:not(.type-web)]:hidden",
+        "has-[#portfolio-filter-ai:checked]:[&_.portfolio-card:not(.type-ai)]:hidden",
       )}
     >
       <div
-        className="mb-12 flex flex-wrap justify-center gap-3"
+        className="mb-12 flex w-full flex-wrap justify-center gap-3"
         role="radiogroup"
         aria-label="Filter projects by type"
       >
@@ -52,7 +62,7 @@ export function PortfolioGrid({ projects }: PortfolioGridProps) {
         {projects.map((project) => (
           <div
             key={project._id}
-            className={`portfolio-card ${typeClass(project.projectType)}`}
+            className={`portfolio-card ${typeClass(project)}`}
           >
             <FeaturedProjectCard project={project} />
           </div>

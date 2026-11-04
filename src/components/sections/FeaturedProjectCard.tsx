@@ -18,9 +18,17 @@ export function FeaturedProjectCard({
   const cardSource = project.cardImage?.asset
     ? project.cardImage
     : project.thumbnail;
-  const imageUrl = cardSource?.asset
-    ? urlFor(cardSource).width(800).height(640).fit("crop").url()
-    : null;
+  const localCardImage =
+    project.slug === "tms-system"
+      ? "/portfolio/freight-operator/card.png"
+      : project.slug === "study-panda"
+        ? "/portfolio/study-panda/card.png"
+        : null;
+  const imageUrl =
+    localCardImage ??
+    (cardSource?.asset
+      ? urlFor(cardSource).width(800).height(640).fit("crop").url()
+      : null);
   const imageAlt = portfolioImageAlt(
     project.slug,
     cardSource?.alt,
@@ -37,7 +45,13 @@ export function FeaturedProjectCard({
       <Link
         href={href}
         prefetch={false}
-        className="relative block overflow-hidden bg-primary"
+        className={
+          project.slug === "tms-system"
+            ? "relative block overflow-hidden bg-[#16315a]"
+            : project.slug === "study-panda"
+              ? "relative block overflow-hidden bg-[#241a6e]"
+              : "relative block overflow-hidden bg-primary"
+        }
       >
         <div className="relative aspect-[5/4]">
           {imageUrl ? (
@@ -46,9 +60,13 @@ export function FeaturedProjectCard({
               alt={imageAlt}
               fill
               loading={priority ? "eager" : "lazy"}
-              quality={60}
+              quality={localCardImage ? 90 : 60}
               sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              className={
+                localCardImage
+                  ? "object-contain object-center"
+                  : "object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+              }
             />
           ) : null}
         </div>

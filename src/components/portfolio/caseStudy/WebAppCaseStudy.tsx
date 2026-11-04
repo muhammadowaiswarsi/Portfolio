@@ -1,4 +1,5 @@
 import { CaseStudyApproach } from "@/components/portfolio/caseStudy/CaseStudyApproach";
+import { CaseStudyProductVideo } from "@/components/portfolio/caseStudy/CaseStudyProductVideo";
 import { CaseStudyBrand } from "@/components/portfolio/caseStudy/CaseStudyBrand";
 import { CaseStudyChallenges } from "@/components/portfolio/caseStudy/CaseStudyChallenges";
 import { CaseStudyCta } from "@/components/portfolio/caseStudy/CaseStudyCta";
@@ -49,6 +50,14 @@ export function WebAppCaseStudy({
         presentation={webMobile ? "web-mobile" : "web-app"}
       />
       {freightOperator ? <FreightOperatorOverview /> : null}
+      {project.slug === "study-panda" ? (
+        <CaseStudyProductVideo
+          src="/portfolio/study-panda/hero.mp4"
+          label="Study Panda product video"
+          title="See Study Panda in action"
+          description={project.shortDescription}
+        />
+      ) : null}
       <CaseStudyOverview
         project={project}
         eyebrow={

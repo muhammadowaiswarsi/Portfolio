@@ -47,6 +47,7 @@ const categories = [
       "Vector Database",
       "Image Recognition",
       "OpenAI",
+      "Qdrant",
       "OpenCV",
       "PyTorch",
     ],
@@ -70,7 +71,7 @@ export function ServicesStack() {
           headingClassName="font-display font-semibold"
         />
 
-        <div className="mt-10 flex flex-wrap justify-center gap-2.5">
+        <div className="mt-10 flex w-full min-w-0 flex-wrap justify-center gap-2.5">
           {categories.map((category) => {
             const selected = category.id === activeId;
 
@@ -80,7 +81,7 @@ export function ServicesStack() {
                 type="button"
                 onClick={() => setActiveId(category.id)}
                 className={cn(
-                  "cursor-pointer rounded-full border px-4 py-2 text-sm font-medium transition-colors",
+                  "shrink-0 cursor-pointer whitespace-nowrap rounded-full border px-4 py-2 text-sm font-medium transition-colors",
                   selected
                     ? "border-accent bg-accent text-accent-foreground"
                     : "border-border bg-surface text-foreground hover:border-primary",

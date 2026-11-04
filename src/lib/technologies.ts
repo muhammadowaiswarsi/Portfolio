@@ -65,6 +65,7 @@ const catalog: TechDefinition[] = [
   { display: "Flutter", aliases: ["flutter"], icon: TabletSmartphone },
   { display: "MySQL", aliases: ["mysql"], icon: Table2 },
   { display: "OpenAI", aliases: ["openai"], icon: Sparkles },
+  { display: "Qdrant", aliases: ["qdrant"], icon: Database },
   { display: "NumPy", aliases: ["numpy"], icon: Braces },
   { display: "OpenCV", aliases: ["opencv"], icon: Scan },
   { display: "Vector Database", aliases: ["vector database", "vectordb", "vector db"], icon: Database },
